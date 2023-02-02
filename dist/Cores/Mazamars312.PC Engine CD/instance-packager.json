@@ -1,0 +1,17 @@
+{
+   "output":"Assets/pcecd/Mazamars312.PC Engine CD",
+   "data_slots":[
+      {
+         "id":100,
+         "filename":"*.cue",
+         "sort":"single",
+         "required":true
+      },
+      {
+         "id":101,
+         "filename":"*.bin",
+         "sort":"ascending",
+         "required":true
+      }
+   ]
+}
