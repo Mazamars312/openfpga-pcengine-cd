@@ -1,0 +1,160 @@
+{
+  "interact": {
+    "magic": "APF_VER_1",
+    "variables": [
+      {
+        "name": "Reset core",
+        "id": 1,
+        "type": "action",
+        "enabled": true,
+        "address": "0xF0000000",
+        "value": 1
+      },
+      {
+        "name": "Use Turbo Tap",
+        "id": 20,
+        "type": "check",
+        "enabled": true,
+        "address": "0x00000100",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "Use 6 Button Ctrl",
+        "id": 21,
+        "type": "check",
+        "enabled": true,
+        "address": "0x00000104",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "Button I Turbo",
+        "id": 22,
+        "type": "slider_u32",
+        "enabled": true,
+        "address": "0x00000108",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "graphical": {
+          "min": 0,
+          "max": 2,
+          "adjust_small": 1,
+          "adjust_large": 1
+        }
+      },
+      {
+        "name": "Button II Turbo",
+        "id": 23,
+        "type": "slider_u32",
+        "enabled": true,
+        "address": "0x0000010C",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "graphical": {
+          "min": 0,
+          "max": 2,
+          "adjust_small": 1,
+          "adjust_large": 1
+        }
+      },
+      {
+        "name": "Extra Sprites",
+        "id": 41,
+        "type": "check",
+        "enabled": true,
+        "address": "0x00000204",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "Raw RGB Color",
+        "id": 42,
+        "type": "check",
+        "enabled": true,
+        "address": "0x00000208",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "Master Audio Boost",
+        "id": 60,
+        "type": "list",
+        "enabled": true,
+        "address": "0x00000300",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "options": [
+          {
+            "name": "No Boost",
+            "value": 0
+          },
+          {
+            "name": "2x Boost",
+            "value": 1
+          },
+          {
+            "name": "4x Boost",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "name": "PCM Audio Boost",
+        "id": 61,
+        "type": "check",
+        "enabled": true,
+        "address": "0x00000304",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "CD Audio Boost",
+        "id": 62,
+        "type": "check",
+        "enabled": true,
+        "address": "0x00000308",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "System Region",
+        "id": 63,
+        "type": "check",
+        "enabled": true,
+        "address": "0xF0000004",
+        "persist": true,
+		"mask": "0xfffffffe",
+        "defaultval": 0,
+        "value": 1
+      },
+      {
+        "name": "Arcade System",
+        "id": 64,
+        "type": "check",
+        "enabled": true,
+        "address": "0xF0000004",
+        "persist": true,
+		"mask": "0xfffffffd",
+        "defaultval": 0,
+        "value": 2
+      }
+    ],
+    "messages": []
+  }
+}

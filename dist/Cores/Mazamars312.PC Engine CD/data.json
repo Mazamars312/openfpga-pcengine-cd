@@ -1,0 +1,325 @@
+{
+  "data": {
+    "magic": "APF_VER_1",
+    "data_slots": [
+	{
+	"name": "CD Rom ISO",
+	"id": 0,
+	"required": true,
+	"parameters": "0x13",
+	"extensions": ["json"]
+	},
+	{
+	"name": "Cartridge",
+	"id": 1,
+	"required": true,
+	"parameters": "0x109",
+	"extensions": ["pce", "sgx"],
+	"address": "0x10000000"
+	},
+	{
+	"name": "Save",
+	"id": 2,
+	"required": false,
+	"parameters": "0x84",
+	"nonvolatile": true,
+	"extensions": ["sav"],
+	"address": "0x20000000",
+	"size_maximum": "0x4000"
+	},
+	{
+	"name": "MPU Bios",
+	"id": 3,
+	"required": true,
+	"parameters": 2,
+	"filename": "mpu.bin",
+	"extensions": [
+		"bin"
+		],
+	"size_exact": 0,
+	"size_maximum": 65536,
+	"address": "0x80000000"
+	},
+	{
+	"name": "cdfile0",
+	"id": 100,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["cue"],
+	"address": "0x80008000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile1",
+	"id": 101,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80009000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile2",
+	"id": 102,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8000a000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile3",
+	"id": 103,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8000b000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile4",
+	"id": 104,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8000c000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile5",
+	"id": 105,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8000d000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile6",
+	"id": 106,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8000e000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile7",
+	"id": 107,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8000f000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile8",
+	"id": 108,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80011000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile9",
+	"id": 109,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80012000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile10",
+	"id": 110,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80013000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile11",
+	"id": 111,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80014000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile12",
+	"id": 112,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80015000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile13",
+	"id": 113,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80016000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile14",
+	"id": 114,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80017000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile15",
+	"id": 115,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80018000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile16",
+	"id": 116,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80019000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile17",
+	"id": 117,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8001a000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile18",
+	"id": 118,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8001b000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile19",
+	"id": 119,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8001c000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile20",
+	"id": 120,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8001d000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile21",
+	"id": 121,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8001e000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile22",
+	"id": 122,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x8001f000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile23",
+	"id": 123,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80020000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile24",
+	"id": 124,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80021000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile25",
+	"id": 125,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80022000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile26",
+	"id": 126,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80023000",
+	"size_maximum": 734003200
+	},
+	{
+	"name": "cdfile27",
+	"id": 127,
+	"required": false,
+	"parameters": "0x8",
+	"deferload": true,
+	"extensions": ["bin"],
+	"address": "0x80024000",
+	"size_maximum": 734003200
+	}
+	]
+	}
+}

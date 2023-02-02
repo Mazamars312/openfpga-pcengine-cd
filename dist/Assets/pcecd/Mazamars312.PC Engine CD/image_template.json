@@ -1,0 +1,109 @@
+{
+    "instance": {
+        "magic": "APF_VER_1",
+			"variant_select" : {
+				"id" : 300,
+				"select" : false
+			},
+			"data_path": "image/",
+		    "data_slots": [
+				{
+		        "id": 100,
+						"filename": "image.cue"
+				},{
+				"id": 101,
+						"filename": "image (Track 01).bin"
+				},{
+				"id": 102,
+						"filename": "image (Track 02).bin"
+				},{
+				"id": 103,
+						"filename": "image (Track 03).bin"
+				},{
+				"id": 104,
+						"filename": "image (Track 04).bin"
+				},{
+				"id": 105,
+						"filename": "image (Track 05).bin"
+				},{
+				"id": 106,
+						"filename": "image (Track 06).bin"
+				},{
+				"id": 107,
+						"filename": "image (Track 07).bin"
+				},{
+				"id": 108,
+						"filename": "image (Track 08).bin"
+				},{
+				"id": 109,
+						"filename": "image (Track 09).bin"
+				},{
+				"id": 110,
+						"filename": "image (Track 10).bin"
+				},{
+				"id": 111,
+						"filename": "image (Track 11).bin"
+				},{
+				"id": 112,
+						"filename": "image (Track 12).bin"
+				},{
+				"id": 113,
+						"filename": "image (Track 13).bin"
+				},{
+				"id": 114,
+						"filename": "image (Track 14).bin"
+				},{
+				"id": 115,
+						"filename": "image (Track 15).bin"
+				},{
+				"id": 116,
+						"filename": "image (Track 16).bin"
+				},{
+				"id": 117,
+						"filename": "image (Track 17).bin"
+				},{
+				"id": 118,
+						"filename": "image (Track 18).bin"
+				},{
+				"id": 119,
+						"filename": "image (Track 19).bin"
+				},{
+				"id": 120,
+						"filename": "image (Track 20).bin"
+				},{
+				"id": 121,
+						"filename": "image (Track 21).bin"
+				},{
+				"id": 122,
+						"filename": "image (Track 22).bin"
+				},{
+				"id": 123,
+						"filename": "image (Track 23).bin"
+				},{
+				"id": 124,
+						"filename": "image (Track 24).bin"
+				},{
+				"id": 125,
+						"filename": "image (Track 25).bin"
+				},{
+				"id": 126,
+						"filename": "image (Track 26).bin"
+				},{
+				"id": 127,
+						"filename": "image (Track 27).bin"
+				},{
+				"id": 128,
+						"filename": "image (Track 28).bin"
+				},{
+				"id": 129,
+						"filename": "image (Track 29).bin"
+				},{
+				"id": 130,
+						"filename": "image (Track 30).bin"
+				}
+		    ],
+			"memory_writes": [
+				
+			]
+    }
+}

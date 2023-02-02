@@ -1,0 +1,52 @@
+{
+  "input": {
+    "magic": "APF_VER_1",
+    "controllers": [
+      {
+        "type": "default",
+        "mappings": [
+          {
+            "id": 0,
+            "name": "I Button",
+            "key": "pad_btn_a"
+          },
+          {
+            "id": 1,
+            "name": "II Button",
+            "key": "pad_btn_b"
+          },
+          {
+            "id": 2,
+            "name": "III/Turbo I Button",
+            "key": "pad_btn_x"
+          },
+          {
+            "id": 3,
+            "name": "IV/Turbo II Button",
+            "key": "pad_btn_y"
+          },
+          {
+            "id": 4,
+            "name": "V Button",
+            "key": "pad_trig_l"
+          },
+          {
+            "id": 5,
+            "name": "VI Button",
+            "key": "pad_trig_r"
+          },
+          {
+            "id": 20,
+            "name": "Run",
+            "key": "pad_btn_start"
+          },
+          {
+            "id": 21,
+            "name": "Select",
+            "key": "pad_btn_select"
+          }
+        ]
+      }
+    ]
+  }
+}
