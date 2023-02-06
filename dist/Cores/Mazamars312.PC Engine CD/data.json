@@ -10,12 +10,16 @@
 	"extensions": ["json"]
 	},
 	{
-	"name": "Cartridge",
+	"name": "CDROM II Bios",
 	"id": 1,
 	"required": true,
 	"parameters": "0x109",
-	"extensions": ["pce", "sgx"],
-	"address": "0x10000000"
+	"filename": "[BIOS] TurboGrafx CD Super System Card (USA) (v3.0).pce",
+	"extensions": [
+		"pce"
+		],
+	"address": "0x10000000",
+	"size_maximum": "0x40000"
 	},
 	{
 	"name": "Save",
