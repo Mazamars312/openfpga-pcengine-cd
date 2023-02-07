@@ -62,7 +62,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80009000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile2",
@@ -72,7 +72,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8000a000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile3",
@@ -82,7 +82,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8000b000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile4",
@@ -92,7 +92,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8000c000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile5",
@@ -102,7 +102,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8000d000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile6",
@@ -112,7 +112,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8000e000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile7",
@@ -122,7 +122,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8000f000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile8",
@@ -132,7 +132,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80011000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile9",
@@ -142,7 +142,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80012000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile10",
@@ -152,7 +152,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80013000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile11",
@@ -162,7 +162,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80014000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile12",
@@ -172,7 +172,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80015000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile13",
@@ -182,7 +182,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80016000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile14",
@@ -192,7 +192,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80017000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile15",
@@ -202,7 +202,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80018000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile16",
@@ -212,7 +212,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80019000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile17",
@@ -222,7 +222,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8001a000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile18",
@@ -232,7 +232,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8001b000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile19",
@@ -242,7 +242,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8001c000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile20",
@@ -252,7 +252,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8001d000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile21",
@@ -262,7 +262,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8001e000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile22",
@@ -272,7 +272,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x8001f000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile23",
@@ -282,7 +282,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80020000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile24",
@@ -292,7 +292,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80021000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile25",
@@ -302,7 +302,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80022000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile26",
@@ -312,7 +312,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80023000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	},
 	{
 	"name": "cdfile27",
@@ -322,7 +322,7 @@
 	"deferload": true,
 	"extensions": ["bin"],
 	"address": "0x80024000",
-	"size_maximum": 734003200
+	"size_maximum": 838860800
 	}
 	]
 	}

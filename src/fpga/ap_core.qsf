@@ -343,376 +343,12 @@ set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -
 
 	# Fitter Assignments
 	# ==================
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_we_n
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_lb_n
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[10]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[11]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[13]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[15]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to bist
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_si_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_si
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sd_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sd
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sck_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sck
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_pin30_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[6]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to vblank
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_ub_n
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_oe_n
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[8]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[9]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[10]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[11]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[12]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[13]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[14]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[15]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[8]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[9]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[12]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[14]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[16]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_so_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk_74a
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[1]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[2]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[3]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[4]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[5]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[6]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[7]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1_dir
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[0]
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[2]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vs
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_skip
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_hs
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_de
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_clk
-set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spimosi
-set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spimiso
-set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spiclk
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audmclk
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audlrck
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_auddac
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audadc
-set_instance_assignment -name IO_STANDARD "1.8 V" -to port_tran_so
-set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_tx
-set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_rx
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_we_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ras_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[2]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[3]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[4]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[5]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[6]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[7]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[8]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[9]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[10]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[11]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[12]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[13]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[14]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[15]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_clk
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_cke
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_cas_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ba[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ba[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[2]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[3]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[4]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[5]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[6]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[7]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[8]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[9]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[10]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[11]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[12]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to clk_74b
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_tran_pin31
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_tran_pin30
-set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spiss
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_we_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_wait
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ub_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_oe_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_lb_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[2]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[3]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[4]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[5]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[6]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[7]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[8]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[9]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[10]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[11]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[12]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[13]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[14]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[15]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_cre
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_clk
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ce1_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ce0_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_adv_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[16]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[17]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[18]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[19]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[20]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[21]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_we_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ub_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_lb_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[2]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[8]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[9]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_clk
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ce0_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[16]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[17]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[18]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[19]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[20]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[21]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_wait
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_oe_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[3]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[4]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[5]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[6]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[7]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[10]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[11]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[12]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[13]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[14]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[15]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_cre
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ce1_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_adv_n
-set_instance_assignment -name IO_STANDARD "1.8 V" -to user1
-set_instance_assignment -name IO_STANDARD "1.8 V" -to user2
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dbg_rx
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dbg_tx
-set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_1wire
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[11]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[10]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[9]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[8]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[7]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[6]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[5]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[4]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[3]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[2]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dqm[0]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dqm[1]
-set_instance_assignment -name IO_STANDARD "1.8 V" -to aux_sda
-set_instance_assignment -name IO_STANDARD "1.8 V" -to aux_scl
-set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_pin30_pwroff_reset
-set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_rx_disable
-set_instance_assignment -name IO_STANDARD "1.8 V" -to vpll_feed
-set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_pin31_dir
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to cram0_clk
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to dram_clk
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_audmclk
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_auddac
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_audlrck
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to vpll_feed
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to cram1_clk
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_clk
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dqm[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dqm[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[2]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[3]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[4]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[5]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[6]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[7]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[8]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[9]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[10]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[11]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[12]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[13]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[14]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[15]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_we_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_cas_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ras_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[15]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_cke
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[12]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ba[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ba[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[2]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[3]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[4]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[5]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[6]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[7]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[8]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[9]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[10]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[11]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dbg_tx
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_we_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_wait
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ub_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_oe_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_lb_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[2]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[3]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[4]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[5]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[6]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[7]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[8]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[9]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[10]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[11]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[12]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[13]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[14]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_cre
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ce1_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ce0_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_adv_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[16]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[17]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[18]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[19]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[20]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[21]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_we_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_wait
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ub_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_oe_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_lb_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[0]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[1]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[2]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[3]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[4]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[5]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[6]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[7]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[8]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[9]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[10]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[11]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[12]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[13]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[14]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[15]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_cre
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ce1_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ce0_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_adv_n
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[16]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[17]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[18]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[19]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[20]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[21]
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_tran_pin31
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_tran_pin30
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_pin30_pwroff_reset
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spimosi
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spimiso
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_1wire
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to aux_sda
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to aux_scl
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spiclk
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_de
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vs
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[0]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[1]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[2]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[3]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[4]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[5]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[6]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[7]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[8]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[9]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[10]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[11]
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_hs
-set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_skip
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_tran_so
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_tx
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx_disable
-set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx
 
 	# start DESIGN_PARTITION(Top)
 	# ---------------------------
 
 		# Incremental Compilation Assignments
 		# ===================================
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
-set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
-set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 
 	# end DESIGN_PARTITION(Top)
 	# -------------------------
@@ -798,17 +434,9 @@ set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_BUFFER_FULL_STOP=
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_CURRENT_RESOURCE_WIDTH=1" -section_id auto_signaltap_1
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INCREMENTAL_ROUTING=1" -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[2] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[5] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[7] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[11] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[13] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[17] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[18] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[19] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[29] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[30] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[31] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_LEVEL=1" -section_id auto_signaltap_1
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_IN_ENABLED=0" -section_id auto_signaltap_1
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_PIPELINE=0" -section_id auto_signaltap_1
@@ -821,11 +449,6 @@ set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_clk -to clk_74
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_SEGMENT_SIZE=512" -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[1] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[6] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[9] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[10] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[15] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[16] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[21] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[22] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_SAMPLE_DEPTH=512" -section_id auto_signaltap_1
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[0] -to "core_top:ic|core_bridge_cmd:icb|bridge_addr[0]" -section_id auto_signaltap_1
@@ -1936,15 +1559,7 @@ set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[550] -
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[551] -to "core_top:ic|core_bridge_cmd:icb|target_dataslot_slotoffset[8]" -section_id auto_signaltap_1
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[552] -to "core_top:ic|core_bridge_cmd:icb|target_dataslot_slotoffset[9]" -section_id auto_signaltap_1
 set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[553] -to "core_top:ic|core_bridge_cmd:icb|target_dataslot_write" -section_id auto_signaltap_1
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_DATA_BITS=554" -section_id auto_signaltap_1
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_BITS=554" -section_id auto_signaltap_1
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STORAGE_QUALIFIER_BITS=554" -section_id auto_signaltap_1
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" -section_id auto_signaltap_1
-set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK_LENGTH=1685" -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[0] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[3] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[4] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[8] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[12] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[14] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[20] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
@@ -1953,5 +1568,518 @@ set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[24] -
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[25] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[26] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[27] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
-set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_we_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_lb_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to bist
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_si_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_si
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sd_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sd
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sck_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_sck
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_pin30_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank0[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to vblank
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_ub_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_oe_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_dq[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sram_a[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to port_tran_so_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk_74a
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank3[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank2[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1_dir
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_bank1[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vs
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_skip
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_hs
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_de
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spimosi
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spimiso
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spiclk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audmclk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audlrck
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_auddac
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_audadc
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_tran_so
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_tx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_rx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_we_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ras_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dq[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_cke
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_cas_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ba[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_ba[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_a[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to clk_74b
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_tran_pin31
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_tran_pin30
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_spiss
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_we_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_wait
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ub_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_oe_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_lb_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_dq[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_cre
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ce1_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_ce0_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_adv_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[16]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[17]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[18]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[19]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[20]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram0_a[21]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_we_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ub_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_lb_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_clk
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ce0_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[16]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[17]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[18]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[19]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[20]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_a[21]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_wait
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_oe_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[12]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[13]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[14]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_dq[15]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_cre
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_ce1_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cram1_adv_n
+set_instance_assignment -name IO_STANDARD "1.8 V" -to user1
+set_instance_assignment -name IO_STANDARD "1.8 V" -to user2
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dbg_rx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dbg_tx
+set_instance_assignment -name IO_STANDARD "1.8 V" -to bridge_1wire
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[11]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[10]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[9]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[8]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[7]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[6]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[5]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[4]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[3]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[2]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to scal_vid[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dqm[0]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to dram_dqm[1]
+set_instance_assignment -name IO_STANDARD "1.8 V" -to aux_sda
+set_instance_assignment -name IO_STANDARD "1.8 V" -to aux_scl
+set_instance_assignment -name IO_STANDARD "1.8 V" -to cart_pin30_pwroff_reset
+set_instance_assignment -name IO_STANDARD "1.8 V" -to port_ir_rx_disable
+set_instance_assignment -name IO_STANDARD "1.8 V" -to vpll_feed
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to cart_tran_pin31_dir
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to cram0_clk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to dram_clk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_audmclk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_auddac
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_audlrck
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to vpll_feed
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to cram1_clk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dqm[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dqm[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_cas_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ras_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_cke
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ba[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_ba[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to dram_a[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to dbg_tx
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_wait
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ub_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_oe_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_lb_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_cre
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ce1_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_ce0_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_adv_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[16]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[17]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[18]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[19]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[20]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram1_a[21]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_wait
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ub_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_oe_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_lb_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_cre
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ce1_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_ce0_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_adv_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[16]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[17]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[18]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[19]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[20]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cram0_a[21]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_tran_pin31
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_tran_pin30
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to cart_pin30_pwroff_reset
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spimosi
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spimiso
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_1wire
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to aux_sda
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to aux_scl
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to bridge_spiclk
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_de
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vs
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[0]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[1]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[2]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[3]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[4]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[5]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[6]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[7]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[8]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[9]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[10]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_vid[11]
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_hs
+set_instance_assignment -name OUTPUT_TERMINATION "SERIES 50 OHM WITHOUT CALIBRATION" -to scal_skip
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_tran_so
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_tx
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx_disable
+set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[554] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[0]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[555] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[10]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[556] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[11]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[557] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[12]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[558] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[13]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[559] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[14]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[560] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[15]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[561] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[16]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[562] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[17]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[563] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[18]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[564] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[19]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[565] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[1]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[566] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[20]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[567] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[21]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[568] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[22]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[569] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[23]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[570] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[24]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[571] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[25]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[572] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[26]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[573] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[27]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[574] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[28]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[575] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[29]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[576] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[2]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[577] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[30]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[578] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[31]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[579] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[3]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[580] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[4]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[581] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[5]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[582] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[6]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[583] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[7]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[584] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[8]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[585] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[9]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[586] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[0]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[587] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[10]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[588] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[11]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[589] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[12]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[590] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[13]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[591] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[14]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[592] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[15]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[593] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[16]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[594] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[17]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[595] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[18]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[596] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[19]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[597] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[1]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[598] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[20]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[599] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[21]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[600] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[22]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[601] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[23]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[602] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[24]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[603] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[25]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[604] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[26]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[605] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[27]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[606] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[28]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[607] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[29]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[608] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[2]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[609] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[30]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[610] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[31]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[611] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[3]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[612] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[4]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[613] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[5]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[614] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[6]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[615] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[7]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[616] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[8]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_trigger_in[617] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[9]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[554] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[0]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[555] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[10]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[556] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[11]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[557] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[12]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[558] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[13]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[559] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[14]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[560] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[15]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[561] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[16]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[562] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[17]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[563] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[18]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[564] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[19]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[565] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[1]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[566] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[20]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[567] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[21]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[568] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[22]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[569] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[23]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[570] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[24]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[571] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[25]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[572] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[26]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[573] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[27]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[574] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[28]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[575] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[29]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[576] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[2]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[577] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[30]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[578] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[31]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[579] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[3]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[580] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[4]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[581] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[5]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[582] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[6]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[583] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[7]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[584] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[8]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[585] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_INPUT[9]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[586] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[0]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[587] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[10]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[588] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[11]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[589] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[12]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[590] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[13]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[591] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[14]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[592] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[15]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[593] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[16]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[594] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[17]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[595] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[18]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[596] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[19]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[597] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[1]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[598] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[20]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[599] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[21]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[600] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[22]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[601] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[23]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[602] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[24]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[603] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[25]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[604] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[26]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[605] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[27]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[606] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[28]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[607] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[29]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[608] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[2]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[609] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[30]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[610] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[31]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[611] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[3]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[612] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[4]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[613] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[5]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[614] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[6]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[615] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[7]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[616] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[8]" -section_id auto_signaltap_1
+set_instance_assignment -name CONNECT_TO_SLD_NODE_ENTITY_PORT acq_data_in[617] -to "core_top:ic|substitute_mcu_apf_mister:substitute_mcu_apf_mister|CORE_OUTPUT[9]" -section_id auto_signaltap_1
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_DATA_BITS=618" -section_id auto_signaltap_1
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_TRIGGER_BITS=618" -section_id auto_signaltap_1
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_STORAGE_QUALIFIER_BITS=618" -section_id auto_signaltap_1
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" -section_id auto_signaltap_1
+set_global_assignment -name SLD_NODE_PARAMETER_ASSIGNMENT "SLD_INVERSION_MASK_LENGTH=1877" -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[0] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[3] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[5] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[7] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[8] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[9] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[10] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[15] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[16] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[17] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[18] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[19] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[21] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[28] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[30] -to auto_signaltap_1|gnd -section_id auto_signaltap_1
+set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[31] -to auto_signaltap_1|vcc -section_id auto_signaltap_1
 set_global_assignment -name SLD_FILE db/stp1_auto_stripped.stp
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

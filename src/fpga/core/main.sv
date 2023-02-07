@@ -264,7 +264,7 @@ module pce (
 
       .CD_EN(cd_en),
       // Arcade card
-      .AC_EN(0),
+      .AC_EN(AC_EN),
 
        .CD_RAM_A (cd_ram_a),
        .CD_RAM_DO(cd_ram_do),
