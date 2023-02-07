@@ -35,7 +35,7 @@ in the assets\pcecd\Mazamars312.PC Engine CD\ folder there a image_template.json
 
 * "data_path": "image/", is the folder location in the \Assets\pcecd\common\ folder
 * DataSlot 100 is always the CUE file
-* DataSlot 101-127 is for each BIN file. If you only have a single BIN (For MultiTrack then you only put this bin file in Dataslot 101 and delete the rest of the assending slots)
+* DataSlot 101-127 is for each BIN file. If you only have a single BIN (with MultiTracks in it) then you only put this bin file in Dataslot 101 and delete the rest of the assending slots)
 
 If you do have any issues loading images, you can in the Analouge menu turn on the file debugging (Tools\Developer\Debug Logging) then try to load the JSON. 
 
