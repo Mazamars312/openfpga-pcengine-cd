@@ -1,6 +1,6 @@
 # PC Engine CD for Analogue Pocket
 
-Ported from the core originally developed by [Gregory Estrade](https://github.com/Torlus/FPGAPCE) and heavily modified by [@srg320](https://github.com/srg320) and [@greyrogue](https://github.com/greyrogue).  Then this was ported over to the Pocket by [Agg233](https://github.com/agg23/openfpga-pcengine) . Core icon based on TG-16 icon by [spiritualized1997](https://github.com/spiritualized1997). Latest upstream available at https://github.com/MiSTer-devel/TurboGrafx16_MiSTer
+This core has been ported from the [MiSTer project](https://github.com/MiSTer-devel/Wiki_MiSTer/wiki). The core was originally developed by [Gregory Estrade](https://github.com/Torlus/FPGAPCE) and heavily modified by [@srg320](https://github.com/srg320) and [@greyrogue](https://github.com/greyrogue) and many fixes by [@dshadoff](https://github.com/dshadoff).  Then this was ported over to the Pocket by [Agg233](https://github.com/agg23/openfpga-pcengine) . Core icon based on TG-16 icon by [spiritualized1997](https://github.com/spiritualized1997). Latest upstream available at https://github.com/MiSTer-devel/TurboGrafx16_MiSTer
 
 Please report any issues encountered to this repo. Most likely any problems are a result of my port, not the original core. Issues will be upstreamed as necessary.
 
