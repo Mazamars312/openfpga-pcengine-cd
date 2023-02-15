@@ -10,7 +10,7 @@ module linebuffer (
 
     output wire vsync_out,
     output wire hsync_out,
-
+	 output   reg [2:0] slot,
     output reg de,
     output reg [23:0] rgb_out
 );
@@ -136,7 +136,7 @@ module linebuffer (
   reg [9:0] total_rendered_count;
 
   reg [9:0] expected_line_width;
-  reg [2:0] slot;
+
 
   always @(*) begin
     if (output_line_width < 280) begin

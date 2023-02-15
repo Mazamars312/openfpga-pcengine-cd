@@ -60,6 +60,7 @@
 #include "riscprintf.h"
 #include "apf.h"
 #include "fileio.h"
+#include "osd_menu.h"
 
 typedef int (*SendDataFunc) (uint8_t* buf, int len, uint8_t index);
 
@@ -95,7 +96,7 @@ typedef struct
 {
 	int end=0; // Total size of CD rom
 	int last=0; // last track number
-	cd_track_t tracks[30];
+	cd_track_t tracks[99];
 	int GetTrackByLBA(int lba)
 	{
 		int i = 0;
@@ -125,7 +126,7 @@ public:
 	bool can_read_next;
 
 	cue_t();
-	int Load(int dataslot);
+	uint16_t Load(int dataslot);
 	void Unload();
 	void Reset();
 	void Update();
@@ -159,7 +160,7 @@ private:
 
 	uint8_t sec_buf[2352 + 2];
 
-	int LoadCUE(int dataslot);
+	uint16_t LoadCUE(int dataslot);
 	int SectorSend(uint8_t* header);
 	void ReadData();
 	int ReadCDDA();

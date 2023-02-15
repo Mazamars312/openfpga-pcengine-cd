@@ -19,67 +19,81 @@
 // This runs a Mister interface and other interfaces can be built for this for other projects :-)
 
 module substitute_mcu_apf_mister(
-	input                  clk_mpu,
-	input 					  clk_sys,
-	input                  reset_n,
-	output reg             reset_out,
+	input                  	clk_mpu,
+	input 					  	clk_sys,
+	input                  	reset_n,
+	output reg             	reset_out,
 		
-	input 	     		     clk_74a,
-	input [31:0]  		     bridge_addr,
-	input 	     		     bridge_rd,
-	output [31:0]  	     mpu_ram_bridge_rd_data,
-	output reg [31:0]  	  mpu_reg_bridge_rd_data,
-	input 	     		     bridge_wr,
-	input  [31:0]   	     bridge_wr_data,
+	input 	     		     	clk_74a,
+	input [31:0]  		     	bridge_addr,
+	input 	     		     	bridge_rd,
+	output [31:0]  	     	mpu_ram_bridge_rd_data,
+	output reg [31:0]  	  	mpu_reg_bridge_rd_data,
+	input 	     		     	bridge_wr,
+	input  [31:0]   	     	bridge_wr_data,
 		 
 
-    input 	     	        dataslot_update,
-    input 	     	[15:0]  dataslot_update_id,
-    input 	     	[31:0]  dataslot_update_size,
+    input 	     	        	dataslot_update,
+    input 	     	[15:0]  	dataslot_update_id,
+    input 	     	[31:0]  	dataslot_update_size,
 
-	output reg             target_dataslot_read,       // rising edge triggered
-	output reg             target_dataslot_write,
+	output reg             	target_dataslot_read,       // rising edge triggered
+	output reg             	target_dataslot_write,
 
-	input                  target_dataslot_ack,        // asserted upon command start until completion
-	input                  target_dataslot_done,       // asserted upon command finish until next command is issued    
-	input        [2:0]     target_dataslot_err,        // contains result of command execution. zero is OK
+	input                  	target_dataslot_ack,        // asserted upon command start until completion
+	input                  	target_dataslot_done,       // asserted upon command finish until next command is issued    
+	input        [2:0]     	target_dataslot_err,        // contains result of command execution. zero is OK
 
-	output reg   [15:0]    target_dataslot_id,         // parameters for each of the read/reload/write commands
-	output reg   [31:0]    target_dataslot_slotoffset,
-	output reg   [31:0]    target_dataslot_bridgeaddr,
-	output reg   [31:0]    target_dataslot_length,
+	output reg   [15:0]    	target_dataslot_id,         // parameters for each of the read/reload/write commands
+	output reg   [31:0]    	target_dataslot_slotoffset,
+	output reg   [31:0]    	target_dataslot_bridgeaddr,
+	output reg   [31:0]    	target_dataslot_length,
 
-	output       [9:0]     datatable_addr,
+	output       [9:0]     	datatable_addr,
 	output              		datatable_wren,
 	output              		datatable_rden,
-	output    	 [31:0]    datatable_data,
-	input      	 [31:0]    datatable_q,
+	output    	 [31:0]    	datatable_data,
+	input      	 [31:0]    	datatable_q,
+	
+	output  [21:16] 			cram_a,
+	inout   [ 15:0] 			cram_dq,
+	input           			cram_wait,
+	output          			cram_clk,
+	output          			cram_adv_n,
+	output          			cram_cre,
+	output          			cram_ce0_n,
+	output          			cram_ce1_n,
+	output          			cram_oe_n,
+	output          			cram_we_n,
+	output          			cram_ub_n,
+	output          			cram_lb_n,
 	
 	// UART
-	output                 txd,
-	input                  rxd,
+	output                 	txd,
+	input                  	rxd,
 	
-	input    	[31:0]  cont1_key,
-	input    	[31:0]  cont2_key,
-	input    	[31:0]  cont3_key,
-	input    	[31:0]  cont4_key,
-	input    	[31:0]  cont1_joy,
-	input    	[31:0]  cont2_joy,
-	input    	[31:0]  cont3_joy,
-	input    	[31:0]  cont4_joy,
-	input    	[15:0]  cont1_trig,
-	input    	[15:0]  cont2_trig,
-	input    	[15:0]  cont3_trig,
-	input    	[15:0]  cont4_trig,
+	input    	[31:0]  		cont1_key,
+	input    	[31:0]  		cont2_key,
+	input    	[31:0]  		cont3_key,
+	input    	[31:0]  		cont4_key,
+	input    	[31:0]  		cont1_joy,
+	input    	[31:0]  		cont2_joy,
+	input    	[31:0]  		cont3_joy,
+	input    	[31:0]  		cont4_joy,
+	input    	[15:0]  		cont1_trig,
+	input    	[15:0]  		cont2_trig,
+	input    	[15:0]  		cont3_trig,
+	input    	[15:0]  		cont4_trig,
 	
 	//Mister HPS Bus via the 32bit bus
-	output 	     	   	  IO_UIO,
-	output    		   	  IO_FPGA,
-	output    		   	  IO_STROBE,
-	input 	     		     IO_WAIT,
-	input  [15:0] 		     IO_DIN,
-	output reg [15:0] 	  IO_DOUT,
-	input 					  IO_WIDE, // 1 = 16bit, 0 = 8bit;
+	output 	     	   	  	IO_UIO,
+	output 	     	   	  	IO_OSD,
+	output    		   	  	IO_FPGA,
+	output    		   	  	IO_STROBE,
+	input 	     		     	IO_WAIT,
+	input  [15:0] 		     	IO_DIN,
+	output reg [15:0] 	  	IO_DOUT,
+	input 					  	IO_WIDE, // 1 = 16bit, 0 = 8bit;
 	output reg [31:0]			CORE_OUTPUT,
 	input	 [31:0]				CORE_INPUT
 	
@@ -141,6 +155,8 @@ wire [31:0] 		iBus_cmd_payload_pc;
 wire [31:0] 		iBus_rsp_payload_inst;
 wire iBus_cmd_ready, iBus_cmd_valid;
 reg					interupt_mask;
+wire 					dBus_ram_ready;
+wire 					dBus_cmd_ready;
 
 controller_rom 
 #(.top_address(16'h8000), // This sets the location on the APF bus to watch out for
@@ -169,6 +185,8 @@ controller_rom(
 	.bridge_wr			(bridge_wr),
 	.bridge_wr_data	(bridge_wr_data)
 );
+
+
 
 
 // The CPU VexRisc
@@ -204,6 +222,8 @@ assign mem_la_write	= dBus_cmd_valid &&  dBus_cmd_payload_wr;
 		end
 	end
 
+
+
 // CPU Core
 	
    VexRiscv cpu(
@@ -224,7 +244,7 @@ assign mem_la_write	= dBus_cmd_valid &&  dBus_cmd_payload_wr;
 		.dBus_cmd_payload_address	(dBus_cmd_payload_address),
 		.dBus_cmd_payload_data		(dBus_cmd_payload_data),
 		.dBus_cmd_payload_size		(dBus_cmd_payload_size),
-		.dBus_rsp_ready				(dBus_rsp_ready),
+		.dBus_rsp_ready				(|{dBus_rsp_ready}),
 		.dBus_rsp_error				(1'b0),
 		.dBus_rsp_data					(dBus_rsp_data)
 		);
@@ -233,6 +253,7 @@ assign mem_la_write	= dBus_cmd_valid &&  dBus_cmd_payload_wr;
 
 wire [31:0] millisecond_counter_1;
 wire [31:0] millisecond_counter_2;
+wire [31:0] millisecond_counter_real_1;
 wire [31:0] millisecond_counter_real_2;
 reg 		  	millisecond_counter_reset_1;
 reg 		  	millisecond_counter_reset_2;
@@ -244,6 +265,7 @@ timer_core timer_1_core(
 	.clk_sys								(clk_mpu),
 	.millisecond_counter_reset		(millisecond_counter_reset_1),
 	.millisecond_counter				(millisecond_counter_1),
+	.millisecond_real					(millisecond_counter_real_1),
 	.sysclk_frequency					(sysclk_frequency),
 	.interupt_counter					(interupt_counter_1),
 	.interupt_output					(interupt_output_1)
@@ -493,11 +515,13 @@ reg dataslot_data_access;
 reg target_dataslot_done_reg;
 reg externalInterrupt_enabled;
 reg timerenabled;
+reg psram_data_access;
 
 always @(posedge clk_mpu) begin
 	dBus_rsp_ready <= 0;
 	ser_txgo <= 0;
 	dataslot_update_ack <= 'b0;
+	psram_data_access <= 0;
 	target_dataslot_write <= 'b0;
 	target_dataslot_read <= 'b0;
 	target_dataslot_done_reg <= target_dataslot_done;
@@ -513,11 +537,18 @@ always @(posedge clk_mpu) begin
 	if (dBus_cmd_valid)begin
 		if (dBus_cmd_payload_address[31:12] == 'hffff0) begin
 			dBus_rsp_ready <= 1;
+			psram_data_access <= 0;
 			dataslot_data_access <= 1;
+			ext_data_en <= 0;
+		end
+		else if (dBus_cmd_payload_address[31:24] == 'h10) begin
+			psram_data_access <= 1;
+			dataslot_data_access <= 0;
 			ext_data_en <= 0;
 		end
 		else if (dBus_cmd_payload_address[31:8] == 'hFFFFFF) begin
 			dBus_rsp_ready <= 1;
+			psram_data_access <= 0;
 			dataslot_data_access <= 0;
 			ext_data_en <= 1;
 			if (~dBus_cmd_payload_wr) begin
@@ -669,6 +700,9 @@ always @(posedge clk_mpu) begin
 					ext_data_out <= {interupt_output_1, interupt_output_1_reg, timerenabled};
 					end
 					'hf8 : begin // This is GPI setup for the HPS interface
+					ext_data_out <= millisecond_counter_real_1;
+					end
+					'hfC : begin // This is GPI setup for the HPS interface
 					ext_data_out <= millisecond_counter_real_2;
 					end
 					default : ext_data_out <= 0;
@@ -760,6 +794,7 @@ end
 
 // Here is the Wait system for the MPU to the HPS bus
 
+assign IO_OSD      =  io_ss1;
 assign IO_FPGA     = ~io_ss1 & io_ss0;
 assign IO_UIO      = ~io_ss1 & io_ss2;
 reg  io_ack;

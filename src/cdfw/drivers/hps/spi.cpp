@@ -57,6 +57,7 @@ void HPS_fpga_spi_en(uint32_t mask, uint32_t en)
 
   asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
   asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
 	HPS_fpga_gpo_write(en ? gpo | mask : gpo & ~mask);
 }
 
@@ -167,7 +168,11 @@ uint16_t HPS_spi_uio_cmd_cont(uint16_t cmd)
 uint16_t HPS_spi_uio_cmd(uint16_t cmd)
 {
 	uint16_t res = HPS_spi_uio_cmd_cont(cmd);
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
 	HPS_DisableIO();
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
 	return res;
 }
 
@@ -279,4 +284,88 @@ void HPS_spi_write_fast(const uint8_t *addr, uint32_t len, int wide, uint16_t da
   	{
 		while (len--) HPS_fpga_spi_write_fast(*addr++);
 	   }
+}
+
+static int osd_target = OSD_ALL;
+
+void HPS_EnableOsd_on(int target)
+{
+	if (!(target & OSD_ALL)) target = OSD_ALL;
+	osd_target = target;
+}
+
+void HPS_EnableOsd()
+{
+	osd_target = OSD_ALL;
+
+	uint32_t mask = SSPI_OSD_EN | SSPI_IO_EN | SSPI_FPGA_EN;
+	// if (osd_target & OSD_HDMI) mask &= ~SSPI_FPGA_EN;
+	// if (osd_target & OSD_VGA) mask &= ~SSPI_IO_EN;
+
+	HPS_fpga_spi_en(mask, 1);
+}
+
+void HPS_DisableOsd()
+{
+	HPS_fpga_spi_en(SSPI_OSD_EN | SSPI_IO_EN | SSPI_FPGA_EN, 0);
+}
+
+
+/* OSD related SPI functions */
+void HPS_spi_osd_cmd_cont(uint8_t cmd)
+{
+	HPS_EnableOsd();
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+	spi_b(cmd);
+}
+
+void HPS_spi_osd_cmd(uint8_t cmd)
+{
+	HPS_spi_osd_cmd_cont(cmd);
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+	HPS_DisableOsd();
+}
+
+void HPS_spi_osd_cmd8_cont(uint8_t cmd, uint8_t parm)
+{
+	HPS_EnableOsd();
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+	spi_b(cmd);
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+	spi_b(parm);
+}
+
+void HPS_spi_osd_cmd8(uint8_t cmd, uint8_t parm)
+{
+	HPS_spi_osd_cmd8_cont(cmd, parm);
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+  asm volatile("nop"); // needed as loops do not work in G++ RISCV compilers
+	HPS_DisableOsd();
+}
+
+void OSD_HPS_spi_write(const uint8_t *addr, uint32_t len, int wide)
+{
+	if (wide)
+	{
+		uint32_t len16 = len >> 1;
+		uint16_t *a16 = (uint16_t*)addr;
+		while (len16--) {
+      spi_w(*a16++);
+
+    }
+		if(len & 1) spi_w(*((uint8_t*)a16));
+  	}
+  	else
+  	{
+
+    // mainprintf("%0.4x\r\n", len);
+		while (len--) {
+    // mainprintf("%0.2x\r\n", *addr);
+      spi_b(*addr++);
+    }
+	}
 }

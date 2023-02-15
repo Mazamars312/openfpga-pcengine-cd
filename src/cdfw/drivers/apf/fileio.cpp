@@ -32,6 +32,7 @@
 // #include <stdbool.h>
 // #include <inttypes.h>
 #include "fileio.h"
+#include "osd_menu.h"
 // #include "printf.h"
 #define MEM_BUFFER_SIZE_C (16 * 1024)
 #define MEM_BUFFER_SIZE_TOTAL (32 * 1024)
@@ -71,7 +72,14 @@ uint32_t sector_buffer_transfer_size_max_process(int dataslot, uint32_t offset){
   }
 }
 
-
+void timer_disply_for_wait() {
+  uint32_t timer_wait = 0;
+  char s[256];
+  while (!dataslot_ready()){
+    timer_wait++;
+  };
+  osd_display_info_update(timer_wait);
+}
 
 uint32_t RISCFileSeek(int dataslot, uint32_t offset, uint32_t size) { // we need to setup the cache so we know how many sizes are transfered at a time
 
@@ -99,11 +107,9 @@ uint32_t RISCFileSeek(int dataslot, uint32_t offset, uint32_t size) { // we need
     } else if ((cache_buffer_1) & (sector_buffer_selector == 0)) {
       sector_buffer_processing = 0;
     } else if ((cache_buffer_0_swap & !cache_buffer_1 & !cache_buffer_0)) {
-      while (!dataslot_ready()){
-      };
+      timer_disply_for_wait();
     } else if ((cache_buffer_1_swap & !cache_buffer_1 & !cache_buffer_0)) {
-      while (!dataslot_ready()){
-      };
+      timer_disply_for_wait();
     }
   }
 
@@ -118,8 +124,7 @@ uint32_t RISCFileSeek(int dataslot, uint32_t offset, uint32_t size) { // we need
     sector_buffer_selector = 0;                                     // made the read advance know that the first buffer is used.
     sector_buffer_offset = 0;                                       // this is the pointer start in the buffer.
 
-    while (!dataslot_ready()){
-    };                            // need to check that the target dataslot process is clean;
+    timer_disply_for_wait();
     dataslot_read_lba_set(dataslot, foo0 , sector_buffer0_address); // Setup the lba for the first buffer
     dataslot_read_lba(sector_buffer_transfer_size_max_process(dataslot, sector_buffer0_address));                      // start the seek
     // I need to do a check here too
@@ -138,8 +143,7 @@ uint32_t RISCFileSeek(int dataslot, uint32_t offset, uint32_t size) { // we need
        if (sector_buffer_processing == 0){
          sector_buffer_processing = 1;
          sector_buffer1_address =  sector_buffer0_address + MEM_BUFFER_SIZE_C;
-         while (!dataslot_ready()){
-         };
+         timer_disply_for_wait();
          dataslot_read_lba_set(dataslot, foo1 , sector_buffer1_address);
          dataslot_read_lba_fast(sector_buffer_transfer_size_max_process(dataslot, sector_buffer1_address),0);               // get the second buffer but run this in the background
        }
@@ -151,9 +155,7 @@ uint32_t RISCFileSeek(int dataslot, uint32_t offset, uint32_t size) { // we need
          sector_buffer_processing = 1;
          sector_buffer0_address =  sector_buffer1_address + MEM_BUFFER_SIZE_C;
          // wait_timer = 0;
-         while (!dataslot_ready()){
-          // wait_timer++;
-         };
+         timer_disply_for_wait();
            // if (wait_timer >= 1) mainprintf("\033[36;5;4m Waiting times sec 0 %d\033[0m\r\n", wait_timer);
          dataslot_read_lba_set(dataslot, foo0 , sector_buffer0_address);
          dataslot_read_lba_fast(sector_buffer_transfer_size_max_process(dataslot, sector_buffer0_address),0);               // get the second buffer but run this in the background
@@ -189,9 +191,7 @@ uint32_t RISCFileReadAdv(int dataslot, uint8_t cmd0, uint8_t cmd1, uint8_t cmd_h
 
   } else {
     // wait_timer = 0;
-    while (!dataslot_ready()){
-     // wait_timer++;
-    };
+    timer_disply_for_wait();
     // if (wait_timer >= 1) mainprintf("\033[36;5;4m Waiting times transfer %d\033[0m\r\n", wait_timer);
     if (sector_buffer_selector == 0) {
       pointer_main    =(pointer0 + sector_buffer_offset);

@@ -27,7 +27,9 @@
 // #include <inttypes.h>
 #include "hardware.h"
 /* FPGA functions */
-
+#define OSD_HDMI 1
+#define OSD_VGA  2
+#define OSD_ALL  (OSD_VGA|OSD_HDMI)
 
 #define HPS_spi_write_fpga(x) *(volatile unsigned int *)(MISTERGPOHARDWAREBASE)
 #define HPS_spi_read_fpga(x) *(volatile unsigned int *)(MISTERGPIHARDWAREBASE)
@@ -63,6 +65,16 @@ void HPS_EnableIO();
 void HPS_DisableIO();
 void HPS_EnableFpga();
 void HPS_DisableFpga();
+void HPS_EnableOsd();
+void HPS_DisableOsd();
+
+/* OSD related SPI functions */
+void HPS_EnableOsd_on(int target);
+void HPS_spi_osd_cmd_cont(uint8_t cmd);
+void HPS_spi_osd_cmd(uint8_t cmd);
+void HPS_spi_osd_cmd8_cont(uint8_t cmd, uint8_t parm);
+void HPS_spi_osd_cmd8(uint8_t cmd, uint8_t parm);
+void OSD_HPS_spi_write(const uint8_t *addr, uint32_t len, int wide);
 
 uint16_t HPS_fpga_spi(uint16_t word);
 

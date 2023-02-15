@@ -68,12 +68,13 @@ static int sgets(char *out, int sz, int cnt)
 
 #define DATASLOT_BRAM_SAVE(x) *(volatile unsigned int *)(DATASLOT_BRAM_BASE+(5<<2))
 
-int cue_t::LoadCUE(int dataslot) {
+uint16_t cue_t::LoadCUE(int dataslot) {
 	static char line[128];
 	char *ptr, *lptr;
 	int hdr = 0;
 	int toc_size;
 	toc_size = dataslot_size(100); // This is where the Cue file will be
+	if (toc_size == 0) return (100);
 	bool file_processer = 0;
 	if (dataslot_size(102) >= 1) file_processer = 1; // this is to confirm that this is a single or multi file system
 	DATASLOT_BRAM_SAVE(0) = (uint32_t)0x00000800;
@@ -188,7 +189,7 @@ int cue_t::LoadCUE(int dataslot) {
 			}
 			this->toc.last++;
 			if (file_processer){
-				if (this->toc.last >= 30) break;
+				if (this->toc.last >= 27) break;
 			} else {
 					if (this->toc.last >= 100) break;
 			}
@@ -215,16 +216,16 @@ int cue_t::LoadCUE(int dataslot) {
 	return 1;
 }
 
-int cue_t::Load(int dataslot)
+uint16_t cue_t::Load(int dataslot)
 {
 	// Unload();
-
-	if (LoadCUE(dataslot)){
+	uint16_t temp = LoadCUE(dataslot);
+	if (temp){
 		this->loaded = 1;
-		return 1;
+		return temp;
 	} else {
 		this->loaded = 0;
-		return 0;
+		return temp;
 	}
 return 0;
 }
@@ -388,6 +389,9 @@ void cue_t::Update() {
 			return;
 		}
 	}
+	msf_t msf;
+	LBAToMSF(this->lba, &msf);
+	osd_display_timing(this->index + 1,  BCD(msf.m) , BCD(msf.s));
 }
 
 void cue_t::CommandExec() {

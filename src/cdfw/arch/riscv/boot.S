@@ -38,7 +38,6 @@ ipc_request:
 ipc_frame:
 .space 4, 0
 
-.org    0x400
 .section .text
 
 #####################################################
@@ -74,13 +73,13 @@ start:
 
     # Setup IRQ vector
     lui t0, %hi(isr_vector)
-    add t0, t0, %lo(isr_vector)    
+    add t0, t0, %lo(isr_vector)
     csrw mtvec, t0
 
     # t0 = _bss_start
     lui t0,%hi(_bss_start)
     add t0,t0,%lo(_bss_start)
-    
+
     # t1 = _end
     lui t1,%hi(_end)
     add t1,t1,%lo(_end)
@@ -102,7 +101,7 @@ bss_clear:
     la a1, arg_argv
     jal main
 
-    # Exit    
+    # Exit
     jal _exit
 
 #####################################################
@@ -114,4 +113,3 @@ _exit:
     csrw dscratch, a0
 _exit_loop:
     jal _exit_loop
-

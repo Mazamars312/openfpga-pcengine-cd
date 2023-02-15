@@ -4,7 +4,7 @@
     "variables": [
       {
         "name": "Reset core",
-        "id": 1,
+        "id": 61,
         "type": "action",
         "enabled": true,
         "address": "0xF0000000",
@@ -12,7 +12,7 @@
       },
       {
         "name": "Use Turbo Tap",
-        "id": 20,
+        "id": 62,
         "type": "check",
         "enabled": true,
         "address": "0x00000100",
@@ -21,9 +21,36 @@
         "defaultval": 0,
         "value": 1
       },
+	  {
+        "name": "Audio Timer",
+        "id": 63,
+        "type": "slider_u32",
+        "enabled": true,
+        "persist": true,
+        "address": "0xF0000004",
+        "defaultval": 920000,
+        "graphical": {
+          "signed": false,
+          "min": 890000,
+          "max": 920000,
+          "adjust_small": "0x10",
+          "adjust_large": "0x100"
+        }
+      },
+	  {
+        "name": "CD Debug",
+        "id": 75,
+        "type": "check",
+        "enabled": true,
+        "address": "0xF0000008",
+        "persist": true,
+        "writeonly": true,
+        "defaultval": 0,
+        "value": 1
+      },
       {
         "name": "Use 6 Button Ctrl",
-        "id": 21,
+        "id": 64,
         "type": "check",
         "enabled": true,
         "address": "0x00000104",
@@ -34,7 +61,7 @@
       },
       {
         "name": "Button I Turbo",
-        "id": 22,
+        "id": 65,
         "type": "slider_u32",
         "enabled": true,
         "address": "0x00000108",
@@ -50,7 +77,7 @@
       },
       {
         "name": "Button II Turbo",
-        "id": 23,
+        "id": 66,
         "type": "slider_u32",
         "enabled": true,
         "address": "0x0000010C",
@@ -66,7 +93,7 @@
       },
       {
         "name": "Extra Sprites",
-        "id": 41,
+        "id": 67,
         "type": "check",
         "enabled": true,
         "address": "0x00000204",
@@ -77,7 +104,7 @@
       },
       {
         "name": "Raw RGB Color",
-        "id": 42,
+        "id": 68,
         "type": "check",
         "enabled": true,
         "address": "0x00000208",
@@ -88,7 +115,7 @@
       },
       {
         "name": "Master Audio Boost",
-        "id": 60,
+        "id": 69,
         "type": "list",
         "enabled": true,
         "address": "0x00000300",
@@ -112,7 +139,7 @@
       },
       {
         "name": "PCM Audio Boost",
-        "id": 61,
+        "id": 70,
         "type": "check",
         "enabled": true,
         "address": "0x00000304",
@@ -123,7 +150,7 @@
       },
       {
         "name": "CD Audio Boost",
-        "id": 62,
+        "id": 71,
         "type": "check",
         "enabled": true,
         "address": "0x00000308",
@@ -134,7 +161,7 @@
       },
       {
         "name": "System Region",
-        "id": 63,
+        "id": 72,
         "type": "check",
         "enabled": true,
         "address": "0xF0000004",
@@ -145,7 +172,7 @@
       },
       {
         "name": "Arcade System",
-        "id": 64,
+        "id": 73,
         "type": "check",
         "enabled": true,
         "address": "0xF0000004",

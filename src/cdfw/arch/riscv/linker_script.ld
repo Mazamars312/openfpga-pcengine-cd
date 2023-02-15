@@ -46,7 +46,7 @@ SECTIONS
     *(COMMON)
     /* Allocate room for stack */
     .   =  ALIGN(8) ;
-    .   += 3072 ;
+    .   += 1024 ;
     _sp =  . - 16;
   } > RAM
 

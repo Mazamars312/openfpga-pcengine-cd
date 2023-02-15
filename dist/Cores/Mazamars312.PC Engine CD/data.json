@@ -13,8 +13,8 @@
 	"name": "CDROM II Bios",
 	"id": 1,
 	"required": true,
-	"parameters": "0x109",
-	"filename": "[BIOS] TurboGrafx CD Super System Card (USA) (v3.0).pce",
+	"filename": "bios_3_0_usa.pce",
+	"alternate_filenames": ["bios_3_0_jap.pce", "bios_2_0_usa.pce", "bios_2_0_jap.pce", "bios_1_0_usa.pce", "bios_1_0_jap.pce"],
 	"extensions": [
 		"pce"
 		],

@@ -91,17 +91,48 @@ unsigned int GetTimer2_fast() // as the per clock amount since reset.
     return (systimer);
 }
 
-uint32_t RISCGetTimer(uint32_t offset)
+
+
+uint32_t RISCGetTimer1(uint32_t offset, int fraction)
 {
-	uint32_t res;
-	res = HW_TIMER2_FAST(REG_MILLISECONDS);
-	res = (res / (SYS_CLOCK * 10));
-	return (uint32_t)(res + offset);
+  uint32_t res;
+  // ResetTimer1();
+  // res = HW_TIMER1_FAST(REG_MILLISECONDS);
+  res = (offset * 74250) + HW_TIMER1_FAST(REG_MILLISECONDS) + fraction;
+  // res = res + fraction;
+  return(res);
 }
 
-uint32_t RISCCheckTimer(uint32_t time)
+uint32_t RISCCheckTimer1(uint32_t time)
 {
-	return (!time) || (RISCGetTimer(0) >= time);
+	return (!time) || (RISCGetTimer1(0, 0) >= time);
+}
+
+
+
+unsigned int CheckTimer1(unsigned int time)
+{
+    unsigned int systimer = HW_TIMER2(REG_MILLISECONDS);
+    time -= systimer;
+    return(time > (1UL << 31));
+}
+
+uint32_t RISCGetTimer2(uint32_t offset, int fraction)
+{
+  uint32_t res;
+  // res = HW_TIMER1_FAST(REG_MILLISECONDS);
+  res = (offset * 74250) + HW_TIMER2_FAST(REG_MILLISECONDS) + fraction;
+  // res = res + fraction;
+  return(res);
+}
+
+uint32_t RISCCheckTimer2(uint32_t time)
+{
+  uint32_t temp = RISCGetTimer2(0, 0);
+  if (temp >= time){
+  mainprintf("%d \r\n",temp );
+  }
+	return (!time) || (temp >= time);
 }
 
 unsigned int CheckTimer2(unsigned int time)
@@ -110,6 +141,17 @@ unsigned int CheckTimer2(unsigned int time)
     time -= systimer;
     return(time > (1UL << 31));
 }
+
+void ResetTimer1()
+{
+  int i = 0;
+  HW_TIMER1(0) = 1;
+  while (i <= 10){
+    i++;
+    asm volatile(""); // needed as loops do not work in G++ RISCV compilers
+  }
+  HW_TIMER1(0) = 0;
+};
 
 void ResetTimer2()
 {

@@ -9,3 +9,5 @@ src/sim/*.mem
 src/sim/*.bin
 *.d
 *.o
+*.ci
+*.su

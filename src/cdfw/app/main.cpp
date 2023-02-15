@@ -34,6 +34,7 @@
 #include "printf.h"
 #include "spi.h"
 #include "core.h"
+#include "osd_menu.h"
 
 void init()
 {
@@ -71,6 +72,8 @@ void mainloop()
 	// EnableInterrupts();
 	// This loop is what keeps the checking of the core interface
   mainprintf("about to go in baby\r\n");
+  uint32_t display_cd = RISCGetTimer1(0, 74250000);
+
   while(true){
 
 		if(DATASLOT_UPDATE_REG(0)){
@@ -83,6 +86,12 @@ void mainloop()
 		}
 	  core_poll_io();
     core_reg_update();
+    if (RISCCheckTimer1(display_cd)) {
+      osd_display_info();
+      ResetTimer1();
+      display_cd = RISCGetTimer1(0, 74250000);
+    };
+
     // This checks if we are wanting to do a reboot of the core from the interaction menu. We want to do this last so nothing is held in the buffers
     if (AFP_REGISTOR(0) & 0x1) { // This has 2 bits for reseting the core
   		// DisableInterrupts(); // we make sure all interrupts are disabled

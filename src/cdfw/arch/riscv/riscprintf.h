@@ -60,8 +60,8 @@ extern "C" {
  * \return The number of characters that are written into the array, not counting the terminating null character
  */
  // this is so we can turn it off
-#define riscprintf riscprintf_
-int riscprintf_(const char* format, ...);
+#define riscprintf riscprintff_
+int riscprintff_(const char* format, ...);
 
 // #define riscprintf riscprintff_
 // int riscprintff_(const char* format, ...);

@@ -29,13 +29,15 @@
 #define TIMERBASE1_RESET 0xffffffc8
 #define TIMERBASE2_RESET 0xffffffcc
 #define TIMERBASE2 0xffffffcc
-#define TIMERBASE2_FAST 0xfffffff8
+#define TIMERBASE1_FAST 0xfffffff8
+#define TIMERBASE2_FAST 0xfffffffc
 #define SYSCLOCKBASE 0xffffff98
 #define TIMERCHECKBASE 0xffffffF4
 #define HW_TIMER1(x) *(volatile unsigned int *)(TIMERBASE1+x)
 #define HW_TIMER1_RESET(x) *(volatile unsigned int *)(TIMERBASE1_RESET+x)
 #define HW_TIMER2_RESET(x) *(volatile unsigned int *)(TIMERBASE2+x)
 #define HW_TIMER2(x) *(volatile unsigned int *)(TIMERBASE2+x)
+#define HW_TIMER1_FAST(x) *(volatile unsigned int *)(TIMERBASE1_FAST+x)
 #define HW_TIMER2_FAST(x) *(volatile unsigned int *)(TIMERBASE2_FAST+x)
 #define HW_SYSCLOCK(x) *(volatile unsigned int *)(SYSCLOCKBASE+x)
 #define HW_TIMERCHECKBASE(x) *(volatile unsigned int *)(TIMERCHECKBASE+x)
@@ -53,9 +55,12 @@ void Set_interrupt_Timer(unsigned int time);
 unsigned int GetTimer2();
 unsigned int GetTimer2_fast();
 unsigned int CheckTimer2(unsigned int time);
-uint32_t RISCGetTimer(uint32_t offset);
-uint32_t RISCCheckTimer(uint32_t time);
+uint32_t RISCGetTimer1(uint32_t offset, int fraction);
+uint32_t RISCCheckTimer1(uint32_t time);
+uint32_t RISCGetTimer2(uint32_t offset, int fraction);
+uint32_t RISCCheckTimer2(uint32_t time);
 // Will reset the timer
+void ResetTimer1();
 void ResetTimer2();
 
 #endif

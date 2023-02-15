@@ -321,6 +321,7 @@ module core_top (
 
 	wire [31:0] 	mpu_reg_bridge_rd_data;
 	wire [31:0] 	mpu_ram_bridge_rd_data;
+	wire [2:0]		video_slot_output;
   // for bridge write data, we just broadcast it to all bus devices
   // for bridge read data, we have to mux it
   // add your own devices here
@@ -889,18 +890,18 @@ end
 		.cram0_ub_n             ( cram0_ub_n ),
 		.cram0_lb_n             ( cram0_lb_n ),
 		
-		.cram1_a                ( cram1_a ),
-		.cram1_dq               ( cram1_dq ),
-		.cram1_wait             ( cram1_wait ),
-		.cram1_clk              ( cram1_clk ),
-		.cram1_adv_n            ( cram1_adv_n ),
-		.cram1_cre              ( cram1_cre ),
-		.cram1_ce0_n            ( cram1_ce0_n ),
-		.cram1_ce1_n            ( cram1_ce1_n ),
-		.cram1_oe_n             ( cram1_oe_n ),
-		.cram1_we_n             ( cram1_we_n ),
-		.cram1_ub_n             ( cram1_ub_n ),
-		.cram1_lb_n             ( cram1_lb_n ),
+//		.cram1_a                ( cram1_a ),
+//		.cram1_dq               ( cram1_dq ),
+//		.cram1_wait             ( cram1_wait ),
+//		.cram1_clk              ( cram1_clk ),
+//		.cram1_adv_n            ( cram1_adv_n ),
+//		.cram1_cre              ( cram1_cre ),
+//		.cram1_ce0_n            ( cram1_ce0_n ),
+//		.cram1_ce1_n            ( cram1_ce1_n ),
+//		.cram1_oe_n             ( cram1_oe_n ),
+//		.cram1_we_n             ( cram1_we_n ),
+//		.cram1_ub_n             ( cram1_ub_n ),
+//		.cram1_lb_n             ( cram1_lb_n ),
 
       .ce_pix (ce_pix),
       .hblank (h_blank),
@@ -921,6 +922,8 @@ end
   
   
 wire reset_mpu_l;
+wire IO_OSD;
+
 substitute_mcu_apf_mister substitute_mcu_apf_mister(
 		// Controls for the MPU
 		.clk_mpu								( clk_74a ), 							// Clock of the MPU itself
@@ -956,6 +959,19 @@ substitute_mcu_apf_mister substitute_mcu_apf_mister(
 		.cont3_trig         				( cont3_trig ),
 		.cont4_trig         				( cont4_trig ),
 		
+		.cram_a                			( cram1_a ),
+		.cram_dq               			( cram1_dq ),
+		.cram_wait             			( cram1_wait ),
+		.cram_clk              			( cram1_clk ),
+		.cram_adv_n            			( cram1_adv_n ),
+		.cram_cre              			( cram1_cre ),
+		.cram_ce0_n            			( cram1_ce0_n ),
+		.cram_ce1_n            			( cram1_ce1_n ),
+		.cram_oe_n             			( cram1_oe_n ),
+		.cram_we_n             			( cram1_we_n ),
+		.cram_ub_n             			( cram1_ub_n ),
+		.cram_lb_n             			( cram1_lb_n ),
+		
 		// MPU Controlls to the APF
 		
 		.dataslot_update            	( dataslot_update ),
@@ -982,7 +998,7 @@ substitute_mcu_apf_mister substitute_mcu_apf_mister(
 		
 		// Core interactions
 		.IO_UIO       						( EXT_BUS[34] ),
-//		.IO_FPGA      						( io_fpga ),
+		.IO_OSD      						( EXT_BUS[35] ),
 		.IO_STROBE    						( EXT_BUS[33] ),
 		.IO_WAIT      						( EXT_BUS[32] ),
 		.IO_DIN       						( EXT_BUS[15:0] ),
@@ -1003,6 +1019,12 @@ substitute_mcu_apf_mister substitute_mcu_apf_mister(
   wire video_hs_core;
   wire video_vs_core;
   wire [23:0] vid_rgb_core;
+  
+  
+  wire video_hs_wire;
+  wire video_vs_wire;
+  wire video_de_wire;
+  wire [23:0] video_rgb_wire;
 
   assign video_rgb_clock = clk_sys_42_95;
   assign video_rgb_clock_90 = clk_vid_42_95_90deg;
@@ -1019,11 +1041,31 @@ substitute_mcu_apf_mister substitute_mcu_apf_mister(
       .disable_pix(border),
       .rgb_in(vid_rgb_core),
 
-      .vsync_out(video_vs),
-      .hsync_out(video_hs),
+      .vsync_out(video_vs_wire),
+      .hsync_out(video_hs_wire),
+		.slot		(CORE_OUTPUT[10:8]),
+      .de(video_de_wire),
+      .rgb_out(video_rgb_wire)
+  );
+  
+  osd osd (
+	.clk_sys		(clk_sys_42_95),
+	.io_osd		(EXT_BUS[35]),
+	.io_strobe	(EXT_BUS[33]),
+	.io_din		(EXT_BUS[31:16]),
 
-      .de(video_de),
-      .rgb_out(video_rgb)
+	.clk_video	(clk_sys_42_95),
+	.din			(video_rgb_wire),
+
+	.de_in		(video_de_wire),
+	.vs_in		(video_vs_wire),
+	.hs_in		(video_hs_wire),
+	
+	.dout			(video_rgb),
+	.de_out		(video_de),
+	.vs_out		(video_vs),
+	.hs_out		(video_hs)
+  
   );
 
   ///////////////////////////////////////////////
