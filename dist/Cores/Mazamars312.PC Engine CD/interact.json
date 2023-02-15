@@ -28,11 +28,11 @@
         "enabled": true,
         "persist": true,
         "address": "0xF0000004",
-        "defaultval": 920000,
+        "defaultval": 945000,
         "graphical": {
           "signed": false,
-          "min": 890000,
-          "max": 920000,
+          "min": 920000,
+          "max": 980000,
           "adjust_small": "0x10",
           "adjust_large": "0x100"
         }

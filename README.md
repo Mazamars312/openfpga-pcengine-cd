@@ -32,6 +32,9 @@ Change log from 0.1.6:
 -   Two timers for software interrupts. One for CD access delays and the other
     used for OSD updates.
 
+-   Autoupdaters: Have added the extra function for adding more BIOS’s for users
+    to be downloaded
+
 Notices For running this core
 -----------------------------
 
