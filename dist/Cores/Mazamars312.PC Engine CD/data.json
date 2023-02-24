@@ -14,7 +14,7 @@
 	"id": 1,
 	"required": true,
 	"filename": "bios_3_0_usa.pce",
-	"alternate_filenames": ["bios_3_0_jap.pce", "bios_2_0_usa.pce", "bios_2_0_jap.pce", "bios_1_0_usa.pce", "bios_1_0_jap.pce"],
+	"alternate_filenames": ["bios_3_0_jap.pce", "bios_2_0_usa.pce", "bios_2_0_jap.pce", "bios_1_0_jap.pce"],
 	"extensions": [
 		"pce"
 		],
