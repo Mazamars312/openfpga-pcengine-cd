@@ -22,22 +22,6 @@
         "value": 1
       },
 	  {
-        "name": "Audio Timer",
-        "id": 63,
-        "type": "slider_u32",
-        "enabled": true,
-        "persist": true,
-        "address": "0xF0000004",
-        "defaultval": 945000,
-        "graphical": {
-          "signed": false,
-          "min": 920000,
-          "max": 980000,
-          "adjust_small": "0x10",
-          "adjust_large": "0x100"
-        }
-      },
-	  {
         "name": "CD Debug",
         "id": 75,
         "type": "check",

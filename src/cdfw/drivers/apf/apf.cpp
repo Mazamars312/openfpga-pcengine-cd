@@ -87,7 +87,7 @@ uint32_t dataslot_read(uint16_t dataslot, uint32_t address, uint32_t offset, uin
 {
 
   WRITE_TARGET_DATASLOT_ID(0) = dataslot;
-  WRITE_TARGET_DATASLOT_BRIDGE_ADD(0) = address;
+  WRITE_TARGET_DATASLOT_BRIDGE_ADD(0) = address | 0x80000000;
   WRITE_TARGET_DATASLOT_LENGTH(0) = length;
   WRITE_TARGET_DATASLOT_OFFSET(0) = offset;
   WRITE_TARGET_DATASLOT_CONTROL(0) = TARGET_DATASLOT_READ_REG;
@@ -178,7 +178,7 @@ uint32_t dataslot_read_lba_set(uint16_t dataslot, uint32_t address, uint32_t off
   READ_TARGET_DATASLOT_BRIDGE_ADD(0) = APF_ADDRESS_OFFSET | address;
   READ_TARGET_DATASLOT_OFFSET(0) = offset;
 
-  // mainprintf("\033[38;1;6mREAD_TARGET_DATASLOT_SETUP Offset %.4x,  \033[0m\r\n", offset);
+  // mainprintf("\033[38;1;6mREAD_TARGET_DATASLOT_SETUP Offset %0.4x, %0.4x, %d \033[0m\r\n", offset, address, dataslot);
   return(0);
 }
 

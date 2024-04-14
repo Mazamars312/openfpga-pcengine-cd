@@ -1,8 +1,8 @@
 GROUP("libgcc.a")
 
 MEMORY {
-  RAM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x00008000
-  SRAM (rw) : ORIGIN  = 0x00008000, LENGTH = 0x00008000
+  RAM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x00010000
+  
 }
 
 SECTIONS
@@ -58,10 +58,5 @@ SECTIONS
     *(.payload)
   }
 
-  .SRAM : {
-   __ram_start = .;
-   *(SRAM*)
-   __ram_end = .;
-   } > SRAM
 
 }

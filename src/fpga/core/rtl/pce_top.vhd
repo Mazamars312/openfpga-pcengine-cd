@@ -71,7 +71,9 @@ entity pce_top is
 
 		CD_COMM		: out std_logic_vector(95 downto 0);
 		CD_COMM_SEND: out std_logic;
-
+		
+		CD_almost_full : out std_logic;
+		AUDIO_almost_full : out std_logic;
 		CD_DOUT_REQ	: in  std_logic;
 		CD_DOUT		: out std_logic_vector(79 downto 0);
 		CD_DOUT_SEND: out std_logic;
@@ -664,6 +666,8 @@ port map(
 	CD_COMM_SEND=> CD_COMM_SEND,
 	CD_DOUT_REQ	=> CD_DOUT_REQ,
 	CD_DOUT		=> CD_DOUT,
+	CD_almost_full => CD_almost_full,
+	AUDIO_almost_full => AUDIO_almost_full,
 	CD_DOUT_SEND=> CD_DOUT_SEND,
 	
 	CD_DATA		=> CD_DATA,

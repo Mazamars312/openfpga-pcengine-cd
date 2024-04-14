@@ -741,17 +741,12 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_tran_so
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_tx
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx_disable
 set_instance_assignment -name CURRENT_STRENGTH_NEW 4MA -to port_ir_rx
-set_global_assignment -name VERILOG_FILE MPU/osd.v
+set_global_assignment -name QIP_FILE MPU/avr/avr.qip
+set_global_assignment -name QIP_FILE MPU/PSRAM/psram.qip
+set_global_assignment -name QIP_FILE MPU/mpu.qip
 set_global_assignment -name VERILOG_FILE core/rtl/CRAM/psram_controller.v
 set_global_assignment -name VERILOG_FILE core/rtl/CRAM/opb_psram_v.v
 set_global_assignment -name VERILOG_FILE core/rtl/sram_core.v
-set_global_assignment -name VERILOG_FILE MPU/VexRiscv.v
-set_global_assignment -name QIP_FILE MPU/uart_fifo.qip
-set_global_assignment -name VERILOG_FILE MPU/substitute_mcu_apf.v
-set_global_assignment -name VHDL_FILE MPU/simple_uart.vhd
-set_global_assignment -name QIP_FILE MPU/imem_bram.qip
-set_global_assignment -name QIP_FILE MPU/dmem_bram.qip
-set_global_assignment -name VERILOG_FILE MPU/controller_rom.v
 set_global_assignment -name VERILOG_FILE core/linebuffer.v
 set_global_assignment -name SYSTEMVERILOG_FILE core/rtl/sdram.sv
 set_global_assignment -name MIF_FILE core/rtl/palette.mif
@@ -786,5 +781,10 @@ set_global_assignment -name SDC_FILE core/core_constraints.sdc
 set_global_assignment -name SIGNALTAP_FILE core/stp1.stp
 set_global_assignment -name QIP_FILE core/mf_pllbase.qip
 set_global_assignment -name SIP_FILE core/mf_pllbase.sip
+set_global_assignment -name REMOVE_REDUNDANT_LOGIC_CELLS ON
+set_global_assignment -name AUTO_RESOURCE_SHARING ON
+set_global_assignment -name ALLOW_ANY_RAM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_ROM_SIZE_FOR_RECOGNITION ON
+set_global_assignment -name ALLOW_ANY_SHIFT_REGISTER_SIZE_FOR_RECOGNITION ON
 set_global_assignment -name SLD_FILE db/stp1_auto_stripped.stp
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

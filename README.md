@@ -1,5 +1,8 @@
-PC Engine CD 0.1.7 for Analogue Pocket
-======================================
+PC Engine CD 0.2.0 ALPHA for Analogue Pocket
+============================================
+
+This is a pre-release of the 0.2.0 version, which will have some more upgrades to the
+MPU core code.
 
 Ported from the core originally developed by [Gregory
 Estrade](https://github.com/Torlus/FPGAPCE) and heavily modified by
@@ -15,7 +18,65 @@ Please report any issues encountered to this repo. Most likely any problems are
 a result of my port, not the original core. Issues will be upstreamed as
 necessary.
 
-There is still a lot to be done in this core as there is still a lot to do.
+There is still a lot to be done in this core as there is still a lot to do. It 
+was always more of a display core on what the pocket can do.
+
+PLEASE NOTE THAT CHD FILES WILL NOT BE SUPPORTED. Many times I have ben asked. But I have always said that 
+the MPU is only a small processer with about 64K of ram, which Im already using 
+90% of that for this core. CHD uses a lot of compression that would slow down the 
+processor and will cause a lot of overhead. 
+
+What will make this PCECD 0.2.0 ALPHA completed Release?
+--------------------------------------------------------
+
+-	Get 99 tracks with Multi file BIN/CUE Files 
+
+- 	Remove the need for the requirement of JSON Files. (Yes it is now doable I just 
+	need to do all the checks in the core)
+
+- 	Get Video based games like Sherlock Homes corrected due to the data and CDROM timing.
+
+What is left after this build?
+------------------------------
+
+-	Find those pesky bugs that cause the core to crash ingame!!!
+
+-	More sync issues with the CD Audio with some games.
+
+-	Please note that this was a show of concept that the Pocket can do CDROM based cores. So 
+	I hope others might take over on this core to inprove on it.
+
+
+Change log from 0.1.7:
+----------------------
+
+-	Massive amount of work on getting the audio and data to the CORE from the MPU 
+	cpu in a reliable way.
+	
+-	Made the MPU get data from the APF bus without having two lots of BRAM. This currently 
+	Pasues the Instruction side of the MPU from 1 to 3 Clock cycles with duel ported BRAM 
+	modules. Can be used with the Amiga core???
+
+-   Correction of the timing in the CD core so the correct Minutes, seconds and 
+	Frames are sent.
+
+-   Fifo checking when sending data to the core which was causing audio skipping.
+
+-   Removed the Processing delay as an interupt is now used on the MPU.
+
+-   Started on the process of getting seperate BIN files to be loaded (Next release 
+	will have this done). Thus removing the 26 Track limit on Seperate BIN files.
+
+-   Autoupdaters: Have removed the "bios_1_0_usa.pce" bios requirement due to there 
+	not being such a bios.
+
+Known Bugs:
+-----------
+
+-	At this moment PopfulMail Still has a intro bug in it.
+
+-	Have not tested games that crash halfway in. Maybe some testers can confirm this 
+	for me later on
 
 Change log from 0.1.6:
 ----------------------

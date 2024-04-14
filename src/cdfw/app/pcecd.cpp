@@ -101,7 +101,7 @@ void pcecd_poll()
 	static uint32_t poll_timer = 0;
 	static uint8_t last_req = 0;
 	static uint8_t adj = 0;
-	if (!poll_timer) poll_timer = RISCGetTimer2(0, AFP_REGISTOR(1));
+	if (!poll_timer) poll_timer = RISCGetTimer2(0, 920000);
 
 	if (RISCCheckTimer2(poll_timer))
 	{
@@ -163,7 +163,7 @@ void pcecd_poll()
 			break;
 
 		default:
-		// mainprintf("\033[31;1;4mcase reset\033[0m\r\n");
+		mainprintf("\033[31;1;4mcase reset\033[0m\r\n");
 			need_reset = 1;
 			break;
 		}

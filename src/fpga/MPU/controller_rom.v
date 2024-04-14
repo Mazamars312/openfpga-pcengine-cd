@@ -27,9 +27,11 @@ module controller_rom #(parameter top_address = 16'h8000, address_size = 5'd14)
 	input                  	reset_n,
 	
 	// Instruction
-	input [14:0]           	instruction_addr,
-	output [31:0]      		instruction_q,
+	input [15:0]           	iBus_cmd_payload_pc,
+	output [31:0]      		iBus_rsp_payload_inst,
 	input							iBus_cmd_valid,
+	output reg					iBus_rsp_valid,
+	output reg					iBus_cmd_ready,
 	
 	// Data Bus
 	input [31:0]           	data_addr,
@@ -49,15 +51,83 @@ module controller_rom #(parameter top_address = 16'h8000, address_size = 5'd14)
 	input  [31:0]   	 		bridge_wr_data
 );
 
+// Imem Controller
+	reg [2:0]	mem_status;
+	reg [31:0]	bridge_addr_reg;
+	reg [31:0] 	bridge_wr_data_reg;
+	reg 			bridge_wr_reg;
+	reg 			BRAM_CONTROLL;
+
+	always @(posedge clk) begin
+		if (~reset_n) begin
+			iBus_rsp_valid 		<= 1'b0;
+			iBus_cmd_ready 		<= 1'b0;
+			mem_status				<= 0;
+			BRAM_CONTROLL			<= 1;
+			bridge_wr_reg			<= bridge_wr && bridge_addr[31:16] == top_address;
+			bridge_addr_reg 		<= bridge_addr;
+			bridge_wr_data_reg	<= bridge_wr_data;
+		end 
+		else begin
+			BRAM_CONTROLL	<= 0;
+			bridge_wr_reg	<= 0;
+			if (bridge_wr && bridge_addr[31:16] == top_address) begin
+				iBus_cmd_ready <= 1'b0;
+				mem_status <= 1;
+				BRAM_CONTROLL <= 1;
+				bridge_wr_data_reg <= bridge_wr_data;
+				bridge_addr_reg <= bridge_addr;
+				bridge_wr_reg	<= 1;
+			end
+//			else if (bridge_rd && bridge_addr[31:16] == top_address) begin
+//				iBus_cmd_ready <= 1'b0;
+//				mem_status <= 2;
+//				bridge_addr_reg <= bridge_addr;
+//			end
+			else begin
+				if (mem_status == 0)iBus_cmd_ready <= 1'b1;
+			end
+			
+			if(iBus_cmd_valid && iBus_cmd_ready) begin
+				// Can read without stall
+				iBus_rsp_valid <= 1'b1;
+			end 
+			else begin
+				iBus_rsp_valid <= 1'b0;
+			end
+			
+			case (mem_status)
+				1 : begin
+					BRAM_CONTROLL	<= 0;
+					mem_status		<= 0;
+				end
+//				2 : begin
+//					BRAM_CONTROLL	<= 1;
+//				end
+//				3 : begin
+//					BRAM_CONTROLL	<= 1;
+//					q_b_reg			<= iBus_rsp_payload_inst;
+//				end
+				default : begin
+					mem_status		<= 0;				
+				end
+			endcase
+		end
+	end
+
+
+
 // Data wires
-wire [31:0] q_b, data_q_dmem, data_q_imem, q_b_wire, bridge_rd_data_dmem;
+wire [31:0] q_b, data_q_dmem, data_q_imem, bridge_rd_data_dmem;
+reg 	[31:0]	q_b_reg;
 
 // APF Bus write selectors
-wire wren_b_instruction = bridge_addr[31:16] == top_address && bridge_wr && ~bridge_addr[15];
-wire wren_b_data 			= bridge_addr[31:16] == top_address && bridge_wr &&  bridge_addr[15];
+//wire wren_b_instruction = bridge_addr[31:16] == top_address && bridge_wr && ~bridge_addr[15];
+//wire wren_b_data 			= bridge_addr[31:16] == top_address && bridge_wr &&  bridge_addr[15];
 
-wire wren_a_instruction = data_addr[31:16] == 16'h0000 && data_we && ~data_addr[15];
-wire wren_a_data 			= data_addr[31:16] == 16'h0000 && data_we &&  data_addr[15];
+//wire wren_a_instruction = data_addr[31:16] == 16'h0000 && data_we && ~data_addr[15];
+//wire wren_a_data 			= data_addr[31:16] == 16'h0000 && data_we &&  data_addr[15];
+wire wren_a_data 			= data_addr[31:16] == 16'h0000 && data_we;
 
 reg [3:0] data_byte_select;
 
@@ -84,46 +154,46 @@ end
 // The A side is the Data side.
 // The B Side is the instruction and APF UPLOAD side.
 
-imem_bram imem_bram (
-	.clock_a		(clk),
-	.address_a	(data_addr[14:2]),
-	.data_a		(data_d),
-	.byteena_a	(data_byte_select),
-	.rden_a		(dBus_cmd_valid),
-	.wren_a		(wren_a_instruction),
-	.q_a			(data_q_imem),
-	
-	.clock_b		(clk),
-	.address_b	(reset_n ? instruction_addr[14:2] 	: bridge_addr[14:2]),
-	.rden_b		(reset_n ? iBus_cmd_valid 		: bridge_rd),
-	.data_b		({bridge_wr_data[7:0], bridge_wr_data[15:8], bridge_wr_data[23:16], bridge_wr_data[31:24]}),
-	.wren_b		(reset_n ? 0 						: wren_b_instruction),
-	.q_b			(instruction_q));
+//imem_bram imem_bram (
+//	.clock_a		(clk),
+//	.address_a	(data_addr[14:2]),
+//	.data_a		(data_d),
+//	.byteena_a	(data_byte_select),
+//	.rden_a		(dBus_cmd_valid),
+//	.wren_a		(wren_a_instruction),
+//	.q_a			(data_q_imem),
+//	
+//	.clock_b		(clk),
+//	.address_b	(reset_n ? iBus_cmd_payload_pc[14:2] 	: bridge_addr[14:2]),
+//	.rden_b		(reset_n ? iBus_cmd_valid 		: bridge_rd),
+//	.data_b		({bridge_wr_data[7:0], bridge_wr_data[15:8], bridge_wr_data[23:16], bridge_wr_data[31:24]}),
+//	.wren_b		(reset_n ? 0 						: wren_b_instruction),
+//	.q_b			(iBus_rsp_payload_inst));
 	
 // This is a 2K ram block for the MPU CPU access and APF bus for a buffer core.	
 dmem_bram dmem_bram (
 	.clock_a		(clk),
-	.address_a	(data_addr[14:2]),
+	.address_a	(data_addr[15:2]),
 	.data_a		(data_d),
 	.byteena_a	(data_byte_select),
 	.rden_a		(dBus_cmd_valid),
 	.wren_a		(wren_a_data),
-	.q_a			(data_q_dmem),
+	.q_a			(data_q),
 	
-	.address_b	(bridge_addr[14:2]),
-	.rden_b		(bridge_rd),
+	.address_b	(BRAM_CONTROLL ? bridge_addr_reg[15:2] : iBus_cmd_payload_pc[15:2]),
+	.rden_b		(BRAM_CONTROLL ? 1'b1 : iBus_cmd_valid),
 	.clock_b		(clk),
-	.data_b		({bridge_wr_data[7:0], bridge_wr_data[15:8], bridge_wr_data[23:16], bridge_wr_data[31:24]} ),
-	.wren_b		(wren_b_data),
-	.q_b			(bridge_rd_data_dmem));
+	.data_b		({bridge_wr_data_reg[7:0], bridge_wr_data_reg[15:8], bridge_wr_data_reg[23:16], bridge_wr_data_reg[31:24]} ),
+	.wren_b		(BRAM_CONTROLL ? bridge_wr_reg : 1'b0),
+	.q_b			(iBus_rsp_payload_inst));
 
 // MPU Data Side to mux the two ram locations
 	
-reg data_addr_mux;
+//reg data_addr_mux;
 	
-always @(posedge clk) data_addr_mux <= data_addr[15];
+//always @(posedge clk) data_addr_mux <= data_addr[15];
 	
-assign data_q = data_addr_mux ? data_q_dmem : data_q_imem;
+//assign data_q = data_addr_mux ? data_q_dmem : data_q_imem;
 
 // APF Address
 
@@ -131,8 +201,8 @@ reg bridge_addr_mux;
 
 always @(posedge clk) if (bridge_rd) bridge_addr_mux <= bridge_addr[15];
 
-assign q_b_wire = bridge_addr_mux ? bridge_rd_data_dmem : instruction_q;
+//assign q_b_wire = bridge_addr_mux ? bridge_rd_data_dmem : iBus_rsp_payload_inst;
 	
-always @(posedge clk_74a) bridge_rd_data <= ~little_enden ? {q_b_wire[7:0], q_b_wire[15:8], q_b_wire[23:16], q_b_wire[31:24]} : q_b_wire;
+always @(posedge clk_74a) bridge_rd_data <= ~little_enden ? {iBus_rsp_payload_inst[7:0], iBus_rsp_payload_inst[15:8], iBus_rsp_payload_inst[23:16], iBus_rsp_payload_inst[31:24]} : iBus_rsp_payload_inst;
 	
 endmodule

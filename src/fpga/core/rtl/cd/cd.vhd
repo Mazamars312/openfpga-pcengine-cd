@@ -33,6 +33,8 @@ entity cd is
 		
 		CD_DOUT_REQ	: in std_logic;
 		CD_DOUT		: out std_logic_vector(79 downto 0);
+		CD_almost_full : out std_logic;
+		AUDIO_almost_full : out std_logic;
 		CD_DOUT_SEND: out std_logic;
 		
 		CD_REGION   : in  std_logic;
@@ -548,7 +550,7 @@ begin
 		DOUT			=> CD_DOUT,
 		DOUT_SEND	=> CD_DOUT_SEND,
 		STOP_CD_SND	=> CD_STOP_CD_SND,
-		
+		CD_almost_full => CD_almost_full,
 		CD_DATA		=> CD_DATA,
 		CD_WR			=> CD_WR and DM,
 		CD_DATA_END	=> CD_DATA_END
@@ -673,6 +675,7 @@ begin
 		wrreq		=> FIFO_WR_REQ,
 		full		=> FIFO_FULL,
 		
+		almost_full => AUDIO_almost_full,
 		rdreq		=> FIFO_RD_REQ,
 		empty		=> FIFO_EMPTY,
 		q			=> FIFO_Q

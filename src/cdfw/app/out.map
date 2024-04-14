@@ -52,6 +52,8 @@ Discarded input sections
  .text          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/fileio.o
  .data          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/fileio.o
  .bss           0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/fileio.o
+ .text._Z14clearbufferramv
+                0x0000000000000000       0x3a obj.riscv.pce_mpu_bios/fileio.o
  .text._Z39sector_buffer_transfer_size_max_processim
                 0x0000000000000000       0x26 obj.riscv.pce_mpu_bios/fileio.o
  .text._Z21timer_disply_for_waitv
@@ -62,12 +64,12 @@ Discarded input sections
                 0x0000000000000000        0x4 obj.riscv.pce_mpu_bios/fileio.o
  .sbss.wait_timer
                 0x0000000000000000        0x4 obj.riscv.pce_mpu_bios/fileio.o
- .eh_frame      0x0000000000000000       0xf8 obj.riscv.pce_mpu_bios/fileio.o
+ .eh_frame      0x0000000000000000      0x108 obj.riscv.pce_mpu_bios/fileio.o
  .text          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/cue.o
  .data          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/cue.o
  .bss           0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/cue.o
  .text._ZN5cue_tC2Ev
-                0x0000000000000000       0x92 obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000000000       0x8e obj.riscv.pce_mpu_bios/cue.o
  .text._ZN5cue_t10PendStatusEt
                 0x0000000000000000        0xe obj.riscv.pce_mpu_bios/cue.o
  .text._ZN5cue_t8LBAToMSFEiP5msf_t
@@ -79,15 +81,13 @@ Discarded input sections
  .text._ZN5cue_t13GetTrackByLBAEiP5toc_t
                 0x0000000000000000       0x28 obj.riscv.pce_mpu_bios/cue.o
  .text._ZN5cue_t8ReadCDDAEv
-                0x0000000000000000       0x54 obj.riscv.pce_mpu_bios/cue.o
- .text._ZN5cue_t11ReadSubcodeEPt
-                0x0000000000000000        0x2 obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000000000       0x46 obj.riscv.pce_mpu_bios/cue.o
  .text._ZN5cue_t12CommandErrorEhhhh
                 0x0000000000000000       0x16 obj.riscv.pce_mpu_bios/cue.o
  .text.startup._GLOBAL__sub_I_foo1
                 0x0000000000000000       0x10 obj.riscv.pce_mpu_bios/cue.o
  .init_array    0x0000000000000000        0x4 obj.riscv.pce_mpu_bios/cue.o
- .eh_frame      0x0000000000000000      0x308 obj.riscv.pce_mpu_bios/cue.o
+ .eh_frame      0x0000000000000000      0x2f0 obj.riscv.pce_mpu_bios/cue.o
  .text          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/seektime.o
  .data          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/seektime.o
  .bss           0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/seektime.o
@@ -156,7 +156,9 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/osd_menu.o
  .text._Z17osd_display_errori
                 0x0000000000000000      0x214 obj.riscv.pce_mpu_bios/osd_menu.o
- .eh_frame      0x0000000000000000       0xb4 obj.riscv.pce_mpu_bios/osd_menu.o
+ .text._Z21osd_display_error_apfv
+                0x0000000000000000        0x2 obj.riscv.pce_mpu_bios/osd_menu.o
+ .eh_frame      0x0000000000000000       0xc8 obj.riscv.pce_mpu_bios/osd_menu.o
  .text          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/uart.o
  .data          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/uart.o
  .bss           0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/uart.o
@@ -192,7 +194,7 @@ Discarded input sections
                 0x0000000000000000       0x16 obj.riscv.pce_mpu_bios/timer.o
  .text._Z11CheckTimer2j
                 0x0000000000000000       0x16 obj.riscv.pce_mpu_bios/timer.o
- .eh_frame      0x0000000000000000      0x15c obj.riscv.pce_mpu_bios/timer.o
+ .eh_frame      0x0000000000000000      0x154 obj.riscv.pce_mpu_bios/timer.o
  .text          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/atoi.o
  .data          0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/atoi.o
  .bss           0x0000000000000000        0x0 obj.riscv.pce_mpu_bios/atoi.o
@@ -409,8 +411,7 @@ Discarded input sections
 Memory Configuration
 
 Name             Origin             Length             Attributes
-RAM              0x0000000000000000 0x0000000000008000 xrw
-SRAM             0x0000000000008000 0x0000000000008000 rw
+RAM              0x0000000000000000 0x0000000000010000 xrw
 *default*        0x0000000000000000 0xffffffffffffffff
 
 Linker script and memory map
@@ -465,7 +466,7 @@ START GROUP
 LOAD /opt/riscv/lib/gcc/riscv32-unknown-elf/12.2.0/libgcc.a
 END GROUP
 
-.text           0x0000000000000000     0x4868
+.text           0x0000000000000000     0x4ad0
  *(.boot)
  .boot          0x0000000000000000       0x1c obj.riscv.pce_mpu_bios/boot.o
  *(.boot)
@@ -512,387 +513,390 @@ END GROUP
                 0x0000000000000470       0x94 obj.riscv.pce_mpu_bios/pcecd.o
                 0x0000000000000470                pcecd_set_image(int, int)
  .text._Z10pcecd_pollv
-                0x0000000000000504      0x1b0 obj.riscv.pce_mpu_bios/pcecd.o
+                0x0000000000000504      0x1c4 obj.riscv.pce_mpu_bios/pcecd.o
                 0x0000000000000504                pcecd_poll()
  .text._Z14dataslot_readyv
-                0x00000000000006b4       0x36 obj.riscv.pce_mpu_bios/apf.o
-                0x00000000000006b4                dataslot_ready()
+                0x00000000000006c8       0x36 obj.riscv.pce_mpu_bios/apf.o
+                0x00000000000006c8                dataslot_ready()
  .text._Z13dataslot_sizet
-                0x00000000000006ea       0x2c obj.riscv.pce_mpu_bios/apf.o
-                0x00000000000006ea                dataslot_size(unsigned short)
+                0x00000000000006fe       0x2c obj.riscv.pce_mpu_bios/apf.o
+                0x00000000000006fe                dataslot_size(unsigned short)
  .text._Z13dataslot_readtmmm
-                0x0000000000000716       0xc4 obj.riscv.pce_mpu_bios/apf.o
-                0x0000000000000716                dataslot_read(unsigned short, unsigned long, unsigned long, unsigned long)
+                0x000000000000072a       0xca obj.riscv.pce_mpu_bios/apf.o
+                0x000000000000072a                dataslot_read(unsigned short, unsigned long, unsigned long, unsigned long)
  .text._Z21dataslot_read_lba_settmm
-                0x00000000000007da       0x16 obj.riscv.pce_mpu_bios/apf.o
-                0x00000000000007da                dataslot_read_lba_set(unsigned short, unsigned long, unsigned long)
+                0x00000000000007f4       0x16 obj.riscv.pce_mpu_bios/apf.o
+                0x00000000000007f4                dataslot_read_lba_set(unsigned short, unsigned long, unsigned long)
  .text._Z17dataslot_read_lbam
-                0x00000000000007f0       0x68 obj.riscv.pce_mpu_bios/apf.o
-                0x00000000000007f0                dataslot_read_lba(unsigned long)
+                0x000000000000080a       0x68 obj.riscv.pce_mpu_bios/apf.o
+                0x000000000000080a                dataslot_read_lba(unsigned long)
  .text._Z22dataslot_read_lba_fastmb
-                0x0000000000000858       0x34 obj.riscv.pce_mpu_bios/apf.o
-                0x0000000000000858                dataslot_read_lba_fast(unsigned long, bool)
- .text._Z14clearbufferramv
-                0x000000000000088c       0x10 obj.riscv.pce_mpu_bios/fileio.o
-                0x000000000000088c                clearbufferram()
+                0x0000000000000872       0x34 obj.riscv.pce_mpu_bios/apf.o
+                0x0000000000000872                dataslot_read_lba_fast(unsigned long, bool)
  .text._Z12RISCFileSeekimm
-                0x000000000000089c      0x2bc obj.riscv.pce_mpu_bios/fileio.o
-                0x000000000000089c                RISCFileSeek(int, unsigned long, unsigned long)
+                0x00000000000008a6      0x2bc obj.riscv.pce_mpu_bios/fileio.o
+                0x00000000000008a6                RISCFileSeek(int, unsigned long, unsigned long)
  .text._Z15RISCFileReadAdvihhhm
-                0x0000000000000b58       0xe4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000000b58                RISCFileReadAdv(int, unsigned char, unsigned char, unsigned char, unsigned long)
+                0x0000000000000b62       0xe4 obj.riscv.pce_mpu_bios/fileio.o
+                0x0000000000000b62                RISCFileReadAdv(int, unsigned char, unsigned char, unsigned char, unsigned long)
  .text._ZN5cue_t7LoadCUEEi
-                0x0000000000000c3c      0x55a obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000000c3c                cue_t::LoadCUE(int)
+                0x0000000000000c46      0x5ae obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000000c46                cue_t::LoadCUE(int)
  .text._ZN5cue_t4LoadEi
-                0x0000000000001196       0x1a obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000001196                cue_t::Load(int)
+                0x00000000000011f4       0x1a obj.riscv.pce_mpu_bios/cue.o
+                0x00000000000011f4                cue_t::Load(int)
  .text._ZN5cue_t6UnloadEv
-                0x00000000000011b0       0x56 obj.riscv.pce_mpu_bios/cue.o
-                0x00000000000011b0                cue_t::Unload()
+                0x000000000000120e       0x52 obj.riscv.pce_mpu_bios/cue.o
+                0x000000000000120e                cue_t::Unload()
  .text._ZN5cue_t5ResetEv
-                0x0000000000001206       0x4e obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000001206                cue_t::Reset()
+                0x0000000000001260       0x4e obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001260                cue_t::Reset()
  .text._ZN5cue_t11CommandExecEv
-                0x0000000000001254      0x74a obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000001254                cue_t::CommandExec()
+                0x00000000000012ae      0x7b4 obj.riscv.pce_mpu_bios/cue.o
+                0x00000000000012ae                cue_t::CommandExec()
  .text._ZN5cue_t9GetStatusEv
-                0x000000000000199e        0xa obj.riscv.pce_mpu_bios/cue.o
-                0x000000000000199e                cue_t::GetStatus()
+                0x0000000000001a62        0xa obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001a62                cue_t::GetStatus()
  .text._ZN5cue_t10SetCommandEPh
-                0x00000000000019a8       0x1a obj.riscv.pce_mpu_bios/cue.o
-                0x00000000000019a8                cue_t::SetCommand(unsigned char*)
+                0x0000000000001a6c       0x1a obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001a6c                cue_t::SetCommand(unsigned char*)
  .text._ZN5cue_t10SendStatusEt
-                0x00000000000019c2       0x30 obj.riscv.pce_mpu_bios/cue.o
-                0x00000000000019c2                cue_t::SendStatus(unsigned short)
+                0x0000000000001a86       0x30 obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001a86                cue_t::SendStatus(unsigned short)
  .text._ZN5cue_t15SendDataRequestEv
-                0x00000000000019f2       0x30 obj.riscv.pce_mpu_bios/cue.o
-                0x00000000000019f2                cue_t::SendDataRequest()
+                0x0000000000001ab6       0x30 obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001ab6                cue_t::SendDataRequest()
  .text._ZN5cue_t9SetRegionEh
-                0x0000000000001a22        0xa obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000001a22                cue_t::SetRegion(unsigned char)
+                0x0000000000001ae6        0xa obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001ae6                cue_t::SetRegion(unsigned char)
  .text._ZN5cue_t8ReadDataEv
-                0x0000000000001a2c       0x9c obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000001a2c                cue_t::ReadData()
+                0x0000000000001af0       0xea obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001af0                cue_t::ReadData()
  .text._ZN5cue_t6UpdateEv
-                0x0000000000001ac8      0x2ae obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000001ac8                cue_t::Update()
+                0x0000000000001bda      0x2c2 obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000001bda                cue_t::Update()
  .text._Z14get_cd_seek_msii
-                0x0000000000001d76      0x196 obj.riscv.pce_mpu_bios/seektime.o
-                0x0000000000001d76                get_cd_seek_ms(int, int)
+                0x0000000000001e9c      0x196 obj.riscv.pce_mpu_bios/seektime.o
+                0x0000000000001e9c                get_cd_seek_ms(int, int)
  .text._Z12HPS_EnableIOv
-                0x0000000000001f0c       0x16 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000001f0c                HPS_EnableIO()
+                0x0000000000002032       0x16 obj.riscv.pce_mpu_bios/spi.o
+                0x0000000000002032                HPS_EnableIO()
  .text._Z13HPS_DisableIOv
-                0x0000000000001f22       0x1e obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000001f22                HPS_DisableIO()
+                0x0000000000002048       0x1e obj.riscv.pce_mpu_bios/spi.o
+                0x0000000000002048                HPS_DisableIO()
  .text._Z12HPS_fpga_spit
-                0x0000000000001f40       0x44 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000001f40                HPS_fpga_spi(unsigned short)
+                0x0000000000002066       0x44 obj.riscv.pce_mpu_bios/spi.o
+                0x0000000000002066                HPS_fpga_spi(unsigned short)
  .text._Z13HPS_spi_writePKhmi
-                0x0000000000001f84       0x60 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000001f84                HPS_spi_write(unsigned char const*, unsigned long, int)
+                0x00000000000020aa       0x60 obj.riscv.pce_mpu_bios/spi.o
+                0x00000000000020aa                HPS_spi_write(unsigned char const*, unsigned long, int)
  .text._Z20HPS_spi_uio_cmd_contt
-                0x0000000000001fe4       0x1a obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000001fe4                HPS_spi_uio_cmd_cont(unsigned short)
+                0x000000000000210a       0x1a obj.riscv.pce_mpu_bios/spi.o
+                0x000000000000210a                HPS_spi_uio_cmd_cont(unsigned short)
  .text._Z21HPS_spi_uio_cmd8_conthh
-                0x0000000000001ffe       0x42 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000001ffe                HPS_spi_uio_cmd8_cont(unsigned char, unsigned char)
+                0x0000000000002124       0x42 obj.riscv.pce_mpu_bios/spi.o
+                0x0000000000002124                HPS_spi_uio_cmd8_cont(unsigned char, unsigned char)
  .text._Z16HPS_spi_uio_cmd8hh
-                0x0000000000002040       0x66 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000002040                HPS_spi_uio_cmd8(unsigned char, unsigned char)
+                0x0000000000002166       0x66 obj.riscv.pce_mpu_bios/spi.o
+                0x0000000000002166                HPS_spi_uio_cmd8(unsigned char, unsigned char)
  .text._Z19HPS_io_file_tx_dataPKhmi
-                0x00000000000020a6       0x60 obj.riscv.pce_mpu_bios/spi.o
-                0x00000000000020a6                HPS_io_file_tx_data(unsigned char const*, unsigned long, int)
+                0x00000000000021cc       0x60 obj.riscv.pce_mpu_bios/spi.o
+                0x00000000000021cc                HPS_io_file_tx_data(unsigned char const*, unsigned long, int)
  .text._Z14HPS_DisableOsdv
-                0x0000000000002106       0x1e obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000002106                HPS_DisableOsd()
+                0x000000000000222c       0x1e obj.riscv.pce_mpu_bios/spi.o
+                0x000000000000222c                HPS_DisableOsd()
  .text._Z20HPS_spi_osd_cmd_conth
-                0x0000000000002124       0x18 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000002124                HPS_spi_osd_cmd_cont(unsigned char)
+                0x000000000000224a       0x18 obj.riscv.pce_mpu_bios/spi.o
+                0x000000000000224a                HPS_spi_osd_cmd_cont(unsigned char)
  .text._Z15HPS_spi_osd_cmdh
-                0x000000000000213c       0x44 obj.riscv.pce_mpu_bios/spi.o
-                0x000000000000213c                HPS_spi_osd_cmd(unsigned char)
+                0x0000000000002262       0x44 obj.riscv.pce_mpu_bios/spi.o
+                0x0000000000002262                HPS_spi_osd_cmd(unsigned char)
  .text._Z17OSD_HPS_spi_writePKhmi
-                0x0000000000002180       0x60 obj.riscv.pce_mpu_bios/spi.o
-                0x0000000000002180                OSD_HPS_spi_write(unsigned char const*, unsigned long, int)
+                0x00000000000022a6       0x60 obj.riscv.pce_mpu_bios/spi.o
+                0x00000000000022a6                OSD_HPS_spi_write(unsigned char const*, unsigned long, int)
  .text._Z14OsdWriteOffsethPKchhcccii
-                0x00000000000021e0      0x36c obj.riscv.pce_mpu_bios/osd.o
-                0x00000000000021e0                OsdWriteOffset(unsigned char, char const*, unsigned char, unsigned char, char, char, char, int, int)
+                0x0000000000002306      0x36c obj.riscv.pce_mpu_bios/osd.o
+                0x0000000000002306                OsdWriteOffset(unsigned char, char const*, unsigned char, unsigned char, char, char, char, int, int)
  .text._Z8OsdWritePKchhcii
-                0x000000000000254c       0x20 obj.riscv.pce_mpu_bios/osd.o
-                0x000000000000254c                OsdWrite(char const*, unsigned char, unsigned char, char, int, int)
+                0x0000000000002672       0x20 obj.riscv.pce_mpu_bios/osd.o
+                0x0000000000002672                OsdWrite(char const*, unsigned char, unsigned char, char, int, int)
  .text._Z8OsdClearv
-                0x000000000000256c       0x18 obj.riscv.pce_mpu_bios/osd.o
-                0x000000000000256c                OsdClear()
+                0x0000000000002692       0x18 obj.riscv.pce_mpu_bios/osd.o
+                0x0000000000002692                OsdClear()
  .text._Z10InfoEnableiiiiii
-                0x0000000000002584       0x74 obj.riscv.pce_mpu_bios/osd.o
-                0x0000000000002584                InfoEnable(int, int, int, int, int, int)
+                0x00000000000026aa       0x74 obj.riscv.pce_mpu_bios/osd.o
+                0x00000000000026aa                InfoEnable(int, int, int, int, int, int)
  .text._Z10OsdDisablev
-                0x00000000000025f8        0x8 obj.riscv.pce_mpu_bios/osd.o
-                0x00000000000025f8                OsdDisable()
+                0x000000000000271e        0x8 obj.riscv.pce_mpu_bios/osd.o
+                0x000000000000271e                OsdDisable()
  .text._Z9OsdUpdatei
-                0x0000000000002600       0x30 obj.riscv.pce_mpu_bios/osd.o
-                0x0000000000002600                OsdUpdate(int)
+                0x0000000000002726       0x30 obj.riscv.pce_mpu_bios/osd.o
+                0x0000000000002726                OsdUpdate(int)
  .text._Z16osd_display_infov
-                0x0000000000002630       0xdc obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000002630                osd_display_info()
+                0x0000000000002756       0xdc obj.riscv.pce_mpu_bios/osd_menu.o
+                0x0000000000002756                osd_display_info()
  .text._Z23osd_display_info_updatei
-                0x000000000000270c       0x2e obj.riscv.pce_mpu_bios/osd_menu.o
-                0x000000000000270c                osd_display_info_update(int)
+                0x0000000000002832       0x2e obj.riscv.pce_mpu_bios/osd_menu.o
+                0x0000000000002832                osd_display_info_update(int)
  .text._Z18osd_display_timinghhh
-                0x000000000000273a       0x28 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x000000000000273a                osd_display_timing(unsigned char, unsigned char, unsigned char)
+                0x0000000000002860       0x28 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x0000000000002860                osd_display_timing(unsigned char, unsigned char, unsigned char)
  .text._Z26osd_display_error_datasloti
-                0x0000000000002762      0x168 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000002762                osd_display_error_dataslot(int)
+                0x0000000000002888      0x17a obj.riscv.pce_mpu_bios/osd_menu.o
+                0x0000000000002888                osd_display_error_dataslot(int)
  .text.riscputchar
-                0x00000000000028ca       0x10 obj.riscv.pce_mpu_bios/uart.o
-                0x00000000000028ca                riscputchar
- .text.SetUART  0x00000000000028da        0xa obj.riscv.pce_mpu_bios/uart.o
-                0x00000000000028da                SetUART
+                0x0000000000002a02       0x10 obj.riscv.pce_mpu_bios/uart.o
+                0x0000000000002a02                riscputchar
+ .text.SetUART  0x0000000000002a12        0xa obj.riscv.pce_mpu_bios/uart.o
+                0x0000000000002a12                SetUART
  .text._handle_trap
-                0x00000000000028e4        0x8 obj.riscv.pce_mpu_bios/interrupts.o
-                0x00000000000028e4                _handle_trap
+                0x0000000000002a1c        0x8 obj.riscv.pce_mpu_bios/interrupts.o
+                0x0000000000002a1c                _handle_trap
  .text._Z17DisableInterruptsv
-                0x00000000000028ec        0x6 obj.riscv.pce_mpu_bios/interrupts.o
-                0x00000000000028ec                DisableInterrupts()
+                0x0000000000002a24        0x6 obj.riscv.pce_mpu_bios/interrupts.o
+                0x0000000000002a24                DisableInterrupts()
  .text._ZL9_out_charcPvjj
-                0x00000000000028f2        0x6 obj.riscv.pce_mpu_bios/riscprintf.o
+                0x0000000000002a2a        0x6 obj.riscv.pce_mpu_bios/riscprintf.o
  .text._ZL10_ntoa_longPFvcPvjjEPcjjmbmjjj.constprop.0
-                0x00000000000028f8      0x43c obj.riscv.pce_mpu_bios/riscprintf.o
+                0x0000000000002a30      0x43c obj.riscv.pce_mpu_bios/riscprintf.o
  .text.riscprintf_
-                0x0000000000002d34      0x5b8 obj.riscv.pce_mpu_bios/riscprintf.o
-                0x0000000000002d34                riscprintf_
+                0x0000000000002e6c      0x5b8 obj.riscv.pce_mpu_bios/riscprintf.o
+                0x0000000000002e6c                riscprintf_
  .text.riscprintff_
-                0x00000000000032ec       0x16 obj.riscv.pce_mpu_bios/riscprintf.o
-                0x00000000000032ec                riscprintff_
+                0x0000000000003424       0x16 obj.riscv.pce_mpu_bios/riscprintf.o
+                0x0000000000003424                riscprintff_
  .text._Z10ResetTimerv
-                0x0000000000003302       0x14 obj.riscv.pce_mpu_bios/timer.o
-                0x0000000000003302                ResetTimer()
+                0x000000000000343a       0x14 obj.riscv.pce_mpu_bios/timer.o
+                0x000000000000343a                ResetTimer()
  .text._Z8SetTimerv
-                0x0000000000003316        0xe obj.riscv.pce_mpu_bios/timer.o
-                0x0000000000003316                SetTimer()
+                0x000000000000344e        0xe obj.riscv.pce_mpu_bios/timer.o
+                0x000000000000344e                SetTimer()
  .text._Z10riscusleepi
-                0x0000000000003324        0xe obj.riscv.pce_mpu_bios/timer.o
-                0x0000000000003324                riscusleep(int)
+                0x000000000000345c        0xe obj.riscv.pce_mpu_bios/timer.o
+                0x000000000000345c                riscusleep(int)
  .text._Z13RISCGetTimer1mi
-                0x0000000000003332       0x14 obj.riscv.pce_mpu_bios/timer.o
-                0x0000000000003332                RISCGetTimer1(unsigned long, int)
+                0x000000000000346a       0x14 obj.riscv.pce_mpu_bios/timer.o
+                0x000000000000346a                RISCGetTimer1(unsigned long, int)
  .text._Z15RISCCheckTimer1m
-                0x0000000000003346       0x14 obj.riscv.pce_mpu_bios/timer.o
-                0x0000000000003346                RISCCheckTimer1(unsigned long)
+                0x000000000000347e       0x14 obj.riscv.pce_mpu_bios/timer.o
+                0x000000000000347e                RISCCheckTimer1(unsigned long)
  .text._Z13RISCGetTimer2mi
-                0x000000000000335a       0x14 obj.riscv.pce_mpu_bios/timer.o
-                0x000000000000335a                RISCGetTimer2(unsigned long, int)
+                0x0000000000003492       0x14 obj.riscv.pce_mpu_bios/timer.o
+                0x0000000000003492                RISCGetTimer2(unsigned long, int)
  .text._Z15RISCCheckTimer2m
-                0x000000000000336e       0x22 obj.riscv.pce_mpu_bios/timer.o
-                0x000000000000336e                RISCCheckTimer2(unsigned long)
+                0x00000000000034a6        0xe obj.riscv.pce_mpu_bios/timer.o
+                0x00000000000034a6                RISCCheckTimer2(unsigned long)
  .text._Z11ResetTimer1v
-                0x0000000000003390       0x12 obj.riscv.pce_mpu_bios/timer.o
-                0x0000000000003390                ResetTimer1()
+                0x00000000000034b4       0x12 obj.riscv.pce_mpu_bios/timer.o
+                0x00000000000034b4                ResetTimer1()
  .text._Z11ResetTimer2v
-                0x00000000000033a2       0x12 obj.riscv.pce_mpu_bios/timer.o
-                0x00000000000033a2                ResetTimer2()
- .text.memcpy   0x00000000000033b4       0x54 obj.riscv.pce_mpu_bios/memcpy.o
-                0x00000000000033b4                memcpy
- .text.outnum   0x0000000000003408      0x212 obj.riscv.pce_mpu_bios/printf.o
+                0x00000000000034c6       0x12 obj.riscv.pce_mpu_bios/timer.o
+                0x00000000000034c6                ResetTimer2()
+ .text.memcpy   0x00000000000034d8       0x54 obj.riscv.pce_mpu_bios/memcpy.o
+                0x00000000000034d8                memcpy
+ .text.outnum   0x000000000000352c      0x212 obj.riscv.pce_mpu_bios/printf.o
  .text.vbuf_printf
-                0x000000000000361a      0x39c obj.riscv.pce_mpu_bios/printf.o
-                0x000000000000361a                vbuf_printf
- .text.sprintf  0x00000000000039b6       0x3a obj.riscv.pce_mpu_bios/printf.o
-                0x00000000000039b6                sprintf
- .text.sscanf   0x00000000000039f0       0x2e obj.riscv.pce_mpu_bios/sscanf.o
-                0x00000000000039f0                sscanf
- .text.strlen   0x0000000000003a1e       0x1a obj.riscv.pce_mpu_bios/strlen.o
-                0x0000000000003a1e                strlen
+                0x000000000000373e      0x39c obj.riscv.pce_mpu_bios/printf.o
+                0x000000000000373e                vbuf_printf
+ .text.sprintf  0x0000000000003ada       0x3a obj.riscv.pce_mpu_bios/printf.o
+                0x0000000000003ada                sprintf
+ .text.sscanf   0x0000000000003b14       0x2e obj.riscv.pce_mpu_bios/sscanf.o
+                0x0000000000003b14                sscanf
+ .text.strlen   0x0000000000003b42       0x1a obj.riscv.pce_mpu_bios/strlen.o
+                0x0000000000003b42                strlen
  .text.buf_getchar
-                0x0000000000003a38       0x14 obj.riscv.pce_mpu_bios/stropen.o
+                0x0000000000003b5c       0x14 obj.riscv.pce_mpu_bios/stropen.o
  .text.buf_peekchar
-                0x0000000000003a4c        0xe obj.riscv.pce_mpu_bios/stropen.o
+                0x0000000000003b70        0xe obj.riscv.pce_mpu_bios/stropen.o
  .text.buf_feof
-                0x0000000000003a5a        0xc obj.riscv.pce_mpu_bios/stropen.o
+                0x0000000000003b7e        0xc obj.riscv.pce_mpu_bios/stropen.o
  .text.buf_putchar
-                0x0000000000003a66       0x1c obj.riscv.pce_mpu_bios/stropen.o
- .text.stropen  0x0000000000003a82        0xe obj.riscv.pce_mpu_bios/stropen.o
-                0x0000000000003a82                stropen
- .text.strstr   0x0000000000003a90       0x38 obj.riscv.pce_mpu_bios/strstr.o
-                0x0000000000003a90                strstr
+                0x0000000000003b8a       0x1c obj.riscv.pce_mpu_bios/stropen.o
+ .text.stropen  0x0000000000003ba6        0xe obj.riscv.pce_mpu_bios/stropen.o
+                0x0000000000003ba6                stropen
+ .text.strstr   0x0000000000003bb4       0x38 obj.riscv.pce_mpu_bios/strstr.o
+                0x0000000000003bb4                strstr
  .text.stream_vscanf
-                0x0000000000003ac8      0x4be obj.riscv.pce_mpu_bios/vscanf.o
-                0x0000000000003ac8                stream_vscanf
+                0x0000000000003bec      0x4be obj.riscv.pce_mpu_bios/vscanf.o
+                0x0000000000003bec                stream_vscanf
  *(.rodata)
  *(.rodata*)
- *fill*         0x0000000000003f86        0x2 
+ *fill*         0x00000000000040aa        0x2 
  .rodata._Z10core_reseti.str1.4
-                0x0000000000003f88        0xb obj.riscv.pce_mpu_bios/core.o
- *fill*         0x0000000000003f93        0x1 
+                0x00000000000040ac        0xb obj.riscv.pce_mpu_bios/core.o
+ *fill*         0x00000000000040b7        0x1 
  .rodata._Z15full_core_resetv.str1.4
-                0x0000000000003f94       0x3a obj.riscv.pce_mpu_bios/core.o
- *fill*         0x0000000000003fce        0x2 
+                0x00000000000040b8       0x3a obj.riscv.pce_mpu_bios/core.o
  .rodata._Z4initv.str1.4
-                0x0000000000003fd0        0x5 obj.riscv.pce_mpu_bios/main.o
- *fill*         0x0000000000003fd5        0x3 
+                0x00000000000040f2       0x3a obj.riscv.pce_mpu_bios/main.o
+                                          0x5 (size before relaxing)
+ *fill*         0x00000000000040f2        0x2 
  .rodata._Z8mainloopv.str1.4
-                0x0000000000003fd8       0x9d obj.riscv.pce_mpu_bios/main.o
- *fill*         0x0000000000004075        0x3 
+                0x00000000000040f4       0x9d obj.riscv.pce_mpu_bios/main.o
+ *fill*         0x0000000000004191        0x3 
+ .rodata._Z10pcecd_pollv.str1.4
+                0x0000000000004194       0x1a obj.riscv.pce_mpu_bios/pcecd.o
+ *fill*         0x00000000000041ae        0x2 
  .rodata._Z14dataslot_readyv.str1.4
-                0x0000000000004078       0x20 obj.riscv.pce_mpu_bios/apf.o
+                0x00000000000041b0       0x20 obj.riscv.pce_mpu_bios/apf.o
  .rodata._Z13dataslot_readtmmm.str1.4
-                0x0000000000004098      0x10c obj.riscv.pce_mpu_bios/apf.o
+                0x00000000000041d0      0x10c obj.riscv.pce_mpu_bios/apf.o
  .rodata._Z17dataslot_read_lbam.str1.4
-                0x00000000000041a4       0x30 obj.riscv.pce_mpu_bios/apf.o
+                0x00000000000042dc       0x30 obj.riscv.pce_mpu_bios/apf.o
  .rodata._ZN5cue_t7LoadCUEEi.str1.4
-                0x00000000000041d4      0x1e6 obj.riscv.pce_mpu_bios/cue.o
- *fill*         0x00000000000043ba        0x2 
+                0x000000000000430c      0x24d obj.riscv.pce_mpu_bios/cue.o
+ *fill*         0x0000000000004559        0x3 
+ .rodata._ZN5cue_t11CommandExecEv.str1.4
+                0x000000000000455c       0x9b obj.riscv.pce_mpu_bios/cue.o
+ *fill*         0x00000000000045f7        0x1 
  .rodata._ZN5cue_t11CommandExecEv
-                0x00000000000043bc       0x1c obj.riscv.pce_mpu_bios/cue.o
+                0x00000000000045f8       0x1c obj.riscv.pce_mpu_bios/cue.o
+ .rodata._ZN5cue_t8ReadDataEv.str1.4
+                0x0000000000004614       0x15 obj.riscv.pce_mpu_bios/cue.o
+ *fill*         0x0000000000004629        0x3 
+ .rodata._ZN5cue_t6UpdateEv.str1.4
+                0x000000000000462c       0x14 obj.riscv.pce_mpu_bios/cue.o
  .rodata._Z14get_cd_seek_msii.str1.4
-                0x00000000000043d8       0x38 obj.riscv.pce_mpu_bios/seektime.o
+                0x0000000000004640       0x38 obj.riscv.pce_mpu_bios/seektime.o
  .rodata._Z17osd_display_errori.str1.4
-                0x0000000000004410      0x13b obj.riscv.pce_mpu_bios/osd_menu.o
- *fill*         0x000000000000454b        0x1 
+                0x0000000000004678      0x13b obj.riscv.pce_mpu_bios/osd_menu.o
+ *fill*         0x00000000000047b3        0x1 
  .rodata._Z16osd_display_infov.str1.4
-                0x000000000000454c       0x1d obj.riscv.pce_mpu_bios/osd_menu.o
- *fill*         0x0000000000004569        0x3 
+                0x00000000000047b4       0x1d obj.riscv.pce_mpu_bios/osd_menu.o
+ *fill*         0x00000000000047d1        0x3 
  .rodata._Z26osd_display_error_datasloti.str1.4
-                0x000000000000456c       0x5a obj.riscv.pce_mpu_bios/osd_menu.o
- *fill*         0x00000000000045c6        0x2 
+                0x00000000000047d4       0x5a obj.riscv.pce_mpu_bios/osd_menu.o
+ *fill*         0x000000000000482e        0x2 
  .rodata._handle_trap.str1.4
-                0x00000000000045c8       0x11 obj.riscv.pce_mpu_bios/interrupts.o
- *fill*         0x00000000000045d9        0x3 
+                0x0000000000004830       0x11 obj.riscv.pce_mpu_bios/interrupts.o
+ *fill*         0x0000000000004841        0x3 
  .rodata.riscprintf_
-                0x00000000000045dc       0x44 obj.riscv.pce_mpu_bios/riscprintf.o
- .rodata._Z15RISCCheckTimer2m.str1.4
-                0x0000000000004620       0x11 obj.riscv.pce_mpu_bios/timer.o
-                                          0x6 (size before relaxing)
+                0x0000000000004844       0x44 obj.riscv.pce_mpu_bios/riscprintf.o
  .rodata.outnum.str1.4
-                0x0000000000004620       0x25 obj.riscv.pce_mpu_bios/printf.o
- *fill*         0x0000000000004645        0x3 
+                0x0000000000004888       0x25 obj.riscv.pce_mpu_bios/printf.o
+ *fill*         0x00000000000048ad        0x3 
  .rodata.vbuf_printf
-                0x0000000000004648      0x1a8 obj.riscv.pce_mpu_bios/printf.o
+                0x00000000000048b0      0x1a8 obj.riscv.pce_mpu_bios/printf.o
  .rodata.stream_vscanf
-                0x00000000000047f0       0x78 obj.riscv.pce_mpu_bios/vscanf.o
+                0x0000000000004a58       0x78 obj.riscv.pce_mpu_bios/vscanf.o
  *(.rdata*)
-                0x0000000000004868                . = ALIGN (0x4)
+                0x0000000000004ad0                . = ALIGN (0x4)
 
-.rela.dyn       0x0000000000004868        0x0
- .rela.text     0x0000000000004868        0x0 obj.riscv.pce_mpu_bios/boot.o
+.rela.dyn       0x0000000000004ad0        0x0
+ .rela.text     0x0000000000004ad0        0x0 obj.riscv.pce_mpu_bios/boot.o
 
-.data           0x0000000000004868      0x540
+.data           0x0000000000004ad0      0x548
  *(.got.plt)
  *(.got)
  *(.shdata)
  *(.data .data.* .gnu.linkonce.d.*)
  .data.sector_list
-                0x0000000000004868      0x118 obj.riscv.pce_mpu_bios/seektime.o
-                0x0000000000004868                sector_list
+                0x0000000000004ad0      0x118 obj.riscv.pce_mpu_bios/seektime.o
+                0x0000000000004ad0                sector_list
  .data.charfont
-                0x0000000000004980      0x400 obj.riscv.pce_mpu_bios/charrom.o
-                0x0000000000004980                charfont
+                0x0000000000004be8      0x400 obj.riscv.pce_mpu_bios/charrom.o
+                0x0000000000004be8                charfont
  .data.buf_interface
-                0x0000000000004d80       0x1c obj.riscv.pce_mpu_bios/stropen.o
-                0x0000000000004da0                . = ALIGN (0x10)
- *fill*         0x0000000000004d9c        0x4 
+                0x0000000000004fe8       0x1c obj.riscv.pce_mpu_bios/stropen.o
+                0x0000000000005010                . = ALIGN (0x10)
+ *fill*         0x0000000000005004        0xc 
  *(.lit8)
  *(.lit4)
  *(.sdata .sdata.* .gnu.linkonce.s.*)
  .sdata._ZL8osd_size
-                0x0000000000004da0        0x4 obj.riscv.pce_mpu_bios/osd.o
-                0x0000000000004da8                . = ALIGN (0x8)
- *fill*         0x0000000000004da4        0x4 
+                0x0000000000005010        0x4 obj.riscv.pce_mpu_bios/osd.o
+                0x0000000000005018                . = ALIGN (0x8)
+ *fill*         0x0000000000005014        0x4 
  *(.ram)
-                0x0000000000004da8                . = ALIGN (0x8)
-                0x0000000000004da8                _edata = .
+                0x0000000000005018                . = ALIGN (0x8)
+                0x0000000000005018                _edata = .
 
-.bss            0x0000000000004da8     0x21c8
-                0x0000000000004da8                . = ALIGN (0x4)
-                0x0000000000004da8                _bss_start = .
+.bss            0x0000000000005018     0x7da0
+                0x0000000000005018                . = ALIGN (0x4)
+                0x0000000000005018                _bss_start = .
  *(.bss*)
+ .bss.sector_buffer0
+                0x0000000000005018     0x2000 obj.riscv.pce_mpu_bios/fileio.o
+                0x0000000000005018                sector_buffer0
+ .bss.sector_buffer1
+                0x0000000000007018     0x2000 obj.riscv.pce_mpu_bios/fileio.o
+                0x0000000000007018                sector_buffer1
  .bss._ZZN5cue_t11CommandExecEvE3buf
-                0x0000000000004da8       0x20 obj.riscv.pce_mpu_bios/cue.o
+                0x0000000000009018       0x20 obj.riscv.pce_mpu_bios/cue.o
  .bss._ZZN5cue_t7LoadCUEEiE4line
-                0x0000000000004dc8       0x80 obj.riscv.pce_mpu_bios/cue.o
- .bss.cue       0x0000000000004e48     0x1aa0 obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000004e48                cue
+                0x0000000000009038       0x80 obj.riscv.pce_mpu_bios/cue.o
+ .bss.cue       0x00000000000090b8     0x3678 obj.riscv.pce_mpu_bios/cue.o
+                0x00000000000090b8                cue
  .bss._ZL6osdbuf
-                0x00000000000068e8      0x100 obj.riscv.pce_mpu_bios/osd.o
+                0x000000000000c730      0x100 obj.riscv.pce_mpu_bios/osd.o
  .bss.framebuffer
-                0x00000000000069e8      0x100 obj.riscv.pce_mpu_bios/osd.o
-                0x00000000000069e8                framebuffer
- .bss.s         0x0000000000006ae8       0x40 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000006ae8                s
+                0x000000000000c830      0x100 obj.riscv.pce_mpu_bios/osd.o
+                0x000000000000c830                framebuffer
+ .bss.s         0x000000000000c930       0x40 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c930                s
  *(.sbss*)
  .sbss._ZZ10pcecd_pollvE3adj
-                0x0000000000006b28        0x1 obj.riscv.pce_mpu_bios/pcecd.o
+                0x000000000000c970        0x1 obj.riscv.pce_mpu_bios/pcecd.o
  .sbss._ZZ10pcecd_pollvE8last_req
-                0x0000000000006b29        0x1 obj.riscv.pce_mpu_bios/pcecd.o
- *fill*         0x0000000000006b2a        0x2 
+                0x000000000000c971        0x1 obj.riscv.pce_mpu_bios/pcecd.o
+ *fill*         0x000000000000c972        0x2 
  .sbss._ZZ10pcecd_pollvE10poll_timer
-                0x0000000000006b2c        0x4 obj.riscv.pce_mpu_bios/pcecd.o
+                0x000000000000c974        0x4 obj.riscv.pce_mpu_bios/pcecd.o
  .sbss._ZL10need_reset
-                0x0000000000006b30        0x4 obj.riscv.pce_mpu_bios/pcecd.o
+                0x000000000000c978        0x4 obj.riscv.pce_mpu_bios/pcecd.o
  .sbss.sector_buffer_processing
-                0x0000000000006b34        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b34                sector_buffer_processing
+                0x000000000000c97c        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c97c                sector_buffer_processing
  .sbss.sector_buffer_offset
-                0x0000000000006b38        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b38                sector_buffer_offset
+                0x000000000000c980        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c980                sector_buffer_offset
  .sbss.sector_buffer_selector
-                0x0000000000006b3c        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b3c                sector_buffer_selector
+                0x000000000000c984        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c984                sector_buffer_selector
  .sbss.sector_buffer_size
-                0x0000000000006b40        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b40                sector_buffer_size
+                0x000000000000c988        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c988                sector_buffer_size
  .sbss.sector_buffer1_address
-                0x0000000000006b44        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b44                sector_buffer1_address
+                0x000000000000c98c        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c98c                sector_buffer1_address
  .sbss.sector_buffer0_address
-                0x0000000000006b48        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b48                sector_buffer0_address
+                0x000000000000c990        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c990                sector_buffer0_address
  .sbss.sector_buffer_dataslot
-                0x0000000000006b4c        0x4 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000006b4c                sector_buffer_dataslot
- .sbss.foo1     0x0000000000006b50        0x4 obj.riscv.pce_mpu_bios/cue.o
-                0x0000000000006b50                foo1
+                0x000000000000c994        0x4 obj.riscv.pce_mpu_bios/fileio.o
+                0x000000000000c994                sector_buffer_dataslot
+ .sbss.foo1     0x000000000000c998        0x4 obj.riscv.pce_mpu_bios/cue.o
+                0x000000000000c998                foo1
  .sbss._ZL6osdset
-                0x0000000000006b54        0x4 obj.riscv.pce_mpu_bios/osd.o
+                0x000000000000c99c        0x4 obj.riscv.pce_mpu_bios/osd.o
  .sbss._ZL9osdbufpos
-                0x0000000000006b58        0x4 obj.riscv.pce_mpu_bios/osd.o
+                0x000000000000c9a0        0x4 obj.riscv.pce_mpu_bios/osd.o
  .sbss._ZL5arrow
-                0x0000000000006b5c        0x4 obj.riscv.pce_mpu_bios/osd.o
+                0x000000000000c9a4        0x4 obj.riscv.pce_mpu_bios/osd.o
  .sbss.frame_counter
-                0x0000000000006b60        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000006b60                frame_counter
- .sbss.nstore3  0x0000000000006b61        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000006b61                nstore3
- .sbss.nstore2  0x0000000000006b62        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000006b62                nstore2
- .sbss.nstore1  0x0000000000006b63        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
-                0x0000000000006b63                nstore1
+                0x000000000000c9a8        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c9a8                frame_counter
+ .sbss.nstore3  0x000000000000c9a9        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c9a9                nstore3
+ .sbss.nstore2  0x000000000000c9aa        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c9aa                nstore2
+ .sbss.nstore1  0x000000000000c9ab        0x1 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c9ab                nstore1
  .sbss._ZL16timer_wait_value
-                0x0000000000006b64        0x4 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c9ac        0x4 obj.riscv.pce_mpu_bios/osd_menu.o
  .sbss._ZL12error_system
-                0x0000000000006b68        0x4 obj.riscv.pce_mpu_bios/osd_menu.o
+                0x000000000000c9b0        0x4 obj.riscv.pce_mpu_bios/osd_menu.o
  *(COMMON)
-                0x0000000000006b70                . = ALIGN (0x8)
- *fill*         0x0000000000006b6c        0x4 
-                0x0000000000006f70                . = (. + 0x400)
- *fill*         0x0000000000006b70      0x400 
-                0x0000000000006f60                _sp = (. - 0x10)
-                0x0000000000006f70                . = ALIGN (0x4)
-                0x0000000000006f70                _end = .
+                0x000000000000c9b8                . = ALIGN (0x8)
+ *fill*         0x000000000000c9b4        0x4 
+                0x000000000000cdb8                . = (. + 0x400)
+ *fill*         0x000000000000c9b8      0x400 
+                0x000000000000cda8                _sp = (. - 0x10)
+                0x000000000000cdb8                . = ALIGN (0x4)
+                0x000000000000cdb8                _end = .
 
 .payload
  *(.payload)
-
-.SRAM           0x0000000000008000     0x8000
-                0x0000000000008000                __ram_start = .
- *(SRAM*)
- SRAM           0x0000000000008000     0x8000 obj.riscv.pce_mpu_bios/fileio.o
-                0x0000000000008000                sector_buffer0
-                0x000000000000c000                sector_buffer1
-                0x0000000000010000                __ram_end = .
 OUTPUT(build.riscv.pce_mpu_bios/pce_mpu_bios elf32-littleriscv)
 
 .riscv.attributes

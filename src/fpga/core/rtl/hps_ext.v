@@ -29,14 +29,18 @@ module hps_ext
 	output reg [15:0]		cd_data_out,
 	output reg				cd_dat_download,
 	output reg				cdctl_wr,
-	output reg 				cd_en
+	output reg 				cd_en,
+	input 					AUDIO_almost_full,
+	input 					CD_almost_full
  );
 
 assign EXT_BUS[15:0] = io_dout;
 wire [15:0] io_din = EXT_BUS[31:16];
-assign EXT_BUS[32] = dout_en;
+//assign EXT_BUS[32] = dout_en;
 wire io_strobe = EXT_BUS[33];
 wire io_enable = EXT_BUS[34];
+
+assign EXT_BUS[32] = |{AUDIO_almost_full, CD_almost_full, dout_en};
 
 localparam EXT_CMD_MIN = CD_STATS;
 localparam EXT_CMD_MAX = CD_DATA;

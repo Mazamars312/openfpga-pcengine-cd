@@ -72,10 +72,10 @@ typedef struct
 	uint8_t fru;
 } sense_t;
 
-typedef enum
-{
-        SUBCODE_NONE = 0, SUBCODE_RW, SUBCODE_RW_RAW
-} cd_subcode_types_t;
+// typedef enum
+// {
+//         SUBCODE_NONE = 0, SUBCODE_RW, SUBCODE_RW_RAW
+// } cd_subcode_types_t;
 
 typedef struct
 {
@@ -88,8 +88,8 @@ typedef struct
 	int end = 0;
 	int type = 0;
 	int sector_size = 0;
-	int index1 = 0;
-	cd_subcode_types_t sbc_type;
+	char name[80];
+	// cd_subcode_types_t sbc_type;
 } cd_track_t;
 
 typedef struct
@@ -164,7 +164,6 @@ private:
 	int SectorSend(uint8_t* header);
 	void ReadData();
 	int ReadCDDA();
-	void ReadSubcode(uint16_t* buf);
 	void LBAToMSF(int lba, msf_t* msf);
 	void MSFToLBA(int* lba, msf_t* msf);
 	void MSFToLBA(int* lba, uint8_t m, uint8_t s, uint8_t f);

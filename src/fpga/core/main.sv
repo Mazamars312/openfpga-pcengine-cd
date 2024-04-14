@@ -173,7 +173,7 @@ module pce (
 
   wire VDC_BG_EN = 1;
   wire VDC_SPR_EN = 1;
-  wire                                       [ 1:0] VDC_GRID_EN = 2'd0;
+  wire [ 1:0] VDC_GRID_EN = 2'd0;
   wire CPU_PAUSE_EN = 0;
 
   wire reset = (core_reset | save_download);
@@ -202,7 +202,8 @@ module pce (
   wire         cd_dataout_send;
   wire         cd_reset_req;
   reg          cd_region;
-
+	wire			CD_almost_full;
+	wire			AUDIO_almost_full;
   wire [21:0]  cd_ram_a;
   wire 			cd_ram_rd, cd_ram_wr;
   wire [7:0] 	cd_ram_do;
@@ -281,6 +282,8 @@ module pce (
 
        .CD_DOUT_REQ(cd_dataout_req),
        .CD_DOUT(cd_dataout),
+		 .CD_almost_full(CD_almost_full),
+		 .AUDIO_almost_full(AUDIO_almost_full),
        .CD_DOUT_SEND(cd_dataout_send),
 
        .CD_REGION(cd_region),
@@ -337,7 +340,9 @@ module pce (
 		.cd_dat_download(cd_dat_download),
 		.cdctl_wr(cdctl_wr),
 		.cd_data_out(cd_data_out),
-		.cd_en(cd_en)
+		.cd_en(cd_en),
+		.AUDIO_almost_full(AUDIO_almost_full),
+		.CD_almost_full(CD_almost_full)
    );
 
    reg        cd_dat_req;
@@ -562,6 +567,16 @@ module pce (
 	.sram_lb_n	(sram_lb_n)
 
 );
+
+
+reg [15:0] vram_mem [32767:0];
+
+always @(posedge clk_sys_42_95) begin
+	if (~VRAM1_A[15]) begin
+		if (~VRAM1_WE) vram_mem[VRAM1_A[14:0]] <= VRAM1_DO;
+	VRAM1_DI <= vram_mem[VRAM1_A[14:0]];	
+	end
+end
 
   // Video Ram
 //  reg VIDEO_CE_delay;

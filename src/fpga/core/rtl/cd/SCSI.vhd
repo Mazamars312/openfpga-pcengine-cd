@@ -34,6 +34,7 @@ entity SCSI is
 		
 		CD_DATA		: in std_logic_vector(7 downto 0);
 		CD_WR			: in std_logic;
+		CD_almost_full	: out std_logic;
 		CD_DATA_END	: out std_logic;
 		STOP_CD_SND	: out std_logic;
 		
@@ -116,14 +117,14 @@ begin
 	port map(
 		aclr     => not RESET_N,
 
-		wrclk		=> CLK,
+		clock		=> CLK,
 		data		=> FIFO_D,
 		wrreq		=> FIFO_WR_REQ,
-		wrfull	=> FULL,
+		full		=> FULL,
 		
-		rdclk		=> CLK,
+		almost_full		=> CD_almost_full,
 		rdreq		=> FIFO_RD_REQ,
-		rdempty	=> EMPTY,
+		empty		=> EMPTY,
 		q			=> FIFO_Q
 	);
 

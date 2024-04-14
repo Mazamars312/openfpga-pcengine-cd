@@ -61,11 +61,7 @@ void full_core_reset(){
 // Update dataslots
 
 void core_update_dataslots(){
-	// for (int i = 0; i < 100; i++) {
-	// 	RAMBUFFER(i) = 0;
-	// }
-
-  int tmp = DATASLOT_UPDATE_REG(1);
+  	int tmp = DATASLOT_UPDATE_REG(1);
 	pcecd_set_image(DATASLOT_BRAM(8), DATASLOT_BRAM(9));
 	HPS_spi_uio_cmd8_cont(UIO_SET_SDSTAT, 1);
 	HPS_DisableIO();
@@ -98,6 +94,7 @@ void core_reg_update(){
 
 void core_restart_first(){
 	// what to do to start up the core if required
+	
 };
 
 void core_restart_running_core() {

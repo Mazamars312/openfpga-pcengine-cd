@@ -153,37 +153,43 @@ simple_uart simple_uart (
 reg	littlenden;  
 wire [31:0] 		iBus_cmd_payload_pc;
 wire [31:0] 		iBus_rsp_payload_inst;
-wire iBus_cmd_ready, iBus_cmd_valid;
+wire 					iBus_cmd_ready, iBus_cmd_valid;
+wire 					iBus_rsp_valid;
 reg					interupt_mask;
 wire 					dBus_ram_ready;
 wire 					dBus_cmd_ready;
+wire 					dBus_cmd_valid;
+wire [1:0] 			dBus_cmd_payload_size;
+wire 					dBus_cmd_payload_wr;
 
 controller_rom 
 #(.top_address(16'h8000), // This sets the location on the APF bus to watch out for
   .address_size (5'd14) //Address lines for the memory array
 )
 controller_rom(
-	.clk					(clk_mpu),
-	.reset_n				(reset_n),
+	.clk							(clk_mpu),
+	.reset_n						(reset_n),
 	// Instruction Side
-	.instruction_addr	(iBus_cmd_payload_pc),
-	.instruction_q		(iBus_rsp_payload_inst),
-	.iBus_cmd_valid	(iBus_cmd_valid),
+	.iBus_cmd_payload_pc		(iBus_cmd_payload_pc),
+	.iBus_rsp_payload_inst	(iBus_rsp_payload_inst),
+	.iBus_cmd_valid			(iBus_cmd_valid),
+	.iBus_rsp_valid			(iBus_rsp_valid),
+	.iBus_cmd_ready			(iBus_cmd_ready),
 	// Data Side
-	.data_addr			(dBus_cmd_payload_address),
-	.data_d				(dBus_cmd_payload_data),
-	.data_q				(from_rom),
-	.data_we				(mem_la_write),
-	.dBus_cmd_valid	(dBus_cmd_valid),
-	.data_bytesel		(dBus_cmd_payload_size),
+	.data_addr					(dBus_cmd_payload_address),
+	.data_d						(dBus_cmd_payload_data),
+	.data_q						(from_rom),
+	.data_we						(mem_la_write),
+	.dBus_cmd_valid			(dBus_cmd_valid),
+	.data_bytesel				(dBus_cmd_payload_size),
 	// APF Side
-	.little_enden		(littlenden),
-	.clk_74a				(clk_74a),
-	.bridge_addr		(bridge_addr),
-	.bridge_rd			(bridge_rd),
-	.bridge_rd_data	(mpu_ram_bridge_rd_data),
-	.bridge_wr			(bridge_wr),
-	.bridge_wr_data	(bridge_wr_data)
+	.little_enden				(littlenden),
+	.clk_74a						(clk_74a),
+	.bridge_addr				(bridge_addr),
+	.bridge_rd					(bridge_rd),
+	.bridge_rd_data			(mpu_ram_bridge_rd_data),
+	.bridge_wr					(bridge_wr),
+	.bridge_wr_data			(bridge_wr_data)
 );
 
 
@@ -191,36 +197,13 @@ controller_rom(
 
 // The CPU VexRisc
 
-wire 			cpu_req;
 wire 			mem_la_read, mem_la_write; 
-wire 			dBus_cmd_valid;
-wire [1:0] 	dBus_cmd_payload_size;
-wire 			dBus_cmd_payload_wr;
-reg 			ibus_ready;
-reg 			ibus_valid;
 reg			externalInterrupt;
 reg			interupt_output_1_reg;
 
 assign mem_la_read 	= dBus_cmd_valid && ~dBus_cmd_payload_wr;
 assign mem_la_write	= dBus_cmd_valid &&  dBus_cmd_payload_wr;
 
-// Imem Controller
-
-	always @(posedge clk_mpu) begin
-		if (~reset_n) begin
-			ibus_valid <= 1'b0;
-			ibus_ready <= 1'b0;
-		end 
-		else if(iBus_cmd_valid && ibus_ready) begin
-			// Can read without stall
-			ibus_valid <= 1'b1;
-			ibus_ready <= 1'b1;
-		end 
-		else begin
-			ibus_valid <= 1'b0;
-			ibus_ready <= 1'b1;
-		end
-	end
 
 
 
@@ -230,9 +213,9 @@ assign mem_la_write	= dBus_cmd_valid &&  dBus_cmd_payload_wr;
 		.clk								(clk_mpu), 
 		.reset							(~reset_n),
 		.iBus_cmd_valid				(iBus_cmd_valid),
-		.iBus_cmd_ready				(ibus_ready),
+		.iBus_cmd_ready				(iBus_cmd_ready),
 		.iBus_cmd_payload_pc			(iBus_cmd_payload_pc),
-		.iBus_rsp_valid				(ibus_valid),
+		.iBus_rsp_valid				(iBus_rsp_valid),
 		.iBus_rsp_payload_error		(1'b0),
 		.iBus_rsp_payload_inst		(iBus_rsp_payload_inst),
 		.timerInterrupt				(interupt_output_1_reg && interupt_mask),
@@ -448,67 +431,6 @@ always @(posedge clk_74a) begin
 	mpu_reg_bridge_rd_data <= mpu_reg_bridge_rd_data_reg;
 end
 
-
-/***********************************************************
-	Memory map for the 832 CPU 
-	
-	32'h0000_0000 - 32'h0000_3FFF - Program Ram for the CPU - The program is in here and starts at address 0000_0000. 
-									This is also mapped at address 32'8000_0000 on the APF Bus so data can be up/downloaded 
-									from the APF PIC32. Mostly used for the target dataslot bridge address location.
-	
-	32'hFFFF_0000 - 32'hFFFF_0FFF - Data slot ram from APF Core (R/W)
-	
-	// Target Interface to APF
-	32'hFFFF_FF80 - target_dataslot_id (R/W) 15 bit - For which asset to read 
-	32'hFFFF_FF84 - target_dataslot_bridgeaddr (R/W) 32 bit - Where in ram to place this this data (Buffer and program) (The MPU Ram starts at 32'h8000_0000 to 32'h8000_3FFF )
-	32'hFFFF_FF88 - target_dataslot_length (R/W) 32 bit - How much buffer to pull
-	32'hFFFF_FF8c - target_dataslot_slotoffset (R/W) 32 bit 
-	32'hFFFF_FF90 - target_dataslot Controls (R) Respoce from the APF Core once the reg is written to 
-					{Bit 4 - target_dataslot_ack, 
-					 Bit 3 - target_dataslot_done, 
-					 Bit [2:0] target_dataslot_err[2:0]} 
-	32'hFFFF_FF90 - target_dataslot Controls (W)
-					{Bit 1 - target_dataslot_write - Send a Write signal to the APF ( the target id, Bridgeaddr, length and offset need to be written to first)
-					 Bit 0 - target_dataslot_read - Send a read signal to the APF ( the target id, Bridgeaddr, length and offset need to be written to first)
-	
-	32'hFFFF_FFA4 - Bit 0 Reset_out - Used for reseting the core if required (R/W)
-	
-	// Interupts and dataslot updates 
-	
-	32'hFFFF_FFB0 - Interrupt core - Bit 0 = Dataslot updated by APF (R) Read clears the interupt to the CPU
-	
-	32'hFFFF_FFB4 - dataslot_update_id ID = Dataslot updated by APF (R) 15 bit 
-	32'hFFFF_FFB8 - dataslot_update_size ID = Dataslot updated by APF (R) 32 bit
-	
-	// UART core 
-	32'hFFFF_FFC0 - UART access - ser_rxrecv,ser_txready,ser_rxdata 
-		bit [7:0] data received, 
-		Bit8 - Transmit ready, 
-		Bit9 - Data received (cleared once read) (R)
-	32'hFFFF_FFC0 - UART access 
-		ser_txdata [7:0] data to send (W)
-	
-	32'hFFFF_FFC8 - Timer - millisecond_counter (R) 32 bit
-	
-	The SPI/Mister EXT interface 
-	32'hFFFF_FFD0 - This is setup for the SPI interface (R)
-					Bit [15:0] 	- IO_DIN Data from core 
-					Bit [16]	- IO_WIDE 1 = 16bit, 0 = 8 bit
-					Bit [17]	- io_ack - Data has been ack from core (Both read and writes)
-
-	32'hFFFF_FFD0 - This is setup for the SPI interface (W)
-					Bit [15:0] 	- IO_DIN Data from core 
-					Bit [17]	- io_clk - This is send as a clock from the CPU when data is send or received - Also part of the strobe signal 
-					Bit [18]	- io_ss0
-					Bit [19]	- io_ss1
-					Bit [20]	- io_ss2
-	
-	assign IO_FPGA     = ~io_ss1 & io_ss0; - This is for the CPU to send commands to the FPGA
-	assign IO_UIO      = ~io_ss1 & io_ss2; - This is used for a Broardcast on the bus (Floopy drives use this access)
-	
-
-
-***********************************************************/
 
 reg [31:0] gp_out;
 reg dataslot_data_access;
@@ -806,11 +728,6 @@ always @(posedge clk_sys) begin
 		io_ack <= rack;
 	end
 end
-
-//assign io_clk = gp_out[17];
-//assign io_ss0 = gp_out[18];
-//assign io_ss1 = gp_out[19];
-//assign io_ss2 = gp_out[20];
 
 reg [31:0] gp_outr;
 reg [31:0] gp_outd;

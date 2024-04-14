@@ -62,7 +62,7 @@ static int sgets(char *out, int sz, int cnt)
 		}
 		mainprintf("foo %0.4x cnt %0.4x, %0.4x \r\n", foo1, cnt, &instr);
 	}
-	while ((foo1 - 0x8000) >= cnt);
+	while ((foo1 - 0xe000) >= cnt);
 	return *out;
 }
 
@@ -79,8 +79,10 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 	if (dataslot_size(102) >= 1) file_processer = 1; // this is to confirm that this is a single or multi file system
 	DATASLOT_BRAM_SAVE(0) = (uint32_t)0x00000800;
 
-	foo1 = RAMBUFFER_BASE;
-	clearbufferram();
+	foo1 = 0x0000e000;
+
+
+	// clearbufferram();
 
 	dataslot_read(dataslot, APF_ADDRESS_OFFSET | foo1, 0, toc_size);
 	int mm, ss, bb, pregap = 0;
@@ -93,13 +95,15 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 		/* decode FILE commands */
 		if (!(memcmp(lptr, "FILE", 4)))
 		{
-
+			if ((sscanf(lptr, "FILE %*s", &this->toc.tracks[this->toc.last].name))){
+				//return -1;
+			}
 			if (strstr(lptr, ".wav")){
 				hdr = 44;
 			};
 			pregap = 0;
 
-			this->toc.tracks[this->toc.last].offset = 0;
+			// this->toc.tracks[this->toc.last].offset = 0;
 
 			if (!strstr(lptr, "BINARY") && !strstr(lptr, "MOTOROLA") && !strstr(lptr, "WAVE"))
 			{
@@ -123,9 +127,9 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 				} else {
 					this->toc.tracks[this->toc.last].dataslot = 101;
 					this->toc.tracks[this->toc.last].size  = (int)dataslot_size(101);
-					this->toc.tracks[this->toc.last].opened = 0;
+					this->toc.tracks[this->toc.last].opened = 1;
 				}
-				if (this->toc.tracks[this->toc.last].size > 0) this->toc.tracks[this->toc.last].opened = 1;
+				// if (this->toc.tracks[this->toc.last].size > 0) this->toc.tracks[this->toc.last].opened = 1;
 				if (strstr(lptr, "MODE1/2048"))
 				{
 					this->toc.tracks[this->toc.last].sector_size = 2048;
@@ -145,17 +149,17 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 
 			if (this->toc.last)
 			{
-				if (!this->toc.tracks[this->toc.last].opened)
-				{
-					this->toc.tracks[this->toc.last - 1].end = 0;
-				}
+				// if (!this->toc.tracks[this->toc.last].opened)
+				// {
+				// 	this->toc.tracks[this->toc.last - 1].end = 0;
+				// }
 			}
 		}
 
 		/* decode PREGAP commands */
 		else if (sscanf(lptr, "PREGAP %02d:%02d:%02d", &mm, &ss, &bb) == 3)
 		{
-			pregap += bb + ss * 75 + mm * 60 * 75;
+			pregap += bb + (ss * 75) + (mm * 60 * 75);
 		}
 		/* decode INDEX commands */
 		else if ((sscanf(lptr, "INDEX 00 %02d:%02d:%02d", &mm, &ss, &bb) == 3) ||
@@ -163,29 +167,32 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 		{
 			if (this->toc.last && !this->toc.tracks[this->toc.last - 1].end)
 			{
-				this->toc.tracks[this->toc.last - 1].end = bb + ss * 75 + mm * 60 * 75 + pregap;
+				this->toc.tracks[this->toc.last - 1].end = bb + (ss * 75) + (mm * 60 * 75) + pregap;
 			}
 		}
 		else if ((sscanf(lptr, "INDEX 01 %02d:%02d:%02d", &mm, &ss, &bb) == 3) ||
-			(sscanf(lptr, "INDEX 1 %02d:%02d:%02d", &mm, &ss, &bb) == 3))
+			     (sscanf(lptr, "INDEX 1 %02d:%02d:%02d", &mm, &ss, &bb) == 3))
 		{
-			if (!this->toc.tracks[this->toc.last].opened)
+			if (this->toc.tracks[this->toc.last].opened)
 			{
-				this->toc.tracks[this->toc.last].start = bb + ss * 75 + mm * 60 * 75 + pregap;
-				this->toc.tracks[this->toc.last].offset = (pregap * this->toc.tracks[this->toc.last].sector_size) - hdr;
+				this->toc.tracks[this->toc.last].start = bb + (ss * 75) + (mm * 60 * 75) + pregap;
+				this->toc.tracks[this->toc.last].offset = (this->toc.tracks[this->toc.last].start * this->toc.tracks[this->toc.last].sector_size) - hdr;
 				if (this->toc.last && !this->toc.tracks[this->toc.last - 1].end)
 				{
 					this->toc.tracks[this->toc.last - 1].end = this->toc.tracks[this->toc.last].start;
 				}
+				mainprintf("opened %u %d \r\n", pregap, hdr);
 			}
 			else
 			{
+
 				this->toc.tracks[this->toc.last].start = this->toc.end + pregap;
 				this->toc.tracks[this->toc.last].offset = (this->toc.tracks[this->toc.last].start * this->toc.tracks[this->toc.last].sector_size) - hdr;
-				this->toc.tracks[this->toc.last].end = this->toc.tracks[this->toc.last].start + ((this->toc.tracks[this->toc.last].size - hdr + this->toc.tracks[this->toc.last].sector_size - 1) / this->toc.tracks[this->toc.last].sector_size);
+				this->toc.tracks[this->toc.last].end = (this->toc.tracks[this->toc.last].start + ((this->toc.tracks[this->toc.last].size - hdr + this->toc.tracks[this->toc.last].sector_size - 1)) / this->toc.tracks[this->toc.last].sector_size);
 
-				this->toc.tracks[this->toc.last].start += (bb + ss * 75 + mm * 60 * 75);
+				this->toc.tracks[this->toc.last].start += (bb + (ss * 75) + (mm * 60 * 75));
 				this->toc.end = this->toc.tracks[this->toc.last].end;
+				mainprintf(" not opened %u %u %u %u\r\n", this->toc.tracks[this->toc.last].start, this->toc.tracks[this->toc.last].end, this->toc.tracks[this->toc.last].offset, this->toc.tracks[this->toc.last].offset);
 			}
 			this->toc.last++;
 			if (file_processer){
@@ -196,23 +203,31 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 		}
 	}
 
+	if (this->toc.tracks[this->toc.last - 1].opened) {
+		this->toc.tracks[this->toc.last - 1].end = this->toc.tracks[this->toc.last - 1].start + ((this->toc.tracks[this->toc.last - 1].size - this->toc.tracks[this->toc.last - 1].offset) / this->toc.tracks[this->toc.last - 1].sector_size );		
+		this->toc.end = this->toc.tracks[this->toc.last - 1].end;mainprintf("opened %u %d \r\n", pregap, hdr);
+	}
+
 	if (this->toc.last && !this->toc.tracks[this->toc.last - 1].end)
 	{
 		this->toc.end += pregap;
 		this->toc.tracks[this->toc.last - 1].end = this->toc.end;
 	}
+	
 	for (int i = 0; i < this->toc.last; i++)
 	{
-		mainprintf("\x1b[32mPCECD: Track = %u, start = %u, end = %u, offset = %d, sector_size=%d, type = %u, dataslot = %u\r\n\x1b[0m", i, this->toc.tracks[i].start, this->toc.tracks[i].end, this->toc.tracks[i].offset, this->toc.tracks[i].sector_size, this->toc.tracks[i].type, this->toc.tracks[i].dataslot);
+		mainprintf("\x1b[32mPCECD: size = %u Track = %u, start = %u, end = %u, offset = %u, sector_size=%d, type = %u, dataslot = %u opend = %u name = %s\r\n\x1b[0m", i, this->toc.tracks[i].size, this->toc.tracks[i].start, this->toc.tracks[i].end, this->toc.tracks[i].offset, this->toc.tracks[i].sector_size, this->toc.tracks[i].type, this->toc.tracks[i].dataslot, this->toc.tracks[i].opened, this->toc.tracks[this->toc.last].name);
 	}
+	
 	mainprintf("Dataslot 0 %d %d \r\n", DATASLOT_BRAM(0), DATASLOT_BRAM(1));
-  mainprintf("Dataslot 1 %d %d \r\n", DATASLOT_BRAM(2), DATASLOT_BRAM(3));
-  mainprintf("Dataslot 2 %d %d \r\n", DATASLOT_BRAM(4), DATASLOT_BRAM(5));
-  mainprintf("Dataslot 3 %d %d \r\n", DATASLOT_BRAM(6), DATASLOT_BRAM(7));
-  mainprintf("Dataslot 99 %d %d \r\n", DATASLOT_BRAM(8), DATASLOT_BRAM(9));
-  mainprintf("Dataslot 101 %d %d \r\n", DATASLOT_BRAM(10), DATASLOT_BRAM(11));
+	mainprintf("Dataslot 1 %d %d \r\n", DATASLOT_BRAM(2), DATASLOT_BRAM(3));
+	mainprintf("Dataslot 2 %d %d \r\n", DATASLOT_BRAM(4), DATASLOT_BRAM(5));
+	mainprintf("Dataslot 3 %d %d \r\n", DATASLOT_BRAM(6), DATASLOT_BRAM(7));
+	mainprintf("Dataslot 99 %d %d \r\n", DATASLOT_BRAM(8), DATASLOT_BRAM(9));
+	mainprintf("Dataslot 101 %d %d \r\n", DATASLOT_BRAM(10), DATASLOT_BRAM(11));
+	mainprintf("toc.end %u %u\r\n", this->toc.end, toc.last);
   // mainprintf("Dataslot 102 %d %d %d %0.4x \r\n", DATASLOT_BRAM(12), DATASLOT_BRAM(13), dataslot, RAMBUFFER_BASE);
-	clearbufferram();
+	// clearbufferram();
 	return 1;
 }
 
@@ -250,7 +265,6 @@ void cue_t::Unload()
 				this->toc.tracks[i].end = 0;
 				this->toc.tracks[i].type = 0;
 				this->toc.tracks[i].sector_size = 0;
-				this->toc.tracks[i].index1 = 0;
 			}
 			this->loaded = 0;
 			this->toc.end=0;
@@ -280,6 +294,7 @@ void cue_t::Reset() {
 }
 
 void cue_t::Update() {
+	// mainprintf ("LBA master READING %d \r\n", this->lba);
 	if (this->state == CD_STATE_READ)
 	{
 		if (this->latency > 0)
@@ -302,6 +317,7 @@ void cue_t::Update() {
 		if (this->toc.tracks[this->index].type)
 		{
 			// CD-ROM (Mode 1)
+			mainprintf ("LBA READING %d %d\r\n", this->lba, (this->lba * 2352));
 			ReadData();
 		}
 		else
@@ -329,11 +345,13 @@ void cue_t::Update() {
 			this->index++;
 
 			this->isData = 0x01;
-
-			if (this->toc.tracks[this->index].opened)
-			{
-				RISCFileSeek(this->toc.tracks[this->index].dataslot, (this->toc.tracks[this->index].start * 2352) - this->toc.tracks[this->index].offset, 2352);
+			//mainprintf ("LBA READING %0.4x \r\n", this->lba);
+			if (this->toc.tracks[this->index].opened) {
+				RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352, 2352);
+			}else{
+				RISCFileSeek(this->toc.tracks[this->index].dataslot, (this->lba * 2352 - this->toc.tracks[this->index].offset), 2352);
 			}
+
 		}
 	}
 	else if (this->state == CD_STATE_PLAY)
@@ -349,16 +367,18 @@ void cue_t::Update() {
 			this->audiodelay--;
 			return;
 		}
-
+		
 		this->index = GetTrackByLBA(this->lba, &this->toc);
 
 		for (int i = 0; i <= this->CDDAFirst; i++)
 		{
 			if (!this->toc.tracks[this->index].type)
 			{
-				if (this->toc.tracks[this->index].opened)
-				{
-					RISCFileSeek(this->toc.tracks[index].dataslot, (this->lba * 2352) - this->toc.tracks[index].offset, 2352);
+				
+				if (this->toc.tracks[this->index].opened) {
+					RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352, 2352);
+				}else{
+					RISCFileSeek(this->toc.tracks[this->index].dataslot, ((this->lba * 2352) - this->toc.tracks[this->index].offset), 2352);
 				}
 				ReadCDDA();
 			}
@@ -389,9 +409,15 @@ void cue_t::Update() {
 			return;
 		}
 	}
+
+	int lba_test;
+	lba_test = this->lba;
+	int index_test = GetTrackByLBA(lba_test, &this->toc);
+	lba_test = lba_test - this->toc.tracks[index_test].start;
+
 	msf_t msf;
-	LBAToMSF(this->lba, &msf);
-	osd_display_timing(this->index + 1,  BCD(msf.m) , BCD(msf.s));
+	LBAToMSF(lba_test, &msf);
+	osd_display_timing(this->index + 1,  msf.m , msf.s);
 }
 
 void cue_t::CommandExec() {
@@ -445,6 +471,7 @@ void cue_t::CommandExec() {
 			buf[4] = 0;
 			buf[5] = 0;
 			len = 4 + 2;
+			mainprintf("Command 0 T %u \r\n", (this->toc.last));
 			break;
 		case 1:
 			new_lba = this->toc.end + 150;
@@ -455,6 +482,7 @@ void cue_t::CommandExec() {
 			buf[2] = BCD(msf.m);
 			buf[3] = BCD(msf.s);
 			buf[4] = BCD(msf.f);
+			mainprintf("Command 1 M %0.4x S %0.4x F %0.4x  M %0.4x S %0.4x F %0.4x\r\n", buf[2], buf[3], buf[4], msf.m, msf.s, msf.f);
 			buf[5] = 0;
 			len = 4 + 2;
 			break;
@@ -470,6 +498,7 @@ void cue_t::CommandExec() {
 			buf[3] = BCD(msf.s);
 			buf[4] = BCD(msf.f);
 			buf[5] = this->toc.tracks[track - 1].type << 2;
+			mainprintf("Command 2 M %0.4x S %0.4x F %0.4x  M %0.4x S %0.4x F %0.4x start %d \r\n", buf[2], buf[3], buf[4], msf.m, msf.s, msf.f, this->toc.tracks[track - 1].start);
 			len = 4 + 2;
 			break;
 		}
@@ -514,11 +543,6 @@ void cue_t::CommandExec() {
 		this->lba = new_lba;
 		this->cnt = cnt_;
 
-		// if (this->toc.tracks[index].opened)
-		// {
-		// 	int offset = (new_lba * this->toc.tracks[index].sector_size) - this->toc.tracks[index].offset;
-		// 	RISCFileSeek(this->toc.tracks[index].dataslot, offset, this->toc.tracks[index].sector_size);
-		// }
 
 		this->audioOffset = 0;
 		this->can_read_next = true;
@@ -740,13 +764,25 @@ int cue_t::GetTrackByLBA(int lba, toc_t* toc) {
 void cue_t::ReadData()
 {
 	if (this->toc.tracks[this->index].type && (this->lba >= 0))
-	{
+	{	
+			mainprintf ("LBA READING %0.4x \r\n", this->lba);
+			int32_t temp_LBA;
 			if (this->toc.tracks[this->index].sector_size == 2048)
 			{
-				RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2048 - this->toc.tracks[this->index].offset, 2048);
+				if (this->toc.tracks[this->index].opened) {
+					RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2048, 2048);
+				}else{
+					temp_LBA = (this->lba* 2048) - this->toc.tracks[this->index].offset;
+					RISCFileSeek(this->toc.tracks[this->index].dataslot, temp_LBA, 2048);
+				}
 				RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x00,(0x08 | 0x80),UIO_CD_DATA, 2048);
 			} else {
-				RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352 + 16 - this->toc.tracks[this->index].offset, 2352);
+				if (this->toc.tracks[this->index].opened) {
+					RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352 + 16, 2352);
+				}else{
+					temp_LBA = (this->lba * 2352) - this->toc.tracks[this->index].offset;
+					RISCFileSeek(this->toc.tracks[this->index].dataslot, temp_LBA + 16, 2352);
+				}
 				RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x00,(0x08 | 0x80),UIO_CD_DATA, 2352);
 			}
 	}
@@ -754,35 +790,15 @@ void cue_t::ReadData()
 
 int cue_t::ReadCDDA()
 {
-	this->audioLength = 2352;// 2352 + 2352 - this->audioOffset;
+	this->audioLength = 2352;
 	this->audioOffset = 0;// 2352;
 
-	if (this->toc.tracks[this->index].opened) {
-		RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x30,0x09,UIO_CD_DATA, this->audioLength);
-	}
-
+	// if (this->toc.tracks[this->index].opened) {
+		RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x30,0x09,UIO_CD_DATA,2352);
+	// }
+	
+	// mainprintf("Audio reading 2\r\n");
 	return this->audioLength;
-}
-
-void cue_t::ReadSubcode(uint16_t* buf)
-{
-	(void)buf;
-	/*
-	uint8_t subc[96];
-	int i, j, n;
-	fread(subc, 96, 1, this->toc.sub);
-	for (i = 0, n = 0; i < 96; i += 2, n++)
-	{
-		int code = 0;
-		for (j = 0; j < 8; j++)
-		{
-			int bits = (subc[(j * 12) + (i / 8)] >> (6 - (i & 6))) & 3;
-			code |= ((bits & 1) << (7 - j));
-			code |= ((bits >> 1) << (15 - j));
-		}
-		buf[n] = code;
-	}
-	*/
 }
 
 void cue_t::CommandError(uint8_t key, uint8_t asc, uint8_t ascq, uint8_t fru) {

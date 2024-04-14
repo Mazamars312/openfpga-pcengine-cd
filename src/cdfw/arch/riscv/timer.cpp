@@ -130,7 +130,7 @@ uint32_t RISCCheckTimer2(uint32_t time)
 {
   uint32_t temp = RISCGetTimer2(0, 0);
   if (temp >= time){
-  mainprintf("%d \r\n",temp );
+  // mainprintf("%d \r\n",temp );
   }
 	return (!time) || (temp >= time);
 }

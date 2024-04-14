@@ -34,11 +34,11 @@
 #include "fileio.h"
 #include "osd_menu.h"
 // #include "printf.h"
-#define MEM_BUFFER_SIZE_C (16 * 1024)
-#define MEM_BUFFER_SIZE_TOTAL (32 * 1024)
+#define MEM_BUFFER_SIZE_C (8 * 1024)
+#define MEM_BUFFER_SIZE_TOTAL (2 * MEM_BUFFER_SIZE_C)
 // We are making two 16K cache buffers for these commands and they will cache them in the memory locations
-uint8_t sector_buffer1[MEM_BUFFER_SIZE_C] __attribute__((section("SRAM"))); // We have to set an attribute to help point the program in to the 32K buffer that the APF bus has access to after the MPU has been restarted
-uint8_t sector_buffer0[MEM_BUFFER_SIZE_C] __attribute__((section("SRAM"))); // We have to set an attribute to help point the program in to the 32K buffer that the APF bus has access to after the MPU has been restarted
+uint8_t sector_buffer1[MEM_BUFFER_SIZE_C]; // We have to set an attribute to help point the program in to the 32K buffer that the APF bus has access to after the MPU has been restarted
+uint8_t sector_buffer0[MEM_BUFFER_SIZE_C]; // We have to set an attribute to help point the program in to the 32K buffer that the APF bus has access to after the MPU has been restarted
 
 uint32_t wait_timer = 0;
 uint32_t sector_buffer_dataslot = 0; // Which data slot is active in cache
@@ -52,19 +52,22 @@ uint32_t sector_buffer_offset = 0;
 uint32_t sector_buffer_processing = 0;
 uint32_t sector_buffer_transfer_size_max = 0;   // Buffer 0 size offset in the file 16K this is so we know how many sectors are being moved in the media
 
-void clearbufferram(){
+uint32_t clearbufferram(){
   int i = 0;
   do {
-  RAMBUFFER(i) = 0;
+  sector_buffer0[i] = 0;
+  sector_buffer1[i] = 0;
   i++;
-} while (i < (MEM_BUFFER_SIZE_TOTAL/4));
+  } while (i < (MEM_BUFFER_SIZE_C));
+  uint32_t foo0 = (uint32_t) &sector_buffer0;
+  return foo0;
 }
 
 uint32_t sector_buffer_transfer_size_max_process(int dataslot, uint32_t offset){
   uint32_t file_size = 0;   // Buffer 0 size offset in the file 16K this is so we know how many sectors are being moved in the media
   file_size = dataslot_size(dataslot);
   int32_t file_left_over = (int32_t)(file_size - offset);
-
+  
   if (file_left_over >= (MEM_BUFFER_SIZE_C)){
     return(MEM_BUFFER_SIZE_C);
   } else {
