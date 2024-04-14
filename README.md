@@ -23,7 +23,7 @@ There is still a lot to be done in this core as there is still a lot to do. It
 was always more of a display core on what the pocket can do.
 
 PLEASE NOTE THAT CHD FILES WILL NOT BE SUPPORTED. Many times I have ben asked. But I have always said that 
-the MPU is only a small processer with about 64K of ram, which Im already using 
+the MPU is only a small processer with about 64K of RAM, which Im already using 
 90% of that for this core. CHD uses a lot of compression that would slow down the 
 processor and will cause a lot of overhead. 
 
@@ -45,7 +45,7 @@ What is left after this build?
 -	More sync issues with the CD Audio with some games.
 
 -	Please note that this was a show of concept that the Pocket can do CDROM based cores. So 
-	I hope others might take over on this core to inprove on it.
+	I hope others might take over on this core to improve on it.
 
 
 Change log from 0.1.7:
@@ -55,8 +55,8 @@ Change log from 0.1.7:
 	cpu in a reliable way.
 	
 -	Made the MPU get data from the APF bus without having two lots of BRAM. This currently 
-	Pasues the Instruction side of the MPU from 1 to 3 Clock cycles with duel ported BRAM 
-	modules. Can be used with the Amiga core???
+	Pauses the Instruction side of the MPU from 1 to 3 Clock cycles with duel ported BRAM 
+	modules. This process can be used with the Amiga core maybe???
 
 -   Correction of the timing in the CD core so the correct Minutes, seconds and 
 	Frames are sent.
@@ -78,6 +78,9 @@ Known Bugs:
 
 -	Have not tested games that crash halfway in. Maybe some testers can confirm this 
 	for me later on
+
+-   Games that have FMV use track latency to keep the timing do de-sync at this moment.
+    Will have a look at this in the next build.
 
 Change log from 0.1.6:
 ----------------------
@@ -106,7 +109,8 @@ Notices For running this core
 -   Your SDcard needs to be formated as an exFAT as we have found that FAT32
     formated SDcards have a lot of lag on them due to a bug in the APF
     firmware.(Analogue knows about this bug and is fixing this). Also having a
-    cluster size of 32K seams to help as well for access times.
+    cluster size of 32K seams to help as well for access times. - This has been
+    resolved in later firmwares of the Analogue Pocket.
 
 -   With Multi-BIN files you can only have 27 tracks as a maximum limit due to
     the limited data slots the APF can handle (You can use single CUE/BIN Isos
@@ -127,21 +131,18 @@ Notices For running this core
     memory due to chip size. Will work later on this next for this core to
     complete it.
 
--   Audio skipping has been found and this could be a firmware issue. An Audio
-    delay option has been added to change how long it takes to send the audio to
-    the core. (Smaller Number == faster time sending data/Audio)
-
 -   CD Debugging has the track, Minute and Second timers as well as a delay
     counter when a delay happens from the APF framework. This will most likely
     show that the APF or the SDcard is having an issue getting the data and then
-    sending it. Default is 954000 clock cycles.
+    sending it. 
 
 -   you will need to check that the Cue files are being generated correctly for
     timing and popping sounds. the Audio Delay can also help on this.
 
 -   Repeating of some tracks might need to be looked at more as this could be a
     end of file issue with the APF. Have added a error menu that stays on for 2
-    seconds if this happens.
+    seconds if this happens. - Most of this has been resolved Some games do allow
+    some over run of audio to the next track
 
 Installation and Usage
 ----------------------
