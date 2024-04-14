@@ -2,7 +2,8 @@ PC Engine CD 0.2.0 ALPHA for Analogue Pocket
 ============================================
 
 This is a pre-release of the 0.2.0 version, which will have some more upgrades to the
-MPU core code.
+MPU core code. Nothing in the PCE core has been changed that might be causing bugs in the 
+runtime. So please keep that in mind.
 
 Ported from the core originally developed by [Gregory
 Estrade](https://github.com/Torlus/FPGAPCE) and heavily modified by
@@ -29,7 +30,7 @@ processor and will cause a lot of overhead.
 What will make this PCECD 0.2.0 ALPHA completed Release?
 --------------------------------------------------------
 
--	Get 99 tracks with Multi file BIN/CUE Files 
+-	Get 99 tracks with Multi file BIN/CUE Files  with the new APF framework
 
 - 	Remove the need for the requirement of JSON Files. (Yes it is now doable I just 
 	need to do all the checks in the core)
