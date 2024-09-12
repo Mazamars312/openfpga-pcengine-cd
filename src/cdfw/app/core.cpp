@@ -52,17 +52,16 @@ void full_core_reset(){
 	core_reset(0); // this sends the reset command to core - This one uses the AFP registor for this as the Amiga has 3 types of reset.
 	riscusleep(200);
 	AFP_REGISTOR(0) = 0;	// This makes the reset registor on the APF bus go back to zero for the user to see - need to do a read-modify-write back here
-	riscusleep(20000);
-	core_update_dataslots();
+	riscusleep(50000);
 	core_reset(1);	// activate the core
-	riscusleep(500);
+	riscusleep(50000);
 	mainprintf("Completed the reset\r\n");
 }
 // Update dataslots
 
 void core_update_dataslots(){
   	int tmp = DATASLOT_UPDATE_REG(1);
-	pcecd_set_image(DATASLOT_BRAM(8), DATASLOT_BRAM(9));
+	pcecd_set_image(DATASLOT_BRAM(0), DATASLOT_BRAM(1));
 	HPS_spi_uio_cmd8_cont(UIO_SET_SDSTAT, 1);
 	HPS_DisableIO();
 	mainprintf("UPLOADS\r\n");

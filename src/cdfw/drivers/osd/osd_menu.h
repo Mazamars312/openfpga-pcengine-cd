@@ -33,8 +33,8 @@
 #include "timer.h"
 
 static int error_system = 0;
+static int error_dataslot = 0;
 void osd_display_error_dataslot(int data_error);
-void osd_display_error(int data_error);
 void osd_display_info();
 void osd_display_timing (uint8_t n1, uint8_t n2, uint8_t n3);
 void osd_display_info_update(int timer_wait);

@@ -7,12 +7,12 @@
       "description": "PC Engine (known as TurboGrafx-16 in the US) by NEC",
       "author": "Mazamars312",
       "url": "https://github.com/Mazamars312/openfpga-pcengine-cd/",
-      "version": "0.2.0",
-      "date_release": "2024-04-14"
+      "version": "0.2.3",
+      "date_release": "2024-11-12"
     },
     "framework": {
       "target_product": "Analogue Pocket",
-      "version_required": "1.1",
+      "version_required": "2.3",
       "sleep_supported": false,
       "dock": {
         "supported": true,

@@ -32,44 +32,6 @@ uint8_t nstore2;
 uint8_t nstore3;
 uint8_t frame_counter = 0;
 
-
-void osd_display_error(int data_error){
-  error_system = 1;
-  OsdWrite("------------NO FILES-------E00");
-  OsdUpdate(0);
-  OsdClear();
-  OsdWrite("     Please check the JSON    ");
-  OsdUpdate(1);
-  OsdClear();
-  OsdWrite("    Files could be found in   ");
-  OsdUpdate(2);
-  OsdClear();
-  OsdWrite("        the APF Search.       ");
-  OsdUpdate(3);
-  OsdClear();
-  OsdWrite(" Check Directory Locations in ");
-  OsdUpdate(4);
-  OsdClear();
-  OsdWrite("        The JSON File 			");
-  OsdUpdate(5);
-  OsdClear();
-  OsdWrite("   Also check file names are  ");
-  OsdUpdate(6);
-  OsdClear();
-  OsdWrite("     below 100 Charractors    ");
-  OsdUpdate(7);
-  OsdClear();
-  sprintf (s, "         dataslot %d        ", data_error);
-  OsdWrite(s);
-  OsdUpdate(8);
-  OsdClear();
-
-  OsdWrite("------------------------------");
-  OsdUpdate(9);
-  OsdClear();
-  InfoEnable(5, 80, 30, 10, 192, 65535); // Had to use the info as some of the PCE outputs are smaller
-}
-
 void osd_display_error_apf(){
   
 };
@@ -86,8 +48,7 @@ void osd_display_info(){
     OsdClear();
     if (frame_counter != 0) {
       InfoEnable(10, 10, 16, 2, 291, 31744); // Had to use the info as some of the PCE outputs are smaller
-      ResetTimer2();
-      timer_wait_hold  = RISCGetTimer2(0, 148500000);
+      timer_wait_hold  = RISCGetTimer2(200);
       frame_counter = frame_counter - 1;
     }
     else {
@@ -116,43 +77,148 @@ void osd_display_timing (uint8_t n1, uint8_t n2, uint8_t n3){
 }
 
 void osd_display_error_dataslot (int data_error){
-  error_system = 1;
-  // switch(data_error)
-  // {
-  // case 4:
-  sprintf (s, "-------Dataslot Error----%d", data_error);
-  OsdWrite(s);
-  OsdUpdate(0);
-  OsdClear();
-  OsdWrite("     Please check the file   ");
-  OsdUpdate(1);
-  OsdClear();
-  OsdWrite("     size or the cue times   ");
-  OsdUpdate(2);
-  OsdClear();
-  OsdWrite("        the APF Search.       ");
-  OsdUpdate(3);
-  OsdClear();
-  OsdWrite(" Check Directory Locations in ");
-  OsdUpdate(4);
-  OsdClear();
-  OsdWrite("        The JSON File 			");
-  OsdUpdate(5);
-  OsdClear();
-  OsdWrite("   Also check file names are  ");
-  OsdUpdate(6);
-  OsdClear();
-  OsdWrite("     below 100 Charractors    ");
-  OsdUpdate(7);
-  OsdClear();
-  sprintf (s, "         dataslot %d        ", data_error);
-  OsdWrite(s);
-  OsdUpdate(8);
-  OsdClear();
+  switch(data_error)
+  {
+  case 6:
+    OsdWrite("-----------Core Error----------");
+    OsdUpdate(0);
+    OsdClear();
+    OsdWrite("This function is not added yet");
+    OsdUpdate(1);
+    OsdClear();
+    OsdWrite("Please quit the core and reload");
+    OsdUpdate(2);
+    OsdClear();
+    OsdWrite("the game that you want to play");
+    OsdUpdate(3);
+    OsdClear();
+    OsdWrite("      upcoming function");
+    OsdUpdate(4);
+    OsdClear();
+    OsdWrite("Now Im just wasting codespace" );
+    OsdUpdate(5);
+    OsdClear();
+    OsdWrite("ULTRAFP64 is a pain in the ass");
+    OsdUpdate(6);
+    OsdClear();
+    OsdWrite("Im also one too, but I drink");
+    OsdUpdate(7);
+    OsdClear();
+    OsdWrite("more. Will Fix later YAY - MAZA  ");
+    OsdUpdate(8);
+    OsdClear();
+    OsdWrite("ULTRAFP64 COMING SOON");
+    OsdUpdate(9);
+    OsdClear();
+    OsdWrite("------------------------------");
+    OsdUpdate(10);
+    OsdClear();
+    OsdWrite("I hate that guy Maza - UFP64");
+    OsdUpdate(11);
+    OsdClear();
+    InfoEnable(5, 80, 31, 12, 192, 65535); // Had to use the info as some of the PCE outputs are smaller
+    break;
 
-  OsdWrite("------------------------------");
-  OsdUpdate(9);
-  OsdClear();
-  InfoEnable(5, 80, 30, 10, 192, 65535); // Had to use the info as some of the PCE outputs are smaller
+  case 5:
+    OsdWrite ("----------Core Error--------");
+    OsdUpdate(0);
+    OsdClear();
+    OsdWrite("The Core did something weird");
+    OsdUpdate(1);
+    OsdClear();
+    OsdWrite("the MPU received a reset ");
+    OsdUpdate(2);
+    OsdClear();
+    OsdWrite("command from the core. ");
+    OsdUpdate(3);
+    OsdClear();
+    OsdWrite("If this is a hacked CD ISO  ");
+    OsdUpdate(4);
+    OsdClear();
+    OsdWrite("This could be a unallighed" );
+    OsdUpdate(5);
+    OsdClear();
+    OsdWrite("Data location for the TOC   ");
+    OsdUpdate(6);
+    OsdClear();
+    OsdWrite("Pain in the ass error to fix");
+    OsdUpdate(7);
+    OsdClear();
+    OsdWrite("Will Fix later YAY - MAZA  ");
+    OsdUpdate(8);
+    OsdClear();
+    OsdWrite("ULTRAFP64 COMING SOON");
+    OsdUpdate(9);
+    OsdClear();
+    OsdWrite("------------------------------");
+    OsdUpdate(10);
+    OsdClear();
+    InfoEnable(10, 80, 30, 11, 192, 65535); // Had to use the info as some of the PCE outputs are smaller
+    break;
+
+  default:
+    sprintf (s, "-------DataFile Error---- %d", data_error);
+    OsdWrite(s);
+    OsdUpdate(0);
+    OsdClear();
+    OsdWrite("     Please check the files  ");
+    OsdUpdate(1);
+    OsdClear();
+    OsdWrite(" are in the correct location");
+    OsdUpdate(2);
+    OsdClear();
+    OsdWrite(" or both the File and folder ");
+    OsdUpdate(3);
+    OsdClear();
+    OsdWrite(" name is below 255 Charrators");
+    OsdUpdate(4);
+
+    OsdClear();
+    OsdWrite("         Directory");
+    OsdUpdate(5);
+
+    OsdClear();
+    snprintf (s, 30," %s", aft.aft_filepath);
+    OsdWrite(s);
+    OsdUpdate(6);
+    
+    OsdClear();
+    snprintf (s, 30," %s", aft.aft_filepath + 29);
+    OsdWrite(s);
+    OsdUpdate(8);
+
+    OsdClear();
+    snprintf (s, 30," %s", aft.aft_filepath + 58);
+    OsdWrite(s);
+    OsdUpdate(9);
+
+    OsdClear();
+    OsdWrite("Trying to find the File Name  ");
+    OsdUpdate(10);
+    
+    OsdClear();
+    snprintf (s, 30," %s", aft.aft_filename);
+    OsdWrite(s);
+    OsdUpdate(11);
+    
+    OsdClear();
+    snprintf (s, 30," %s", aft.aft_filename + 29);
+    OsdWrite(s);
+    OsdUpdate(12);
+
+    OsdClear();
+    snprintf (s, 30," %s", aft.aft_filename + 58);
+    OsdWrite(s);
+    OsdUpdate(13);
+
+    OsdClear();
+    OsdWrite("------------------------------");
+    OsdUpdate(14);
+    OsdClear();
+    InfoEnable(10, 80, 30, 15, 192, 65535); // Had to use the info as some of the PCE outputs are smaller
+    break;
+  }
+
+
 
 }

@@ -59,7 +59,7 @@ void ResetTimer()
 
 void SetTimer() // makes a time length - this is used for the timer interupt
 {
-  HW_SYSCLOCK(0) = SYS_CLOCK * 100;
+  HW_SYSCLOCK(0) = (SYS_CLOCK - 10) * 10;
 };
 
 void riscusleep(int time)
@@ -117,21 +117,18 @@ unsigned int CheckTimer1(unsigned int time)
     return(time > (1UL << 31));
 }
 
-uint32_t RISCGetTimer2(uint32_t offset, int fraction)
+uint32_t RISCGetTimer2(uint32_t fraction)
 {
   uint32_t res;
-  // res = HW_TIMER1_FAST(REG_MILLISECONDS);
-  res = (offset * 74250) + HW_TIMER2_FAST(REG_MILLISECONDS) + fraction;
-  // res = res + fraction;
+  res = HW_TIMER2(REG_MILLISECONDS) + fraction;
+  
   return(res);
 }
 
-uint32_t RISCCheckTimer2(uint32_t time)
+bool RISCCheckTimer2(uint32_t time)
 {
-  uint32_t temp = RISCGetTimer2(0, 0);
-  if (temp >= time){
-  // mainprintf("%d \r\n",temp );
-  }
+  uint32_t temp = RISCGetTimer2(0);
+  
 	return (!time) || (temp >= time);
 }
 

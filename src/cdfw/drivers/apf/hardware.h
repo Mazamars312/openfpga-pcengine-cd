@@ -27,6 +27,8 @@
 #include <inttypes.h>
 #include <stdio.h>
 
+
+
 #define RESTARTBASE               0xFFFFFFA4
 #define AFP_REGISTOR_BASE         0xffffff00
 #define IO_CORE_REGISTOR_BASE     0xffffff50
@@ -39,15 +41,52 @@
 
 #define RAMBUFFER_BASE            0x00008000
 
+// Global Shit!!!!
+// We need to make sure that the AFP stuff is here as Im sick of not having it everywhere and then needing it, then having it and not needing it..... Yea AVP Quote here without the Condom.
+
+typedef struct dataslot_type
+{
+    uint16_t aft_dataslot;
+    char aft_filename[255];
+    char aft_filepath[255];
+    uint32_t aft_op_flags;
+    uint32_t aft_op_filesize;
+    uint32_t aft_filesize;
+} dataslot_type;
+
+extern dataslot_type aft;
+
+extern bool file_error_enabled;
+extern int file_error_code;
+extern int apf_data_already_streamed;
+
+/*********************************
+ * 
+ * Error codes for APF
+ * 
+ *********************************/
+
+#define error_info_dataslot_Faild 1;
+#define error_info_dataslot_File_Not_Found 2;
+#define error_info_dataslot_Load_Faild 3;
+#define error_info_dataslot_save_Faild 4;
+#define error_info_Core_Restart_code 5;
+#define error_info_Core_data_slot_change 6;
+
+#define MAIN_ADDRESS_OFFSET          0x00000000 // We want to make sure we advise the APF where the BRAM is of the CPU
+#define MAIN_SCRACH_ADDRESS_OFFSET   0x01000000 // We want to make sure we advise the APF where the BRAM is of the CPU
+#define MAIN_PSRAM_ADDRESS_OFFSET    0x02000000 // We want to make sure we advise the APF where the BRAM is of the CPU
+
 #define SYS_CLOCK  7425 // This is the CPU clock speed in a int size 74.2mhz
-#define UART_RATE  4608 // This is the UART Rate shifted right by 2
+// #define UART_RATE  4608 // This is the UART Rate shifted right by 2
+#define UART_RATE  1152 // This is the UART Rate shifted right by 2 this is for MACS
 
 #define RESTARTBASE 0xFFFFFFA4
 
 #define RESET_CORE(x) *(volatile unsigned int *)(RESTARTBASE+x)
 
 #define AFP_REGISTOR(x) *(volatile unsigned int *)(AFP_REGISTOR_BASE+(x<<2))
-
+#define DATASLOT_BRAM_SAVE(x) *(volatile unsigned int *)(DATASLOT_BRAM_BASE+(5<<2))
 
 #define CORE_OUTPUT_REGISTOR() *(volatile unsigned int *)(IO_CORE_REGISTOR_BASE+(4))
 #define CORE_INPUT_REGISTOR()  *(volatile unsigned int *)(IO_CORE_REGISTOR_BASE+(0))
@@ -57,6 +96,15 @@
 #define CONTROLLER_TRIG_REG(x) *(volatile unsigned int *)(CONTROLLER_TRIG_BASE+((x-1)<<2))
 
 #define RAMBUFFER(x) *(volatile unsigned int *)(RAMBUFFER_BASE + (x<<2))
+
+#define SCRACH_RAMBUFFER_BYTE(x) 	*(volatile uint8_t *)		(MAIN_SCRACH_ADDRESS_OFFSET + (x))
+#define SCRACH_RAMBUFFER_WORD(x) 	*(volatile uint16_t int *)	(MAIN_SCRACH_ADDRESS_OFFSET + (x))
+#define SCRACH_RAMBUFFER(x) 		*(volatile unsigned int *)	(MAIN_SCRACH_ADDRESS_OFFSET + (x))
+
+
+ #define FETCH_BYTE(p)	(*(unsigned char*)(p))
+ #define FETCH_WORD(p)	(*(unsigned short*)(p))
+ #define FETCH_LONG(p)	(*(unsigned long*)(p))
 
 #define DATASLOT_BRAM(x) *(volatile unsigned int *)(DATASLOT_BRAM_BASE+(x<<2))
 

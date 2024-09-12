@@ -4,25 +4,25 @@
 // CDD command
 #define CD_COMM_TESTUNIT			0x00
 #define CD_COMM_REQUESTSENSE		0x03
-#define CD_COMM_READ6			0x08
-#define CD_COMM_MODESELECT6		0x15
-#define CD_COMM_SAPSP			0xD8
-#define CD_COMM_SAPEP			0xD9
-#define CD_COMM_PAUSE			0xDA
+#define CD_COMM_READ6				0x08
+#define CD_COMM_MODESELECT6			0x15
+#define CD_COMM_SAPSP				0xD8
+#define CD_COMM_SAPEP				0xD9
+#define CD_COMM_PAUSE				0xDA
 #define CD_COMM_READSUBQ			0xDD
-#define CD_COMM_GETDIRINFO		0xDE
+#define CD_COMM_GETDIRINFO			0xDE
 
-#define CD_STATE_IDLE		0
-#define CD_STATE_NODISC		1
-#define CD_STATE_READ		2
-#define CD_STATE_PLAY		3
-#define CD_STATE_PAUSE		4
+#define CD_STATE_IDLE				0
+#define CD_STATE_NODISC				1
+#define CD_STATE_READ				2
+#define CD_STATE_PLAY				3
+#define CD_STATE_PAUSE				4
 
-#define CD_STATUS_GOOD			0
+#define CD_STATUS_GOOD				0
 #define CD_STATUS_CHECK_COND		1
-#define CD_STATUS_CONDITION_MET	2
-#define CD_STATUS_BUSY			4
-#define CD_STATUS_INTERMEDIATE	8
+#define CD_STATUS_CONDITION_MET		2
+#define CD_STATUS_BUSY				4
+#define CD_STATUS_INTERMEDIATE		8
 
 #define SENSEKEY_NO_SENSE			0x0
 #define SENSEKEY_NOT_READY			0x2
@@ -46,10 +46,10 @@
 #define NSE_DISC_CHANGED			0x28
 #define NSE_AUDIO_NOT_PLAYING		0x2C
 
-#define CD_CDDAMODE_SILENT		0x00
+#define CD_CDDAMODE_SILENT			0x00
 #define CD_CDDAMODE_LOOP			0x01
-#define CD_CDDAMODE_INTERRUPT	0x02
-#define CD_CDDAMODE_NORMAL		0x03
+#define CD_CDDAMODE_INTERRUPT		0x02
+#define CD_CDDAMODE_NORMAL			0x03
 
 // #include <stdlib.h>
 #include <string.h>
@@ -61,6 +61,10 @@
 #include "apf.h"
 #include "fileio.h"
 #include "osd_menu.h"
+
+// uint8_t error_osd_displaying;
+
+
 
 typedef int (*SendDataFunc) (uint8_t* buf, int len, uint8_t index);
 
@@ -88,7 +92,7 @@ typedef struct
 	int end = 0;
 	int type = 0;
 	int sector_size = 0;
-	char name[80];
+	char name[128];
 	// cd_subcode_types_t sbc_type;
 } cd_track_t;
 
@@ -96,6 +100,7 @@ typedef struct
 {
 	int end=0; // Total size of CD rom
 	int last=0; // last track number
+	char cue_name[128];
 	cd_track_t tracks[99];
 	int GetTrackByLBA(int lba)
 	{
@@ -141,6 +146,7 @@ public:
 private:
 	toc_t toc;
 	int index;
+	int current_track;
 	int lba;
 	int cnt;
 	int scanOffset;
@@ -158,12 +164,13 @@ private:
 	uint16_t stat;
 	uint8_t comm[14];
 
-	uint8_t sec_buf[2352 + 2];
+	// uint8_t sec_buf[2352 + 2];
 
 	uint16_t LoadCUE(int dataslot);
 	int SectorSend(uint8_t* header);
 	void ReadData();
-	int ReadCDDA();
+	void ReadCDDA();
+	void ReadCDG();
 	void LBAToMSF(int lba, msf_t* msf);
 	void MSFToLBA(int* lba, msf_t* msf);
 	void MSFToLBA(int* lba, uint8_t m, uint8_t s, uint8_t f);

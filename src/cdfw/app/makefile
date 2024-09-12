@@ -1,5 +1,5 @@
 SRC_DIR      = ./
-EXTRA_CFLAGS = -c -I../ -I../api -march=rv32imac -mabi=ilp32
+EXTRA_CFLAGS = -c -I../ -I../api -march=rv32imac_zicsr -mabi=ilp32
 
 # Drivers
 EXTRA_CFLAGS += -DCONFIG_IRQCTRL

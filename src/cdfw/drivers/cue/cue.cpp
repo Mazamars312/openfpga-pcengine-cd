@@ -6,6 +6,7 @@ int get_cd_seek_ms(int start_sector, int target_sector);
 #define CD_DATA_IO_INDEX 2
 uint32_t foo1;
 cue_t cue;
+
 cue_t::cue_t() {
 	latency = 0;
 	audiodelay = 0;
@@ -29,6 +30,8 @@ cue_t::cue_t() {
 	stat = 0x0000;
 
 }
+
+const uint32_t memory_offset_cue = 0x00000200;
 
 static int sgets(char *out, int sz, int cnt)
 {
@@ -60,55 +63,71 @@ static int sgets(char *out, int sz, int cnt)
 		if(*instr == 00) {
 			return *out;
 		}
-		mainprintf("foo %0.4x cnt %0.4x, %0.4x \r\n", foo1, cnt, &instr);
 	}
-	while ((foo1 - 0xe000) >= cnt);
+	while ((foo1 - (MAIN_SCRACH_ADDRESS_OFFSET + memory_offset_cue)) >= cnt);
 	return *out;
 }
 
-#define DATASLOT_BRAM_SAVE(x) *(volatile unsigned int *)(DATASLOT_BRAM_BASE+(5<<2))
-
+	// dataslot_type aft;
 uint16_t cue_t::LoadCUE(int dataslot) {
 	static char line[128];
+	char fline[255];
+	char s[255];
+	// static char fname[80];
 	char *ptr, *lptr;
 	int hdr = 0;
 	int toc_size;
-	toc_size = dataslot_size(100); // This is where the Cue file will be
-	if (toc_size == 0) return (100);
-	bool file_processer = 0;
-	if (dataslot_size(102) >= 1) file_processer = 1; // this is to confirm that this is a single or multi file system
-	DATASLOT_BRAM_SAVE(0) = (uint32_t)0x00000800;
-
-	foo1 = 0x0000e000;
-
-
-	// clearbufferram();
-
-	dataslot_read(dataslot, APF_ADDRESS_OFFSET | foo1, 0, toc_size);
+	// First we get the Cue File
+	aft.aft_dataslot = 100;
+	GetFileNameDataSlot(&aft);
+	bool File_processesd = 0;
+	bool File_processesd_done = true;
+	toc_size = DATASLOT_BRAM(1); // This is where the Cue file will be The BINs are in the 101 dataslot
+	if (toc_size == 0) return 100;
+	clearscrachram(0,16384);
+	foo1 = MAIN_SCRACH_ADDRESS_OFFSET + memory_offset_cue;
+	dataslot_read(100, APF_SCRACH_ADDRESS_OFFSET + memory_offset_cue, 0, toc_size);
+	aft.aft_dataslot = dataslot;
 	int mm, ss, bb, pregap = 0;
 	while ((sgets(line, sizeof(line), toc_size)))
 	{
 		lptr = line;
-		mainprintf("%s\r\n", line);
+		// mainprintf("%s\r\n", line);
 		while (*lptr == 0x20) lptr++;
 
 		/* decode FILE commands */
 		if (!(memcmp(lptr, "FILE", 4)))
 		{
-			if ((sscanf(lptr, "FILE %*s", &this->toc.tracks[this->toc.last].name))){
-				//return -1;
-			}
+			int i = 0;
+         	int j = 0;
+         	int q = 0; // track open and closed quotes
+			do { 
+				this->toc.tracks[this->toc.last].name[j] = lptr[5+i]; 
+				i++;
+				j++;
+				if ((this->toc.tracks[this->toc.last].name[j-1] == '\\') || (this->toc.tracks[this->toc.last].name[j-1] == '/')) { j = 0; } //strip out path info
+				if (this->toc.tracks[this->toc.last].name[j-1] == '"') { j--; q++;} // strip out quotes
+        	} while ((lptr[5+i-1] != ' ') || (q == 1));
+			sprintf(s,"%s%s", aft.aft_filepath, this->toc.tracks[this->toc.last].name);
+			if (OpenFileNameDataSlot(&aft, s) > 0) {
+				return 1;
+				}
+			// OpenFileNameDataSlot (&aft, s);
+			File_processesd = 1;
 			if (strstr(lptr, ".wav")){
 				hdr = 44;
 			};
 			pregap = 0;
 
 			// this->toc.tracks[this->toc.last].offset = 0;
+			
+			
 
 			if (!strstr(lptr, "BINARY") && !strstr(lptr, "MOTOROLA") && !strstr(lptr, "WAVE"))
 			{
 				return -1;
 			}
+			
 		}
 
 		/* decode TRACK commands */
@@ -120,16 +139,10 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 			}
 			else
 			{
-				if (file_processer){
-					this->toc.tracks[this->toc.last].dataslot = (uint16_t)bb + 100;
-					this->toc.tracks[this->toc.last].size  = (int)dataslot_size((uint16_t)bb + 100);
-					this->toc.tracks[this->toc.last].opened = 0;
-				} else {
-					this->toc.tracks[this->toc.last].dataslot = 101;
-					this->toc.tracks[this->toc.last].size  = (int)dataslot_size(101);
-					this->toc.tracks[this->toc.last].opened = 1;
-				}
-				// if (this->toc.tracks[this->toc.last].size > 0) this->toc.tracks[this->toc.last].opened = 1;
+				
+  				mainprintf("New Directory %s ||| File name %s ||| more information %0.8x %0.8x\r\n",aft.aft_filepath, aft.aft_filename, aft.aft_op_flags, aft.aft_op_filesize);
+				this->toc.tracks[this->toc.last].dataslot = aft.aft_dataslot;
+				this->toc.tracks[this->toc.last].size  = aft.aft_op_filesize;
 				if (strstr(lptr, "MODE1/2048"))
 				{
 					this->toc.tracks[this->toc.last].sector_size = 2048;
@@ -144,16 +157,34 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 				{
 					this->toc.tracks[this->toc.last].sector_size = 2352;
 					this->toc.tracks[this->toc.last].type = 0;
+				} else if (strstr(lptr, "CDG"))
+				{
+					this->toc.tracks[this->toc.last].sector_size = 2448;
+					this->toc.tracks[this->toc.last].type = 2;
 				}
 			}
-
-			if (this->toc.last)
-			{
-				// if (!this->toc.tracks[this->toc.last].opened)
-				// {
-				// 	this->toc.tracks[this->toc.last - 1].end = 0;
-				// }
+			
+			if (File_processesd) {
+				if (this->toc.last >= 1) {
+					this->toc.tracks[this->toc.last].opened = true;
+					if (this->toc.last == 1) {
+						this->toc.tracks[this->toc.last - 1].end = this->toc.tracks[this->toc.last - 1].start + ((this->toc.tracks[this->toc.last - 1].size - this->toc.tracks[this->toc.last - 1].offset) / this->toc.tracks[this->toc.last - 1].sector_size );
+						this->toc.end = this->toc.tracks[this->toc.last - 1].end;
+						this->toc.tracks[this->toc.last - 1].opened = true;
+  						// mainprintf("\033[92;1;1m Done the change 1 %d\033[0m\r\n", this->lba);
+					}
+				} else {
+					this->toc.tracks[this->toc.last].opened = false;
+					// mainprintf("\033[92;1;1m Done the change 2 %d\033[0m\r\n", this->lba);
+				}
+				File_processesd = 0;
+			} else {
+				
+  				// mainprintf("\033[92;1;1m Done the change 3 %d\033[0m\r\n", this->lba);
+				strcpy(this->toc.tracks[this->toc.last].name,aft.aft_filename);
+				this->toc.tracks[this->toc.last].opened = false;
 			}
+			
 		}
 
 		/* decode PREGAP commands */
@@ -170,10 +201,9 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 				this->toc.tracks[this->toc.last - 1].end = bb + (ss * 75) + (mm * 60 * 75) + pregap;
 			}
 		}
-		else if ((sscanf(lptr, "INDEX 01 %02d:%02d:%02d", &mm, &ss, &bb) == 3) ||
-			     (sscanf(lptr, "INDEX 1 %02d:%02d:%02d", &mm, &ss, &bb) == 3))
+		else if ((sscanf(lptr, "INDEX 01 %02d:%02d:%02d", &mm, &ss, &bb) == 3) || (sscanf(lptr, "INDEX 1 %02d:%02d:%02d", &mm, &ss, &bb) == 3))
 		{
-			if (this->toc.tracks[this->toc.last].opened)
+			if (!this->toc.tracks[this->toc.last].opened)
 			{
 				this->toc.tracks[this->toc.last].start = bb + (ss * 75) + (mm * 60 * 75) + pregap;
 				this->toc.tracks[this->toc.last].offset = (this->toc.tracks[this->toc.last].start * this->toc.tracks[this->toc.last].sector_size) - hdr;
@@ -181,32 +211,29 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 				{
 					this->toc.tracks[this->toc.last - 1].end = this->toc.tracks[this->toc.last].start;
 				}
-				mainprintf("opened %u %d \r\n", pregap, hdr);
+
+				mainprintf("opened %u %d %u %u %u\r\n", pregap, hdr, this->toc.tracks[this->toc.last].start, this->toc.tracks[this->toc.last].end, this->toc.tracks[this->toc.last].offset);
 			}
 			else
 			{
-
 				this->toc.tracks[this->toc.last].start = this->toc.end + pregap;
 				this->toc.tracks[this->toc.last].offset = (this->toc.tracks[this->toc.last].start * this->toc.tracks[this->toc.last].sector_size) - hdr;
 				this->toc.tracks[this->toc.last].end = (this->toc.tracks[this->toc.last].start + ((this->toc.tracks[this->toc.last].size - hdr + this->toc.tracks[this->toc.last].sector_size - 1)) / this->toc.tracks[this->toc.last].sector_size);
 
 				this->toc.tracks[this->toc.last].start += (bb + (ss * 75) + (mm * 60 * 75));
 				this->toc.end = this->toc.tracks[this->toc.last].end;
-				mainprintf(" not opened %u %u %u %u\r\n", this->toc.tracks[this->toc.last].start, this->toc.tracks[this->toc.last].end, this->toc.tracks[this->toc.last].offset, this->toc.tracks[this->toc.last].offset);
+				mainprintf(" not opened %u %u %u\r\n", this->toc.tracks[this->toc.last].start, this->toc.tracks[this->toc.last].end, this->toc.tracks[this->toc.last].offset);
 			}
 			this->toc.last++;
-			if (file_processer){
-				if (this->toc.last >= 27) break;
-			} else {
-					if (this->toc.last >= 100) break;
-			}
+			if (this->toc.last == 99) break;
 		}
 	}
 
-	if (this->toc.tracks[this->toc.last - 1].opened) {
+	if (!this->toc.tracks[this->toc.last - 1].opened) {
 		this->toc.tracks[this->toc.last - 1].end = this->toc.tracks[this->toc.last - 1].start + ((this->toc.tracks[this->toc.last - 1].size - this->toc.tracks[this->toc.last - 1].offset) / this->toc.tracks[this->toc.last - 1].sector_size );		
-		this->toc.end = this->toc.tracks[this->toc.last - 1].end;mainprintf("opened %u %d \r\n", pregap, hdr);
-	}
+		this->toc.end = this->toc.tracks[this->toc.last - 1].end;
+		// mainprintf("unopened %u %d \r\n", pregap, hdr);
+	} 
 
 	if (this->toc.last && !this->toc.tracks[this->toc.last - 1].end)
 	{
@@ -216,18 +243,9 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 	
 	for (int i = 0; i < this->toc.last; i++)
 	{
-		mainprintf("\x1b[32mPCECD: size = %u Track = %u, start = %u, end = %u, offset = %u, sector_size=%d, type = %u, dataslot = %u opend = %u name = %s\r\n\x1b[0m", i, this->toc.tracks[i].size, this->toc.tracks[i].start, this->toc.tracks[i].end, this->toc.tracks[i].offset, this->toc.tracks[i].sector_size, this->toc.tracks[i].type, this->toc.tracks[i].dataslot, this->toc.tracks[i].opened, this->toc.tracks[this->toc.last].name);
+		mainprintf("\x1b[32mPCECD: Track = %u, start = %u, end = %u, offset = %u, sector_size=%d, type = %u, dataslot = %u opend = %u \r\n name = %s \r\n\x1b[0m", i, this->toc.tracks[i].start, this->toc.tracks[i].end, this->toc.tracks[i].offset, this->toc.tracks[i].sector_size, this->toc.tracks[i].type, this->toc.tracks[i].dataslot, this->toc.tracks[i].opened, this->toc.tracks[i].name);
 	}
 	
-	mainprintf("Dataslot 0 %d %d \r\n", DATASLOT_BRAM(0), DATASLOT_BRAM(1));
-	mainprintf("Dataslot 1 %d %d \r\n", DATASLOT_BRAM(2), DATASLOT_BRAM(3));
-	mainprintf("Dataslot 2 %d %d \r\n", DATASLOT_BRAM(4), DATASLOT_BRAM(5));
-	mainprintf("Dataslot 3 %d %d \r\n", DATASLOT_BRAM(6), DATASLOT_BRAM(7));
-	mainprintf("Dataslot 99 %d %d \r\n", DATASLOT_BRAM(8), DATASLOT_BRAM(9));
-	mainprintf("Dataslot 101 %d %d \r\n", DATASLOT_BRAM(10), DATASLOT_BRAM(11));
-	mainprintf("toc.end %u %u\r\n", this->toc.end, toc.last);
-  // mainprintf("Dataslot 102 %d %d %d %0.4x \r\n", DATASLOT_BRAM(12), DATASLOT_BRAM(13), dataslot, RAMBUFFER_BASE);
-	// clearbufferram();
 	return 1;
 }
 
@@ -251,9 +269,6 @@ void cue_t::Unload()
 	{
 
 
-		// this->toc.tracks = 0;
-
-
 		for (int i = 0; i < this->toc.last; i++)
 			{
 				this->toc.tracks[i].dataslot = 0;
@@ -265,11 +280,18 @@ void cue_t::Unload()
 				this->toc.tracks[i].end = 0;
 				this->toc.tracks[i].type = 0;
 				this->toc.tracks[i].sector_size = 0;
+				// sprintf(this->toc.tracks[i].name,"");
+				// int j = 0;
+				// do{
+					// this->toc.tracks[i].name = NULL;
+					// j++;
+				// }while(j < 128);
 			}
 			this->loaded = 0;
 			this->toc.end=0;
 			this->toc.last=0;
 	}
+	 mainprintf ("Im Here Father %d \r\n", this->toc.last);
 }
 
 void cue_t::Reset() {
@@ -314,11 +336,13 @@ void cue_t::Update() {
 
 		this->can_read_next = false;
 
-		if (this->toc.tracks[this->index].type)
+		if (this->toc.tracks[this->index].type == 1)
 		{
+			mainprintf("check they type data \r\n");
 			// CD-ROM (Mode 1)
-			mainprintf ("LBA READING %d %d\r\n", this->lba, (this->lba * 2352));
 			ReadData();
+			apf_data_already_streamed = 1;
+
 		}
 		else
 		{
@@ -335,9 +359,6 @@ void cue_t::Update() {
 			PendStatus(MAKE_STATUS(CD_STATUS_GOOD, 0));
 			this->state = CD_STATE_IDLE;
 		}
-		else {
-
-		}
 
 		this->lba++;
 		if (this->lba >= this->toc.tracks[this->index].end)
@@ -345,11 +366,12 @@ void cue_t::Update() {
 			this->index++;
 
 			this->isData = 0x01;
-			//mainprintf ("LBA READING %0.4x \r\n", this->lba);
-			if (this->toc.tracks[this->index].opened) {
-				RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352, 2352);
+			mainprintf("check they type data 2\r\n");
+
+			if (!this->toc.tracks[this->index].opened) {
+				RISCFileSeek(this->toc.tracks[this->index].name, this->lba * 2352 + 16, this->toc.tracks[this->index].sector_size, this->index, &aft);
 			}else{
-				RISCFileSeek(this->toc.tracks[this->index].dataslot, (this->lba * 2352 - this->toc.tracks[this->index].offset), 2352);
+				RISCFileSeek(this->toc.tracks[this->index].name, (this->lba * 2352 - this->toc.tracks[this->index].offset), this->toc.tracks[this->index].sector_size, this->index, &aft);
 			}
 
 		}
@@ -372,14 +394,21 @@ void cue_t::Update() {
 
 		for (int i = 0; i <= this->CDDAFirst; i++)
 		{
-			if (!this->toc.tracks[this->index].type)
+			uint32_t temp_LBA;
+			temp_LBA = this->lba * this->toc.tracks[this->index].sector_size;
+			if (this->toc.tracks[this->index].opened){
+				temp_LBA = temp_LBA - this->toc.tracks[this->index].offset;
+			}
+			
+			if (!(this->toc.tracks[this->index].type == 1)) {
+				RISCFileSeek(this->toc.tracks[this->index].name, temp_LBA, this->toc.tracks[this->index].sector_size, this->index, &aft);
+			}
+			
+			if (this->toc.tracks[this->index].type == 2)
 			{
-				
-				if (this->toc.tracks[this->index].opened) {
-					RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352, 2352);
-				}else{
-					RISCFileSeek(this->toc.tracks[this->index].dataslot, ((this->lba * 2352) - this->toc.tracks[this->index].offset), 2352);
-				}
+				ReadCDG();
+			} else if (this->toc.tracks[this->index].type == 0)
+			{
 				ReadCDDA();
 			}
 			this->lba++;
@@ -471,7 +500,7 @@ void cue_t::CommandExec() {
 			buf[4] = 0;
 			buf[5] = 0;
 			len = 4 + 2;
-			mainprintf("Command 0 T %u \r\n", (this->toc.last));
+			// mainprintf("Command 0 T %u \r\n", (this->toc.last));
 			break;
 		case 1:
 			new_lba = this->toc.end + 150;
@@ -482,7 +511,7 @@ void cue_t::CommandExec() {
 			buf[2] = BCD(msf.m);
 			buf[3] = BCD(msf.s);
 			buf[4] = BCD(msf.f);
-			mainprintf("Command 1 M %0.4x S %0.4x F %0.4x  M %0.4x S %0.4x F %0.4x\r\n", buf[2], buf[3], buf[4], msf.m, msf.s, msf.f);
+			// mainprintf("Command 1 M %0.4x S %0.4x F %0.4x  M %0.4x S %0.4x F %0.4x\r\n", buf[2], buf[3], buf[4], msf.m, msf.s, msf.f);
 			buf[5] = 0;
 			len = 4 + 2;
 			break;
@@ -498,7 +527,7 @@ void cue_t::CommandExec() {
 			buf[3] = BCD(msf.s);
 			buf[4] = BCD(msf.f);
 			buf[5] = this->toc.tracks[track - 1].type << 2;
-			mainprintf("Command 2 M %0.4x S %0.4x F %0.4x  M %0.4x S %0.4x F %0.4x start %d \r\n", buf[2], buf[3], buf[4], msf.m, msf.s, msf.f, this->toc.tracks[track - 1].start);
+			// mainprintf("Command 2 M %0.4x S %0.4x F %0.4x  M %0.4x S %0.4x F %0.4x start %d \r\n", buf[2], buf[3], buf[4], msf.m, msf.s, msf.f, this->toc.tracks[track - 1].start);
 			len = 4 + 2;
 			break;
 		}
@@ -547,8 +576,6 @@ void cue_t::CommandExec() {
 		this->audioOffset = 0;
 		this->can_read_next = true;
 		this->state = CD_STATE_READ;
-
-		//riscprintf("\x1b[32mPCECD: Command READ6, lba = %u, cnt = %u\r\n\x1b[0m", this->lba, this->cnt);
 	}
 		break;
 
@@ -765,40 +792,43 @@ void cue_t::ReadData()
 {
 	if (this->toc.tracks[this->index].type && (this->lba >= 0))
 	{	
-			mainprintf ("LBA READING %0.4x \r\n", this->lba);
 			int32_t temp_LBA;
+			
+    		mainprintf ("LBA %d \r\n", this->lba);
 			if (this->toc.tracks[this->index].sector_size == 2048)
 			{
-				if (this->toc.tracks[this->index].opened) {
-					RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2048, 2048);
+				if (!this->toc.tracks[this->index].opened) {
+					RISCFileSeek(this->toc.tracks[this->index].name, this->lba * 2048, 2048, this->index, &aft);
 				}else{
-					temp_LBA = (this->lba* 2048) - this->toc.tracks[this->index].offset;
-					RISCFileSeek(this->toc.tracks[this->index].dataslot, temp_LBA, 2048);
+					temp_LBA = (this->lba * 2048) - this->toc.tracks[this->index].offset;
+					RISCFileSeek(this->toc.tracks[this->index].name, temp_LBA, 2048, this->index, &aft);
 				}
-				RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x00,(0x08 | 0x80),UIO_CD_DATA, 2048);
+				RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x00,(0x08 | 0x80),UIO_CD_DATA, this->toc.tracks[this->index].sector_size);
 			} else {
-				if (this->toc.tracks[this->index].opened) {
-					RISCFileSeek(this->toc.tracks[this->index].dataslot, this->lba * 2352 + 16, 2352);
+				if (!this->toc.tracks[this->index].opened) {
+					RISCFileSeek(this->toc.tracks[this->index].name, this->lba * 2352 + 16 , 2352, this->index, &aft);
 				}else{
 					temp_LBA = (this->lba * 2352) - this->toc.tracks[this->index].offset;
-					RISCFileSeek(this->toc.tracks[this->index].dataslot, temp_LBA + 16, 2352);
+					RISCFileSeek(this->toc.tracks[this->index].name, temp_LBA + 16, 2352, this->index, &aft);
 				}
-				RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x00,(0x08 | 0x80),UIO_CD_DATA, 2352);
+				RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x00,(0x08 | 0x80),UIO_CD_DATA, this->toc.tracks[this->index].sector_size);
 			}
+			
 	}
 }
 
-int cue_t::ReadCDDA()
+void cue_t::ReadCDDA()
 {
 	this->audioLength = 2352;
 	this->audioOffset = 0;// 2352;
+	RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x30,0x09,UIO_CD_DATA,2352);
+}
 
-	// if (this->toc.tracks[this->index].opened) {
-		RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x30,0x09,UIO_CD_DATA,2352);
-	// }
-	
-	// mainprintf("Audio reading 2\r\n");
-	return this->audioLength;
+void cue_t::ReadCDG()
+{
+	this->audioLength = 2448;
+	this->audioOffset = 0;// 2352;
+	RISCFileReadAdv(this->toc.tracks[this->index].dataslot,0x90,(0x09 | 0x80),UIO_CD_DATA,2448);
 }
 
 void cue_t::CommandError(uint8_t key, uint8_t asc, uint8_t ascq, uint8_t fru) {

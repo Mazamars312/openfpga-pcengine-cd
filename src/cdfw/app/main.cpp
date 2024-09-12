@@ -43,9 +43,9 @@ void init()
 	// This setups the timers and the CPU clock rate on the system.
   DisableInterrupts();
   // Setup the core to know what MHZ the CPU is running at.
-	SetTimer();
-	SetUART();
-	ResetTimer();
+  SetTimer();
+  SetUART();
+  ResetTimer();
   riscusleep(500000);
   mainprintf("\033[0m");
   // printf_register(riscputc);
@@ -53,51 +53,54 @@ void init()
   core_restart_first(); // we want to setup the core now :-) but with no startup yet
 }
 
+bool file_error_enabled = 0;
+int file_error_code = 0;
+
 void mainloop()
 {
   // We like to see over the UART that hey I did something :-)
 	riscusleep(9000);
-	mainprintf("RISC MPU Startup core\r\n");
+	mainprintf("RISC MPU Startup core 2.4\r\n");
 	mainprintf("Created By Mazamars312\r\n");
 	mainprintf("Make in 2022\r\n");
 	mainprintf("I hate this debugger LOL\r\n");
 	riscusleep(2000);
 	core_reset(1); // Turns off all the resets via the HPS bus
-	// I do enjoy reseting this timer.
-  core_update_dataslots();
-	// mainprintf("I hate this debugger LOL1\r\n");
+  	// core_update_dataslots();
 	core_input_setup();
-  DisableInterrupts();
-	// mainprintf("I hate this debugger LOL2\r\n");
-	// EnableInterrupts();
-	// This loop is what keeps the checking of the core interface
-  mainprintf("about to go in baby\r\n");
-  uint32_t display_cd = RISCGetTimer1(0, 74250000);
-
-  while(true){
+	DisableInterrupts();
+	mainprintf("about to go in baby\r\n");
+	uint32_t display_cd = RISCGetTimer2(200);
+	DATASLOT_BRAM_SAVE(0) = (uint32_t)0x00000800;
+	while(true){
 
 		if(DATASLOT_UPDATE_REG(0)){
-		// 		// This subprogram is for the program to check what dataslots are updated by the APF
-			// DisableInterrupts(); // we want to make sure when updating the dataslots - interrupts are stopped.
-		// 	EnableInterrupts(); // Re-enable interrupts
-      mainprintf("Data Slot Update\r\n");
-      core_update_dataslots();
-      mainprintf("Data Slot done\r\n");
+			mainprintf("Data Slot Update\r\n");
+			riscusleep(2000);
+			mainprintf("Data Slot done\r\n");
+			file_error_code = error_info_Core_data_slot_change;
+			display_cd = RISCGetTimer2(15000);
 		}
-	  core_poll_io();
-    core_reg_update();
-    if (RISCCheckTimer1(display_cd)) {
-      osd_display_info();
-      ResetTimer1();
-      display_cd = RISCGetTimer1(0, 74250000);
-    };
 
-    // This checks if we are wanting to do a reboot of the core from the interaction menu. We want to do this last so nothing is held in the buffers
-    if (AFP_REGISTOR(0) & 0x1) { // This has 2 bits for reseting the core
-  		// DisableInterrupts(); // we make sure all interrupts are disabled
-  		full_core_reset();
-  		// EnableInterrupts(); // we make sure all interrupts are re-enabled
-    }
+		
+		core_poll_io();
+		core_reg_update();
+		if (RISCCheckTimer2(display_cd) && (file_error_code == 0)) {
+			osd_display_info();
+			display_cd = RISCGetTimer2(200);
+		} else if (RISCCheckTimer2(display_cd) && file_error_code == 6){
+			display_cd = RISCGetTimer2(200);
+			file_error_code = 0;
+		}
+
+		if (file_error_code != 0){
+			osd_display_error_dataslot(file_error_code);
+		}
+
+		// This checks if we are wanting to do a reboot of the core from the interaction menu. We want to do this last so nothing is held in the buffers
+		if (AFP_REGISTOR(0) & 0x1) { // This has 2 bits for reseting the core
+			full_core_reset();
+		}
 	};
 }
 

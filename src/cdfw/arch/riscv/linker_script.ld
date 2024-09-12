@@ -2,7 +2,6 @@ GROUP("libgcc.a")
 
 MEMORY {
   RAM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x00010000
-  
 }
 
 SECTIONS
@@ -57,6 +56,5 @@ SECTIONS
   {
     *(.payload)
   }
-
 
 }

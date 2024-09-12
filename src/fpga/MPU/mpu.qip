@@ -1,9 +1,10 @@
 
 set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "dmem_bram.v"]
-set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "imem_bram.v"]
 set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "VexRiscv.v"]
 set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "uart_fifo.v"]
-set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "substitute_mcu_apf.v"]
-set_global_assignment -name VHDL_FILE [file join $::quartus(qip_path) "simple_uart.vhd"]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "MPU_AFP_CORE.v"]
+set_global_assignment -name VHDL_FILE    [file join $::quartus(qip_path) "simple_uart.vhd"]
 set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "osd.v"]
 set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "controller_rom.v"]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "core_bridge_cmd.v"]
+set_global_assignment -name VERILOG_FILE [file join $::quartus(qip_path) "mf_datatable.v"]

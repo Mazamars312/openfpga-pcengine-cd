@@ -102,41 +102,6 @@ module pce (
     output wire        dram_cas_n,
     output wire        dram_we_n,
 	 
-	 // SRAM
-	 
-    output wire [16:0] 	sram_a,
-    inout  wire [15:0] 	sram_dq,
-    output wire        	sram_oe_n,
-    output wire        	sram_we_n,
-    output wire        	sram_ub_n,
-    output wire        	sram_lb_n,
-	 	 
-	 // CRAM
-	 output wire [21:16] cram0_a,
-    inout  wire [ 15:0] cram0_dq,
-    input  wire         cram0_wait,
-    output wire         cram0_clk,
-    output wire         cram0_adv_n,
-    output wire         cram0_cre,
-    output wire         cram0_ce0_n,
-    output wire         cram0_ce1_n,
-    output wire         cram0_oe_n,
-    output wire         cram0_we_n,
-    output wire         cram0_ub_n,
-    output wire         cram0_lb_n,
-
-    output wire [21:16] cram1_a,
-    inout  wire [ 15:0] cram1_dq,
-    input  wire         cram1_wait,
-    output wire         cram1_clk,
-    output wire         cram1_adv_n,
-    output wire         cram1_cre,
-    output wire         cram1_ce0_n,
-    output wire         cram1_ce1_n,
-    output wire         cram1_oe_n,
-    output wire         cram1_we_n,
-    output wire         cram1_ub_n,
-    output wire         cram1_lb_n,
 
     // Video
     output reg ce_pix,
@@ -148,7 +113,6 @@ module pce (
     output wire [7:0] video_g,
     output wire [7:0] video_b,
 
-    output wire [1:0] dotclock_divider,
     output wire border,
 
     // Audio
@@ -204,6 +168,7 @@ module pce (
   reg          cd_region;
 	wire			CD_almost_full;
 	wire			AUDIO_almost_full;
+	wire 			SUB_almost_full;
   wire [21:0]  cd_ram_a;
   wire 			cd_ram_rd, cd_ram_wr;
   wire [7:0] 	cd_ram_do;
@@ -214,112 +179,93 @@ module pce (
   wire [15:0] 	cdda_sl, cdda_sr, adpcm_s, psg_sl, psg_sr;
 
   pce_top #(LITE) pce_top (
-      .RESET(reset | cart_download),
-      .COLD_RESET(cart_download),
+		.RESET					(reset | cart_download),
+		.COLD_RESET				(cart_download),
 
-      .CLK(clk_sys_42_95),
+		.CLK						(clk_sys_42_95),
 
-      .ROM_RD(rom_rd),
-      .ROM_RDY(rom_sdrdy),
-      // .ROM_RDY(~rom_sdbusy),
-      .ROM_A(rom_rdaddr),
-      .ROM_DO(rom_sdata),
-      .ROM_SZ(romwr_a[23:12]),
-      .ROM_POP(populous[romwr_a[9]]),
-      .ROM_CLKEN(ce_rom),
+		.ROM_RD					(rom_rd),
+		.ROM_RDY					(rom_sdrdy),
+		.ROM_A					(rom_rdaddr),
+		.ROM_DO					(rom_sdata),
+		.ROM_SZ					(romwr_a[23:12]),
+		.ROM_POP					(populous[romwr_a[9]]),
+		.ROM_CLKEN				(ce_rom),
 
-      .BRM_A (bram_addr),
-      .BRM_DO(bram_q),
-      .BRM_DI(bram_data),
-      .BRM_WE(bram_wr),
+		.BRM_A 					(bram_addr),
+		.BRM_DO					(bram_q),
+		.BRM_DI					(bram_data),
+		.BRM_WE					(bram_wr),
+
+		.GG_EN					(status[5]),
+		.GG_CODE					(gg_code),
+		.GG_RESET				((cart_download | code_download) & ioctl_wr & !ioctl_addr),
+		.GG_AVAIL				(gg_avail),
+
+		.SP64						(extra_sprites_enable),
+		.SGX 						(sgx && !LITE),
+
+		.JOY_OUT					(joy_out),
+		.JOY_IN 					(joy_in),
+
+		.CD_EN					(cd_en),
+		// Arcade card
+		.AC_EN					(AC_EN),
+
+		.CD_RAM_A 				(cd_ram_a),
+		.CD_RAM_DO				(cd_ram_do),
+		.CD_RAM_DI				(rom_sdata),
+		.CD_RAM_RD				(cd_ram_rd),
+		.CD_RAM_WR				(cd_ram_wr),
+
+		.CD_STAT					(cd_stat[7:0]),
+		.CD_MSG					(cd_stat[15:8]),
+		.CD_STAT_GET			(cd_stat_rec),
+
+		.CD_COMM					(cd_comm),
+		.CD_COMM_SEND			(cd_comm_send),
+
+		.CD_DOUT_REQ			(cd_dataout_req),
+		.CD_DOUT					(cd_dataout),
+
+		.CD_DOUT_SEND			(cd_dataout_send),
+
+		.CD_REGION				(cd_region),
+		.CD_RESET 				(cd_reset_req),
+
+		.CD_DATA					(!cd_dat_byte ? cd_dat[7:0] : cd_dat[15:8]),
+		.CD_WR					(cd_wr),
+		.CD_DATA_END			(cd_dat_req),
+		.CD_DM					(cd_dm),
+		.CD_SUB					(cd_sub),
+
+		.CDDA_SL					(cdda_sl),
+		.CDDA_SR					(cdda_sr),
+		.ADPCM_S					(adpcm_s),
+		.PSG_SL 					(psg_sl),
+		.PSG_SR 					(psg_sr),
+
+		.BG_EN					(VDC_BG_EN),
+		.SPR_EN					(VDC_SPR_EN),
+		.GRID_EN					(VDC_GRID_EN),
+		.CPU_PAUSE_EN			(CPU_PAUSE_EN),
+
+		.ReducedVBL				(~overscan_enable),
+		.BORDER_EN				(0),
+		.VIDEO_R					(r),
+		.VIDEO_G					(g),
+		.VIDEO_B					(b),
+		.VIDEO_BW				(bw),
+		.VIDEO_CE_FS			(ce_vid),
+		.VIDEO_VS				(vs),
+		.VIDEO_HS				(hs),
+		.VIDEO_HBL				(hbl),
+		.VIDEO_VBL				(vbl),
 		
-		.RAM_A (RAM_addr),
-      .RAM_DO(RAM_q),
-      .RAM_DI(RAM_data),
-      .RAM_WE(RAM_wr),
-		.RAM_SEL(RAM_SEL),
-		
-		.VRAM1_A		(VRAM1_A),
-		.VRAM1_DI	(VRAM1_DI),
-		.VRAM1_DO	(VRAM1_DO),
-		.VRAM1_WE	(VRAM1_WE),
-		
-		.PRAM_A (PRAM_addr),
-      .PRAM_DO(PRAM_q),
-      .PRAM_DI(PRAM_data),
-      .PRAM_WE(PRAM_wr),
-		.PRAM_SEL(PRAM_SEL),
-		
-		.RAM_RDY(RAM_RDY),
-
-      .GG_EN(status[5]),
-      .GG_CODE(gg_code),
-      .GG_RESET((cart_download | code_download) & ioctl_wr & !ioctl_addr),
-      .GG_AVAIL(gg_avail),
-
-      .SP64(extra_sprites_enable),
-      .SGX (sgx && !LITE),
-
-      .JOY_OUT(joy_out),
-      .JOY_IN (joy_in),
-
-      .CD_EN(cd_en),
-      // Arcade card
-      .AC_EN(AC_EN),
-
-       .CD_RAM_A (cd_ram_a),
-       .CD_RAM_DO(cd_ram_do),
-       .CD_RAM_DI(rom_sdata),
-       .CD_RAM_RD(cd_ram_rd),
-       .CD_RAM_WR(cd_ram_wr),
-
-       .CD_STAT(cd_stat[7:0]),
-       .CD_MSG(cd_stat[15:8]),
-       .CD_STAT_GET(cd_stat_rec),
-
-       .CD_COMM(cd_comm),
-       .CD_COMM_SEND(cd_comm_send),
-
-       .CD_DOUT_REQ(cd_dataout_req),
-       .CD_DOUT(cd_dataout),
-		 .CD_almost_full(CD_almost_full),
-		 .AUDIO_almost_full(AUDIO_almost_full),
-       .CD_DOUT_SEND(cd_dataout_send),
-
-       .CD_REGION(cd_region),
-       .CD_RESET (cd_reset_req),
-
-       .CD_DATA(!cd_dat_byte ? cd_dat[7:0] : cd_dat[15:8]),
-       .CD_WR(cd_wr),
-       .CD_DATA_END(cd_dat_req),
-       .CD_DM(cd_dm),
-
-      .CDDA_SL(cdda_sl),
-      .CDDA_SR(cdda_sr),
-      .ADPCM_S(adpcm_s),
-      .PSG_SL (psg_sl),
-      .PSG_SR (psg_sr),
-
-      .BG_EN(VDC_BG_EN),
-      .SPR_EN(VDC_SPR_EN),
-      .GRID_EN(VDC_GRID_EN),
-      .CPU_PAUSE_EN(CPU_PAUSE_EN),
-
-      .ReducedVBL(~overscan_enable),
-      .BORDER_EN(0),
-      .DOTCLOCK_DIVIDER(dotclock_divider),
-      .VIDEO_R(r),
-      .VIDEO_G(g),
-      .VIDEO_B(b),
-      .VIDEO_BW(bw),
-      //.VIDEO_CE(ce_vid),
-      .VIDEO_CE_FS(ce_vid),
-      .VIDEO_VS(vs),
-      .VIDEO_HS(hs),
-      .VIDEO_HBL(hbl),
-      .VIDEO_VBL(vbl),
-
-      .BORDER_OUT(border)
+		.CD_almost_full		(CD_almost_full),
+		.AUDIO_almost_full	(AUDIO_almost_full),
+		.SUB_almost_full		(SUB_almost_full),
+		.BORDER_OUT				(border)
   );
   
 
@@ -341,7 +287,7 @@ module pce (
 		.cdctl_wr(cdctl_wr),
 		.cd_data_out(cd_data_out),
 		.cd_en(cd_en),
-		.AUDIO_almost_full(AUDIO_almost_full),
+		.AUDIO_almost_full(AUDIO_almost_full || SUB_almost_full),
 		.CD_almost_full(CD_almost_full)
    );
 
@@ -394,10 +340,12 @@ module pce (
   reg        cd_wr = 0;
   reg        cd_dat_byte = 0;
   reg        cd_dm = 0;
+  reg 		 cd_sub = 0;
+  reg 		 cd_cdg;
    always @(posedge clk_sys_42_95) begin
    	reg old_download;
    	reg head_pos, cd_dat_write;
-   	reg [14:0] cd_dat_len, cd_dat_cnt;
+   	reg [11:0] cd_dat_len, cd_dat_cnt;
 
    	old_download <= cd_dat_download;
    	if ((~old_download && cd_dat_download) || reset) begin
@@ -407,7 +355,9 @@ module pce (
    	end
    	else if (cdctl_wr && cd_dat_download) begin
    		if (!head_pos) begin
-   			{cd_dm,cd_dat_len} <= cd_data_out;
+   			cd_dat_len <= cd_data_out[11:0];
+   			cd_dm <= cd_data_out[15];
+				cd_cdg <= cd_data_out[14];
    			cd_dat_cnt <= 0;
    			head_pos <= 1;
    		end
@@ -426,6 +376,7 @@ module pce (
    			cd_wr <= 0;
    			cd_dat_byte <= ~cd_dat_byte;
    			cd_dat_cnt <= cd_dat_cnt + 15'd1;
+				if (cd_cdg && cd_dat_cnt >= 12'd2352) cd_sub <= 1;
    			if (cd_dat_byte || cd_dat_cnt >= cd_dat_len-1) begin
    				cd_dat_write <= 0;
    			end
@@ -545,28 +496,6 @@ module pce (
       .SDRAM_CKE(dram_cke)
   );
   
-  sram_core sram_core(
-	.clk			(clk_sys_42_95),
-	.ce_rom		(ce_rom),
-	.RAM_RDY		(RAM_RDY),
-	.RAM_addr	(RAM_addr),
-	.RAM_wr		(RAM_wr),
-	.RAM_SEL		(RAM_SEL),
-	.RAM_data	(RAM_data),
-	.RAM_q		(RAM_q),
-	.PRAM_addr	(PRAM_addr),
-	.PRAM_wr		(PRAM_wr),
-	.PRAM_SEL	(PRAM_SEL),
-	.PRAM_data	(PRAM_data),
-	.PRAM_q		(PRAM_q),
-	.sram_a		(sram_a),
-	.sram_dq		(sram_dq),
-	.sram_oe_n	(sram_oe_n),
-	.sram_we_n	(sram_we_n),
-	.sram_ub_n	(sram_ub_n),
-	.sram_lb_n	(sram_lb_n)
-
-);
 
 
 reg [15:0] vram_mem [32767:0];
@@ -578,63 +507,6 @@ always @(posedge clk_sys_42_95) begin
 	end
 end
 
-  // Video Ram
-//  reg VIDEO_CE_delay;
-//  
-//  always @(posedge clk_mem_85_91) VIDEO_CE_delay <= VIDEO_CE;
-//  
-//  opb_psram_v VDP0_RAM(
-//		.OPB_ABus		({8'd0, VRAM0_A[14:0], 1'b0}),
-//      .OPB_BE			(2'b00),
-//      .OPB_Clk			(clk_mem_85_91),
-//      .OPB_DBus		(VRAM0_DO),
-//		.OPB_32Bit		(1'b0),
-//      .OPB_RNW			(~VRAM0_WE),
-//      .OPB_Rst			(~reset),
-//      .OPB_select		(~VIDEO_CE_delay && ~VRAM0_A[15]),
-//      .Sln_DBus		(VRAM0_DI),
-//      .Sln_xferAck	(),
-//      .cram_a			(cram0_a),
-//		.cram_dq			(cram0_dq),
-//		.cram_wait		(cram0_wait),
-//		.cram_clk		(cram0_clk),
-//		.cram_adv_n		(cram0_adv_n),
-//		.cram_cre		(cram0_cre),
-//		.cram_ce0_n		(cram0_ce0_n),
-//		.cram_ce1_n		(cram0_ce1_n),
-//		.cram_oe_n		(cram0_oe_n),
-//		.cram_we_n		(cram0_we_n),
-//		.cram_ub_n		(cram0_ub_n),
-//		.cram_lb_n		(cram0_lb_n)
-//);
-//
-//  // Video Ram
-//  
-//  
-//  opb_psram_v VDP1_RAM(
-//		.OPB_ABus		({8'd0, VRAM1_A[14:0], 1'b0}),
-//      .OPB_BE			(4'b0000),
-//      .OPB_Clk			(clk_mem_85_91),
-//      .OPB_DBus		({2{VRAM1_DO}}),
-//		.OPB_32Bit		(1'b0),
-//      .OPB_RNW			(~VRAM1_WE),
-//      .OPB_Rst			(~reset),
-//      .OPB_select		(~VIDEO_CE_delay && ~VRAM1_A[15]),
-//      .Sln_DBus		(VRAM1_DI),
-//      .Sln_xferAck	(),
-//      .cram_a			(cram1_a),
-//		.cram_dq			(cram1_dq),
-//		.cram_wait		(cram1_wait),
-//		.cram_clk		(cram1_clk),
-//		.cram_adv_n		(cram1_adv_n),
-//		.cram_cre		(cram1_cre),
-//		.cram_ce0_n		(cram1_ce0_n),
-//		.cram_ce1_n		(cram1_ce1_n),
-//		.cram_oe_n		(cram1_oe_n),
-//		.cram_we_n		(cram1_we_n),
-//		.cram_ub_n		(cram1_ub_n),
-//		.cram_lb_n		(cram1_lb_n)
-//);
 
 
   wire romwr_ack;
@@ -894,5 +766,6 @@ end
 
 
 endmodule
+
 
 

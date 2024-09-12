@@ -37,8 +37,8 @@
 
 
 
-uint32_t clearbufferram();
-uint32_t RISCFileSeek(int dataslot, uint32_t offset, uint32_t size);
+void clearscrachram(uint32_t offset, uint32_t size);
+uint32_t RISCFileSeek(const char *s, uint32_t offset, uint32_t size, uint32_t Sector_track_number, dataslot_type *aft);
 uint32_t RISCFileReadAdv(int dataslot, uint8_t cmd0, uint8_t cmd1, uint8_t cmd_hps, uint32_t offset);
 // uint32_t RISCFileOpen (int dataslot);
 // uint32_t RISCFileLoad (int dataslot, void *pBuffer , uint32_t offset);

@@ -321,25 +321,61 @@ module core_top (
 
 	wire [31:0] 	mpu_reg_bridge_rd_data;
 	wire [31:0] 	mpu_ram_bridge_rd_data;
+	wire [31:0]  	mpu_scrachram_bridge_rd_data;
+	wire [31:0]  	mpu_psram_bridge_rd_data;
+	
 	wire [2:0]		video_slot_output;
   // for bridge write data, we just broadcast it to all bus devices
   // for bridge read data, we have to mux it
   // add your own devices here
+  
+
+parameter SIZE_BRAM_256 			= 6;
+parameter SIZE_BRAM_512 			= 7;
+parameter SIZE_BRAM_1k 				= 8;
+parameter SIZE_BRAM_2k 				= 9;
+parameter SIZE_BRAM_4k 				= 10;
+parameter SIZE_BRAM_8k 				= 11;
+parameter SIZE_BRAM_16k 			= 12;
+parameter SIZE_BRAM_32k 			= 13;
+parameter SIZE_BRAM_64k 			= 14;
+parameter SIZE_BRAM_128k 			= 15;
+
+parameter MPU_BRAM_SIZE 			= SIZE_BRAM_64k;
+parameter MPU_SCRATCH_BRAM_SIZE 	= SIZE_BRAM_16k;
+
+parameter CORE_REG_ADDRESS 		= 8'h00;
+parameter CORE_DATA_ADDRESS 		= 8'h20;
+
+parameter MPU_BRAM_ADDRESS			= 8'h80;
+parameter MPU_SCRACHRAM_ADDRESS	= 8'h81;
+parameter MPU_PSRAM_ADDRESS		= 8'h82;
+parameter MPU_REG_ADDRESS 			= 8'hf0;
+
+parameter CMD_REG_ADDRESS 			= 8'hf8;
+  
+  
   always @(*) begin
-    casex (bridge_addr)
+    case (bridge_addr[31:24])
       default: begin
         bridge_rd_data <= 0;
       end
-      32'h2xxxxxxx: begin
+      CORE_DATA_ADDRESS : begin
         bridge_rd_data <= sd_read_data;
       end
-		32'h8xxxxxxx: begin
+		MPU_BRAM_ADDRESS : begin
         bridge_rd_data <= mpu_ram_bridge_rd_data;
       end
-		32'hf0xxxxxx: begin
+		MPU_SCRACHRAM_ADDRESS : begin
+        bridge_rd_data <= mpu_scrachram_bridge_rd_data;
+      end
+		MPU_PSRAM_ADDRESS : begin
+        bridge_rd_data <= mpu_psram_bridge_rd_data;
+      end
+		MPU_REG_ADDRESS : begin
         bridge_rd_data <= mpu_reg_bridge_rd_data;
       end
-      32'hF8xxxxxx: begin
+      CMD_REG_ADDRESS : begin
         bridge_rd_data <= cmd_bridge_rd_data;
       end
     endcase
@@ -350,65 +386,62 @@ module core_top (
       reset_delay <= reset_delay - 1;
     end
 
-    if (bridge_wr) begin
-      casex (bridge_addr)
-//        32'h0: begin
-//          ioctl_download <= bridge_wr_data[0];
-//        end
-//        32'h4: begin
-//          save_download <= bridge_wr_data[0];
-//        end
-//        32'h8: begin
-//          is_sgx <= bridge_wr_data[0];
-//        end
-        32'h50: begin
+    if (bridge_wr && bridge_addr[31:24] == CORE_REG_ADDRESS) begin
+      casex (bridge_addr[15:0])
+        16'h0050: begin
           reset_delay <= 32'h100000;
         end
-        32'h100: begin
+        16'h0100: begin
           turbo_tap_enable <= bridge_wr_data[0];
         end
-        32'h104: begin
+        16'h0104: begin
           button6_enable <= bridge_wr_data[0];
         end
-        32'h108: begin
+        16'h0108: begin
           button1_turbo_speed <= bridge_wr_data[1:0];
         end
-        32'h10C: begin
+        16'h010C: begin
           button2_turbo_speed <= bridge_wr_data[1:0];
         end
-        32'h200: begin
+        16'h0200: begin
           overscan_enable <= bridge_wr_data[0];
         end
-        32'h204: begin
+        16'h0204: begin
           extra_sprites_enable <= bridge_wr_data[0];
         end
-        32'h208: begin
+        16'h0208: begin
           raw_rgb_enable <= bridge_wr_data[0];
         end
-        32'h300: begin
+        16'h0300: begin
           master_audio_boost <= bridge_wr_data[1:0];
         end
-        32'h304: begin
+        16'h0304: begin
           adpcm_audio_boost <= bridge_wr_data[0];
         end
-        32'h308: begin
+        16'h0308: begin
           cd_audio_boost <= bridge_wr_data[0];
         end
       endcase
     end
   end
+  
+  /******************************************************
+  
+	Command Core
+  
+  ******************************************************/
 
-  //
-  // host/target command handler
-  //
-  wire reset_n;  // driven by host commands, can be used as core-wide reset
-  wire [31:0] cmd_bridge_rd_data;
+	//
+	// host/target command handler
+	//
+	wire reset_n;  // driven by host commands, can be used as core-wide reset
+	wire [31:0] cmd_bridge_rd_data;
 
-  // bridge host commands
-  // synchronous to clk_74a
-  wire status_boot_done = pll_core_locked;
-  wire status_setup_done = pll_core_locked;  // rising edge triggers a target command
-  wire status_running = reset_n;  // we are running as soon as reset_n goes high
+	// bridge host commands
+	// synchronous to clk_74a
+	wire status_boot_done = pll_core_locked;
+	wire status_setup_done = pll_core_locked;  // rising edge triggers a target command
+	wire status_running = reset_n;  // we are running as soon as reset_n goes high
 
 	wire            dataslot_requestread;
 	wire    [15:0]  dataslot_requestread_id;
@@ -424,58 +457,64 @@ module core_top (
 	wire            dataslot_update;
 	wire    [15:0]  dataslot_update_id;
 	wire    [31:0]  dataslot_update_size;
+	wire 	  [15:0]	 dataslot_update_size_lba48;
 
 	wire            dataslot_allcomplete;
 
-  wire savestate_supported;
-  wire [31:0] savestate_addr;
-  wire [31:0] savestate_size;
-  wire [31:0] savestate_maxloadsize;
+	wire savestate_supported;
+	wire [31:0] savestate_addr;
+	wire [31:0] savestate_size;
+	wire [31:0] savestate_maxloadsize;
 
-  wire savestate_start;
-  wire savestate_start_ack;
-  wire savestate_start_busy;
-  wire savestate_start_ok;
-  wire savestate_start_err;
+	wire savestate_start;
+	wire savestate_start_ack;
+	wire savestate_start_busy;
+	wire savestate_start_ok;
+	wire savestate_start_err;
 
-  wire savestate_load;
-  wire savestate_load_ack;
-  wire savestate_load_busy;
-  wire savestate_load_ok;
-  wire savestate_load_err;
+	wire savestate_load;
+	wire savestate_load_ack;
+	wire savestate_load_busy;
+	wire savestate_load_ok;
+	wire savestate_load_err;
 
-  wire osnotify_inmenu;
-  
+	wire osnotify_inmenu;
+
 	wire     [31:0] rtc_epoch_seconds;
 	wire     [31:0] rtc_date_bcd;
 	wire     [31:0] rtc_time_bcd;
 	wire            rtc_valid;
-  
-  
+
+
 	wire            target_dataslot_read;       
 	wire            target_dataslot_write;
+	wire 				 target_dataslot_enableLBA48;
+	wire 				 target_dataslot_flush;
+	wire 				 target_dataslot_Get_filename;
+	wire 				 target_dataslot_Open_file;
 
 	wire            target_dataslot_ack;        
 	wire            target_dataslot_done;
-	wire    [2:0]   target_dataslot_err;
+	wire    [5:0]   target_dataslot_err;
 
 	wire     [15:0] target_dataslot_id;
 	wire     [31:0] target_dataslot_slotoffset;
+	wire 		[15:0] target_dataslot_slotoffsetLBA48;
 	wire     [31:0] target_dataslot_bridgeaddr;
 	wire     [31:0] target_dataslot_length;
 
-  // bridge target commands
-  // synchronous to clk_74a
-  wire  [35:0] EXT_BUS;
+	// bridge target commands
+	// synchronous to clk_74a
+	wire  [35:0] EXT_BUS;
 
-  // bridge data slot access
+	// bridge data slot access
 
-  wire [9:0]  datatable_addr;
-  wire 		  datatable_wren;
-  
-  wire        datatable_rden;
-  wire [31:0] datatable_data;
-  wire [31:0] datatable_q;
+	wire [9:0]  datatable_addr;
+	wire 		  datatable_wren;
+
+	wire        datatable_rden;
+	wire [31:0] datatable_data;
+	wire [31:0] datatable_q;
 
 core_bridge_cmd icb (
 
@@ -494,20 +533,21 @@ core_bridge_cmd icb (
     .status_setup_done      		( status_setup_done ),
     .status_running         		( status_running ),
 
-    .dataslot_requestread       ( dataslot_requestread ),
-    .dataslot_requestread_id    ( dataslot_requestread_id ),
-    .dataslot_requestread_ack   ( dataslot_requestread_ack ),
-    .dataslot_requestread_ok    ( dataslot_requestread_ok ),
+    .dataslot_requestread       	( dataslot_requestread ),
+    .dataslot_requestread_id    	( dataslot_requestread_id ),
+    .dataslot_requestread_ack   	( dataslot_requestread_ack ),
+    .dataslot_requestread_ok    	( dataslot_requestread_ok ),
 
-    .dataslot_requestwrite      ( dataslot_requestwrite ),
-    .dataslot_requestwrite_id   ( dataslot_requestwrite_id ),
-    .dataslot_requestwrite_size ( dataslot_requestwrite_size ),
-    .dataslot_requestwrite_ack  ( dataslot_requestwrite_ack ),
-    .dataslot_requestwrite_ok   ( dataslot_requestwrite_ok ),
+    .dataslot_requestwrite      	( dataslot_requestwrite ),
+    .dataslot_requestwrite_id   	( dataslot_requestwrite_id ),
+    .dataslot_requestwrite_size 	( dataslot_requestwrite_size ),
+    .dataslot_requestwrite_ack  	( dataslot_requestwrite_ack ),
+    .dataslot_requestwrite_ok   	( dataslot_requestwrite_ok ),
 
-    .dataslot_update            ( dataslot_update ),
-    .dataslot_update_id         ( dataslot_update_id ),
-    .dataslot_update_size       ( dataslot_update_size ),
+    .dataslot_update            	( dataslot_update ),
+    .dataslot_update_id         	( dataslot_update_id ),
+    .dataslot_update_size       	( dataslot_update_size ),
+    .dataslot_update_size_lba48 	( dataslot_update_size_lba48 ),
     
     .dataslot_allcomplete   		( dataslot_allcomplete ),
 
@@ -527,33 +567,45 @@ core_bridge_cmd icb (
     .savestate_start_ok     		( savestate_start_ok ),
     .savestate_start_err    		( savestate_start_err ),
 
-    .savestate_load         ( savestate_load ),
-    .savestate_load_ack     ( savestate_load_ack ),
-    .savestate_load_busy    ( savestate_load_busy ),
-    .savestate_load_ok      ( savestate_load_ok ),
-    .savestate_load_err     ( savestate_load_err ),
+    .savestate_load         		( savestate_load ),
+    .savestate_load_ack     		( savestate_load_ack ),
+    .savestate_load_busy    		( savestate_load_busy ),
+    .savestate_load_ok      		( savestate_load_ok ),
+    .savestate_load_err     		( savestate_load_err ),
 
-    .osnotify_inmenu        ( osnotify_inmenu ),
+    .osnotify_inmenu        		( osnotify_inmenu ),
     
-    .target_dataslot_read       ( target_dataslot_read ),
-    .target_dataslot_write      ( target_dataslot_write ),
+    .target_dataslot_read       	( target_dataslot_read ),
+    .target_dataslot_write      	( target_dataslot_write ),
+	 
+	 .target_dataslot_enableLBA48	( target_dataslot_enableLBA48 ),
+	 .target_dataslot_flush			( target_dataslot_flush ),
+	 .target_dataslot_Get_filename( target_dataslot_Get_filename ),
+	 .target_dataslot_Open_file	( target_dataslot_Open_file ),
 
-    .target_dataslot_ack        ( target_dataslot_ack ),
-    .target_dataslot_done       ( target_dataslot_done ),
-    .target_dataslot_err        ( target_dataslot_err ),
+    .target_dataslot_ack        	( target_dataslot_ack ),
+    .target_dataslot_done       	( target_dataslot_done ),
+    .target_dataslot_err        	( target_dataslot_err ),
 
-    .target_dataslot_id         ( target_dataslot_id ),
-    .target_dataslot_slotoffset ( target_dataslot_slotoffset ),
-    .target_dataslot_bridgeaddr ( target_dataslot_bridgeaddr ),
-    .target_dataslot_length     ( target_dataslot_length ),
+    .target_dataslot_id         	( target_dataslot_id ),
+    .target_dataslot_slotoffset 	( target_dataslot_slotoffset ),
+	 .target_dataslot_slotoffsetLBA48 ( target_dataslot_slotoffsetLBA48 ),
+    .target_dataslot_bridgeaddr 	( target_dataslot_bridgeaddr ),
+    .target_dataslot_length     	( target_dataslot_length ),
 
-    .datatable_addr         ( datatable_addr ),
-    .datatable_wren         ( datatable_wren ),
-    .datatable_rden         ( datatable_rden ),
-    .datatable_data         ( datatable_data ),
-    .datatable_q            ( datatable_q )
+    .datatable_addr         		( datatable_addr ),
+    .datatable_wren         		( datatable_wren ),
+    .datatable_rden         		( datatable_rden ),
+    .datatable_data         		( datatable_data ),
+    .datatable_q            		( datatable_q )
 
 );
+
+  /******************************************************
+  
+	DataSlots Core
+  
+  ******************************************************/
 
   reg ioctl_download = 0;
   reg save_download = 0;
@@ -578,7 +630,115 @@ end
   wire [24:0] sd_buff_addr_in;
   wire [24:0] sd_buff_addr_out;
 
+  /******************************************************
+  
+	MPU Core
+  
+  ******************************************************/
+  
+  
 
+wire reset_mpu_l;
+wire IO_OSD;
+
+MPU_AFP_CORE #(
+  .MPU_BRAM_ADDRESS			( MPU_BRAM_ADDRESS ), // This sets the location on the APF bus to watch out for
+  .MPU_BRAM_SIZE 				( MPU_BRAM_SIZE ), //Address lines for the memory array
+  .MPU_PSRAM_ADDRESS			( MPU_PSRAM_ADDRESS ),
+  .MPU_SCRACHRAM_ADDRESS	( MPU_SCRACHRAM_ADDRESS ),
+  .MPU_SCRATCH_BRAM_SIZE	( MPU_SCRATCH_BRAM_SIZE )
+) MPU_AFP_CORE(
+		// Controls for the MPU
+		.clk_mpu								( clk_74a ), 							// Clock of the MPU itself
+		.clk_sys								( clk_sys_42_95 ),
+		.clk_74a								( clk_74a ),							// Clock of the APF Bus
+		.reset_n								( status_running),							// Reset from the APF System
+		.reset_out							( reset_mpu_l ),						// Able to restart the core from the MPU if required
+		
+		// APF Bus controll
+		.bridge_addr            		( bridge_addr ),
+		.bridge_rd              		( bridge_rd ),
+		.mpu_reg_bridge_rd_data       ( mpu_reg_bridge_rd_data ),		// Used for interactions
+		.mpu_ram_bridge_rd_data       ( mpu_ram_bridge_rd_data ),		// Used for ram up/download	
+		.mpu_scrachram_bridge_rd_data	( mpu_scrachram_bridge_rd_data ),
+		.mpu_psram_bridge_rd_data		( mpu_psram_bridge_rd_data ),
+		.bridge_wr              		( bridge_wr ),
+		.bridge_wr_data         		( bridge_wr_data ),
+	  
+	   // Debugging to the Cart	
+		.rxd									( RXDATA ),
+		.txd									( TXDATA ),
+		
+		// APF Controller access if required
+		
+		.cont1_key          				( cont1_key ),
+		.cont2_key          				( cont2_key ),
+		.cont3_key          				( cont3_key ),
+		.cont4_key          				( cont4_key ),
+		.cont1_joy          				( cont1_joy ),
+		.cont2_joy          				( cont2_joy ),
+		.cont3_joy          				( cont3_joy ),
+		.cont4_joy          				( cont4_joy ),
+		.cont1_trig         				( cont1_trig ),
+		.cont2_trig         				( cont2_trig ),
+		.cont3_trig         				( cont3_trig ),
+		.cont4_trig         				( cont4_trig ),
+		
+		.cram_a                			( cram1_a ),
+		.cram_dq               			( cram1_dq ),
+		.cram_wait             			( cram1_wait ),
+		.cram_clk              			( cram1_clk ),
+		.cram_adv_n            			( cram1_adv_n ),
+		.cram_cre              			( cram1_cre ),
+		.cram_ce0_n            			( cram1_ce0_n ),
+		.cram_ce1_n            			( cram1_ce1_n ),
+		.cram_oe_n             			( cram1_oe_n ),
+		.cram_we_n             			( cram1_we_n ),
+		.cram_ub_n             			( cram1_ub_n ),
+		.cram_lb_n             			( cram1_lb_n ),
+		
+		// MPU Controlls to the APF
+		
+		.dataslot_update            	( dataslot_update ),
+		.dataslot_update_id         	( dataslot_update_id ),
+		.dataslot_update_size       	( dataslot_update_size ),
+		.dataslot_update_size_lba48 	( dataslot_update_size_lba48 ),
+	  
+		.target_dataslot_read       	( target_dataslot_read ),
+		.target_dataslot_write      	( target_dataslot_write ),
+		.target_dataslot_enableLBA48	( target_dataslot_enableLBA48 ),
+		.target_dataslot_flush			( target_dataslot_flush ),
+		.target_dataslot_Get_filename	( target_dataslot_Get_filename ),
+		.target_dataslot_Open_file		( target_dataslot_Open_file ),
+
+		.target_dataslot_ack        	( target_dataslot_ack ),
+		.target_dataslot_done       	( target_dataslot_done ),
+		.target_dataslot_err        	( target_dataslot_err ),
+
+		.target_dataslot_id         		( target_dataslot_id ),
+		.target_dataslot_slotoffset 		( target_dataslot_slotoffset ),
+		.target_dataslot_slotoffsetLBA48 (target_dataslot_slotoffsetLBA48),
+		.target_dataslot_bridgeaddr 		( target_dataslot_bridgeaddr ),
+		.target_dataslot_length     		( target_dataslot_length ),
+
+		.datatable_addr         		( datatable_addr ),
+		.datatable_wren         		( datatable_wren ),
+		.datatable_rden         		( datatable_rden ),
+		.datatable_data         		( datatable_data ),
+		.datatable_q            		( datatable_q ),
+		
+		// Core interactions
+		.IO_UIO       						( EXT_BUS[34] ),
+		.IO_OSD      						( EXT_BUS[35] ),
+		.IO_STROBE    						( EXT_BUS[33] ),
+		.IO_WAIT      						( EXT_BUS[32] ),
+		.IO_DIN       						( EXT_BUS[15:0] ),
+		.IO_DOUT      						( EXT_BUS[31:16] ),
+		.IO_WIDE								( 1'b1 ),
+		.CORE_OUTPUT						(CORE_OUTPUT),
+		.CORE_INPUT							(CORE_INPUT)
+	 
+	 );
 
   wire ioctl_download_s;
   wire save_download_s;
@@ -761,7 +921,6 @@ end
   wire [15:0] audio_l;
   wire [15:0] audio_r;
 
-  wire [1:0] dotclock_divider;
   wire border;
 
   pce pce (
@@ -867,147 +1026,26 @@ end
       .dram_ras_n					(dram_ras_n),
       .dram_cas_n					(dram_cas_n),
       .dram_we_n					(dram_we_n),
-		
-		//SRAM
-		.sram_a                 ( sram_a ),
-		.sram_dq                ( sram_dq ),
-		.sram_oe_n              ( sram_oe_n ),
-		.sram_we_n              ( sram_we_n ),
-		.sram_ub_n              ( sram_ub_n ),
-		.sram_lb_n              ( sram_lb_n ),
-		
-		//CRAM
-		.cram0_a                ( cram0_a ),
-		.cram0_dq               ( cram0_dq ),
-		.cram0_wait             ( cram0_wait ),
-		.cram0_clk              ( cram0_clk ),
-		.cram0_adv_n            ( cram0_adv_n ),
-		.cram0_cre              ( cram0_cre ),
-		.cram0_ce0_n            ( cram0_ce0_n ),
-		.cram0_ce1_n            ( cram0_ce1_n ),
-		.cram0_oe_n             ( cram0_oe_n ),
-		.cram0_we_n             ( cram0_we_n ),
-		.cram0_ub_n             ( cram0_ub_n ),
-		.cram0_lb_n             ( cram0_lb_n ),
-		
-//		.cram1_a                ( cram1_a ),
-//		.cram1_dq               ( cram1_dq ),
-//		.cram1_wait             ( cram1_wait ),
-//		.cram1_clk              ( cram1_clk ),
-//		.cram1_adv_n            ( cram1_adv_n ),
-//		.cram1_cre              ( cram1_cre ),
-//		.cram1_ce0_n            ( cram1_ce0_n ),
-//		.cram1_ce1_n            ( cram1_ce1_n ),
-//		.cram1_oe_n             ( cram1_oe_n ),
-//		.cram1_we_n             ( cram1_we_n ),
-//		.cram1_ub_n             ( cram1_ub_n ),
-//		.cram1_lb_n             ( cram1_lb_n ),
 
-      .ce_pix (ce_pix),
-      .hblank (h_blank),
-      .vblank (v_blank),
-      .hsync  (video_hs_core),
-      .vsync  (video_vs_core),
-      .video_r(vid_rgb_core[23:16]),
-      .video_g(vid_rgb_core[15:8]),
-      .video_b(vid_rgb_core[7:0]),
+		
 
-      .dotclock_divider(dotclock_divider),
-      .border(border),
+      .ce_pix 						(ce_pix),
+      .hblank 						(h_blank),
+      .vblank 						(v_blank),
+      .hsync  						(video_hs_core),
+      .vsync  						(video_vs_core),
+      .video_r						(vid_rgb_core[23:16]),
+      .video_g						(vid_rgb_core[15:8]),
+      .video_b						(vid_rgb_core[7:0]),
 
-      .audio_l(audio_l),
-      .audio_r(audio_r),
-		.EXT_BUS(EXT_BUS)
+      .border						(border),
+
+      .audio_l						(audio_l),
+      .audio_r						(audio_r),
+		.EXT_BUS						(EXT_BUS)
   );
   
   
-wire reset_mpu_l;
-wire IO_OSD;
-
-substitute_mcu_apf_mister substitute_mcu_apf_mister(
-		// Controls for the MPU
-		.clk_mpu								( clk_74a ), 							// Clock of the MPU itself
-		.clk_sys								( clk_sys_42_95 ),
-		.clk_74a								( clk_74a ),							// Clock of the APF Bus
-		.reset_n								( status_running),							// Reset from the APF System
-		.reset_out							( reset_mpu_l ),						// Able to restart the core from the MPU if required
-		
-		// APF Bus controll
-		.bridge_addr            		( bridge_addr ),
-		.bridge_rd              		( bridge_rd ),
-		.mpu_reg_bridge_rd_data       ( mpu_reg_bridge_rd_data ),		// Used for interactions
-		.mpu_ram_bridge_rd_data       ( mpu_ram_bridge_rd_data ),		// Used for ram up/download
-		.bridge_wr              		( bridge_wr ),
-		.bridge_wr_data         		( bridge_wr_data ),
-	  
-	   // Debugging to the Cart	
-		.rxd									( RXDATA ),
-		.txd									( TXDATA ),
-		
-		// APF Controller access if required
-		
-		.cont1_key          				( cont1_key ),
-		.cont2_key          				( cont2_key ),
-		.cont3_key          				( cont3_key ),
-		.cont4_key          				( cont4_key ),
-		.cont1_joy          				( cont1_joy ),
-		.cont2_joy          				( cont2_joy ),
-		.cont3_joy          				( cont3_joy ),
-		.cont4_joy          				( cont4_joy ),
-		.cont1_trig         				( cont1_trig ),
-		.cont2_trig         				( cont2_trig ),
-		.cont3_trig         				( cont3_trig ),
-		.cont4_trig         				( cont4_trig ),
-		
-		.cram_a                			( cram1_a ),
-		.cram_dq               			( cram1_dq ),
-		.cram_wait             			( cram1_wait ),
-		.cram_clk              			( cram1_clk ),
-		.cram_adv_n            			( cram1_adv_n ),
-		.cram_cre              			( cram1_cre ),
-		.cram_ce0_n            			( cram1_ce0_n ),
-		.cram_ce1_n            			( cram1_ce1_n ),
-		.cram_oe_n             			( cram1_oe_n ),
-		.cram_we_n             			( cram1_we_n ),
-		.cram_ub_n             			( cram1_ub_n ),
-		.cram_lb_n             			( cram1_lb_n ),
-		
-		// MPU Controlls to the APF
-		
-		.dataslot_update            	( dataslot_update ),
-		.dataslot_update_id         	( dataslot_update_id ),
-		.dataslot_update_size       	( dataslot_update_size ),
-	  
-		.target_dataslot_read       	( target_dataslot_read ),
-		.target_dataslot_write      	( target_dataslot_write ),
-
-		.target_dataslot_ack        	( target_dataslot_ack ),
-		.target_dataslot_done       	( target_dataslot_done ),
-		.target_dataslot_err        	( target_dataslot_err ),
-
-		.target_dataslot_id         	( target_dataslot_id ),
-		.target_dataslot_slotoffset 	( target_dataslot_slotoffset ),
-		.target_dataslot_bridgeaddr 	( target_dataslot_bridgeaddr ),
-		.target_dataslot_length     	( target_dataslot_length ),
-
-		.datatable_addr         		( datatable_addr ),
-		.datatable_wren         		( datatable_wren ),
-		.datatable_rden         		( datatable_rden ),
-		.datatable_data         		( datatable_data ),
-		.datatable_q            		( datatable_q ),
-		
-		// Core interactions
-		.IO_UIO       						( EXT_BUS[34] ),
-		.IO_OSD      						( EXT_BUS[35] ),
-		.IO_STROBE    						( EXT_BUS[33] ),
-		.IO_WAIT      						( EXT_BUS[32] ),
-		.IO_DIN       						( EXT_BUS[15:0] ),
-		.IO_DOUT      						( EXT_BUS[31:16] ),
-		.IO_WIDE								( 1'b1 ),
-		.CORE_OUTPUT						(CORE_OUTPUT),
-		.CORE_INPUT							(CORE_INPUT)
-	 
-	 );
 	 
 
   ////////////////////////////////////////////////////////////////////////////////////////

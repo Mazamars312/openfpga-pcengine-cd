@@ -23,6 +23,7 @@
 
 #ifndef TIMER_H
 #include <stdio.h>
+#include <inttypes.h>
 
 // We have two timers one for User use and the other for the Keyboard and mouse checks
 #define TIMERBASE1 0xffffffc4
@@ -57,8 +58,8 @@ unsigned int GetTimer2_fast();
 unsigned int CheckTimer2(unsigned int time);
 uint32_t RISCGetTimer1(uint32_t offset, int fraction);
 uint32_t RISCCheckTimer1(uint32_t time);
-uint32_t RISCGetTimer2(uint32_t offset, int fraction);
-uint32_t RISCCheckTimer2(uint32_t time);
+uint32_t RISCGetTimer2(uint32_t fraction);
+bool RISCCheckTimer2(uint32_t time);
 // Will reset the timer
 void ResetTimer1();
 void ResetTimer2();

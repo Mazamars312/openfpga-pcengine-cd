@@ -30,7 +30,6 @@
 
 #ifndef APF_H
 #define APF_H
-
 #define DATASLOT_ID_BASE              0xFFFF0000
 #define DATASLOT_ID_BASE_END          0x1000
 
@@ -42,14 +41,22 @@
 
 #define DATASLOT_UPDATE_FLAG_REG      0xFFFFFFB0
 
-#define TARGET_DATASLOT_READ_REG      0x1
-#define TARGET_DATASLOT_WRITE_REG     0x2
+//{externalInterrupt_enabled, target_dataslot_Open_file, target_dataslot_Get_filename, target_dataslot_flush, target_dataslot_enableLBA48, target_dataslot_write, target_dataslot_read}
+
+#define TARGET_DATASLOT_READ_REG            0x01
+#define TARGET_DATASLOT_WRITE_REG           0x02
+#define TARGET_DATASLOT_ENABLE_48LBA_REG    0x04
+#define TARGET_DATASLOT_FLUSH_REG           0x08
+#define TARGET_DATASLOT_GET_FILENAME_REG    0x10
+#define TARGET_DATASLOT_OPEN_FILENAME_REG   0x20
 
 // APF commands and address locations
-#define APF_ADDRESS_OFFSET      0x80000000 // We want to make sure we advise the APF where the BRAM is of the CPU
-#define APF_ACK 0x10
-#define APF_DONE 0x8
-#define APF_ERROR 0x7
+#define APF_ADDRESS_OFFSET          0x80000000 // We want to make sure we advise the APF where the BRAM is of the CPU
+#define APF_SCRACH_ADDRESS_OFFSET   0x81000000 // We want to make sure we advise the APF where the BRAM is of the CPU
+#define APF_PSRAM_ADDRESS_OFFSET    0x82000000 // We want to make sure we advise the APF where the BRAM is of the CPU
+#define APF_ACK 0x80
+#define APF_DONE 0x40
+#define APF_ERROR 0x3F
 
 #define DATASLOT_RAM_ACCESS(x) *(volatile unsigned int *)(DATASLOT_ID_BASE+(x))
 
@@ -67,20 +74,23 @@
 #define READ_TARGET_DATASLOT_OFFSET(x) *(volatile unsigned int *)(TARGET_DATASLOT_OFFSET+(x))
 #define READ_TARGET_DATASLOT_CONTROL(x) *(volatile unsigned int *)(TARGET_DATASLOT_CONTROL+(x))
 
-
-uint32_t dataslot_search_id(uint16_t value);
-uint32_t dataslot_size(uint16_t value);
-void dataslot_search_active(uint16_t value);
+uint32_t    dataslot_search_id(uint16_t value);
+uint32_t    dataslot_size(uint16_t value);
+void        dataslot_search_active(uint16_t value);
 // bool dataslot_updated();
-uint32_t dataslot_read(uint16_t dataslot, uint32_t address, uint32_t offset, uint32_t length);
-uint32_t dataslot_write(uint16_t dataslot, uint32_t address, uint32_t offset, uint32_t length);
-uint32_t dataslot_read_lba_set_fast(uint16_t dataslot, uint32_t address, uint32_t offset, uint32_t length);
-uint32_t dataslot_read_lba_set(uint16_t dataslot, uint32_t address, uint32_t offset);
-uint32_t dataslot_read_lba(uint32_t length);
-uint32_t dataslot_read_lba_fast(uint32_t length,  bool wait_update);
-uint32_t dataslot_write_lba_set(uint16_t dataslot, uint32_t address, uint32_t offset);
-uint32_t dataslot_write_lba(uint32_t length,  bool update_address);
-bool      dataslot_ready();
-uint8_t   dataslot_status();
+uint32_t    dataslot_read(uint16_t dataslot, uint32_t address, uint32_t offset, uint32_t length);
+uint32_t    dataslot_write(uint16_t dataslot, uint32_t address, uint32_t offset, uint32_t length);
+uint32_t    dataslot_read_lba_set_fast(uint16_t dataslot, uint32_t address, uint32_t offset, uint32_t length);
+uint32_t    dataslot_read_lba_set(uint16_t dataslot, uint32_t address, uint32_t offset);
+uint32_t    dataslot_read_lba(uint32_t length);
+uint32_t    dataslot_read_lba_fast(uint32_t length,  bool wait_update);
+uint32_t    dataslot_write_lba_set(uint16_t dataslot, uint32_t address, uint32_t offset);
+uint32_t    dataslot_write_lba(uint32_t length,  bool update_address);
+bool        dataslot_ready();
+uint8_t     dataslot_status();
+
+void        dataslot_pathname_file_decode (dataslot_type *aft);
+int         GetFileNameDataSlot (dataslot_type *aft);
+int         OpenFileNameDataSlot (dataslot_type *aft, const char *s);
 
 #endif
