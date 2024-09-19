@@ -20,19 +20,6 @@
 	"extensions": ["cue"]
 	},
 	{
-	"name": "PCE Boot Rom",
-	"id": 1,
-	"required": true,
-	"filename": "bios_3_0_usa.pce",
-	"alternate_filenames": ["bios_3_0_jap.pce", "bios_2_0_usa.pce", "bios_2_0_jap.pce", "bios_1_0_jap.pce"],
-	"extensions": [
-		"pce"
-		],
-	"parameters": "0x00000309",
-	"address": "0x10000000",
-	"size_maximum": "0x40000"
-	},
-	{
 	"name": "Save",
 	"id": 2,
 	"required": false,
@@ -41,6 +28,19 @@
 	"extensions": ["sav"],
 	"address": "0x20000000",
 	"size_maximum": "0x4000"
+	},
+	{
+	"name": "PCE Boot Rom",
+	"id": 1,
+	"required": true,
+	"filename": "bios_3_0_jap.pce",
+	"alternate_filenames": ["bios_3_0_usa.pce", "bios_2_0_usa.pce", "bios_2_0_jap.pce", "bios_1_0_jap.pce"],
+	"extensions": [
+		"pce"
+		],
+	"parameters": "0x00000309",
+	"address": "0x10000000",
+	"size_maximum": "0x40000"
 	},
 	{
 	"name": "MPU Bios",
