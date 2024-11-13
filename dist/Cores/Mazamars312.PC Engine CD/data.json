@@ -2,59 +2,70 @@
   "data": {
     "magic": "APF_VER_1",
     "data_slots": [
-	{
-	"name": "CDRom Cue File",
-	"id": 100,
-	"required": true,
-	"parameters": "0x00000009",
-	"deferload": true,
-	"size_maximum": "0x4000",
-	"extensions": ["cue"]
-	},
-	{
-	"name": "CDRom Bin File",
-	"id": 101,
-	"required": false,
-	"parameters": "0x00000008",
-	"deferload": true,
-	"extensions": ["cue"]
-	},
-	{
-	"name": "PCE Boot Rom",
-	"id": 1,
-	"required": true,
-	"filename": "bios_3_0_usa.pce",
-	"alternate_filenames": ["bios_3_0_jap.pce", "bios_2_0_usa.pce", "bios_2_0_jap.pce", "bios_1_0_jap.pce"],
-	"extensions": [
-		"pce"
-		],
-	"parameters": "0x00000309",
-	"address": "0x10000000",
-	"size_maximum": "0x40000"
-	},
-	{
-	"name": "Save",
-	"id": 2,
-	"required": false,
-	"parameters": "0x84",
-	"nonvolatile": true,
-	"extensions": ["sav"],
-	"address": "0x20000000",
-	"size_maximum": "0x4000"
-	},
-	{
-	"name": "MPU Bios",
-	"id": 3,
-	"required": true,
-	"parameters": 2,
-	"filename": "pce_mpu_bios.bin",
-	"extensions": [
-		"bin"
-		],
-	"size_exact": 0,
-	"size_maximum": 65536,
-	"address": "0x80000000"
-	}
-	]
-}
+      {
+        "name": "CDRom Cue File",
+        "id": 100,
+        "required": true,
+        "parameters": "0x00000009",
+        "deferload": true,
+        "size_maximum": "0x4000",
+        "extensions": [
+          "cue"
+        ]
+      },
+      {
+        "name": "CDRom Bin File",
+        "id": 101,
+        "required": false,
+        "parameters": "0x00000008",
+        "deferload": true,
+        "extensions": [
+          "cue"
+        ]
+      },
+      {
+        "name": "Save",
+        "id": 2,
+        "required": false,
+        "parameters": "0x84",
+        "nonvolatile": true,
+        "extensions": [
+          "sav"
+        ],
+        "address": "0x20000000",
+        "size_maximum": "0x4000"
+      },
+      {
+        "name": "PCE Boot Rom",
+        "id": 1,
+        "required": true,
+        "filename": "bios_3_0_jap.pce",
+        "alternate_filenames": [
+          "bios_3_0_usa.pce",
+          "bios_2_0_usa.pce",
+          "bios_2_0_jap.pce",
+          "bios_1_0_jap.pce"
+        ],
+        "extensions": [
+          "pce"
+        ],
+        "parameters": "0x00000309",
+        "address": "0x10000000",
+        "size_maximum": "0x40000"
+      },
+      {
+        "name": "MPU Bios",
+        "id": 3,
+        "required": true,
+        "parameters": 2,
+        "filename": "pce_mpu_bios.bin",
+        "extensions": [
+          "bin"
+        ],
+        "size_exact": 0,
+        "size_maximum": 65536,
+        "address": "0x80000000"
+      }
+    ]
+  }
 }
