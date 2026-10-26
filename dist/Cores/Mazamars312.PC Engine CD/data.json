@@ -8,7 +8,7 @@
 	"required": true,
 	"parameters": "0x00000009",
 	"deferload": true,
-	"size_maximum": "0x4000",
+	"size_maximum": "0x10000",
 	"extensions": ["cue"]
 	},
 	{

@@ -11,3 +11,4 @@ src/sim/*.bin
 *.o
 *.ci
 *.su
+src/cdfw/tests/host/build/

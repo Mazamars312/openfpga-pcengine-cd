@@ -4,7 +4,6 @@
 int get_cd_seek_ms(int start_sector, int target_sector);
 
 #define CD_DATA_IO_INDEX 2
-uint32_t foo1;
 cue_t cue;
 
 cue_t::cue_t() {
@@ -32,45 +31,148 @@ cue_t::cue_t() {
 }
 
 const uint32_t memory_offset_cue = 0x00000200;
+// The CUE is read into the scratch RAM above the open-file struct one chunk at
+// a time, so it can be bigger than the 16K scratch RAM.
+#define CUE_CHUNK_SIZE (16384 - memory_offset_cue)
+#define CUE_PATH_MAX 255 // the APF path buffers in apf.cpp hold 255 bytes
+static uint32_t cue_offset; // next byte of the CUE to read
+static uint32_t cue_size;
+static char cue_dir[CUE_PATH_MAX]; // folder of the CUE, ending in '/'
+static char bin_dir[CUE_PATH_MAX]; // folder of the files it names, ending in '/'
+static char path[CUE_PATH_MAX];
 
-static int sgets(char *out, int sz, int cnt)
+// Reads the next CUE line into out without its CR/LF. Returns the first
+// character, so 0 at a blank line or at the end of the CUE.
+static int sgets(char *out, int sz)
 {
+	const char *chunk = (const char *)(MAIN_SCRACH_ADDRESS_OFFSET + memory_offset_cue);
+	int cnt = 0;
 	*out = 0;
-	do
+	while (cue_offset < cue_size)
 	{
-		char *instr = (char*)foo1;
-		int cnt = 0;
-		while (*instr && *instr != 10)
+		uint32_t i = cue_offset % CUE_CHUNK_SIZE;
+		if ((i == 0) && dataslot_read(100, APF_SCRACH_ADDRESS_OFFSET + memory_offset_cue, cue_offset,
+				(cue_size - cue_offset < CUE_CHUNK_SIZE) ? cue_size - cue_offset : CUE_CHUNK_SIZE))
+			break;
+		char c = chunk[i];
+		if (c == 0) {
+			cue_offset = cue_size; // a NUL ends the CUE
+			break;
+		}
+		cue_offset++;
+		if (c == 10) break;
+		if ((c != 13) && (cnt < sz - 1))
 		{
-			if (*instr == 13)
-			{
-				instr++;
-				foo1++;
-				continue;
-			}
-			if (cnt < sz - 1)
-			{
-				out[cnt++] = *instr;
-				out[cnt] = 0;
-			}
-			instr++;
-			foo1++;
-		}
-		if(*instr == 10) {
-			instr++;
-			foo1++;
-		}
-		if(*instr == 00) {
-			return *out;
+			out[cnt++] = c;
+			out[cnt] = 0;
 		}
 	}
-	while ((foo1 - (MAIN_SCRACH_ADDRESS_OFFSET + memory_offset_cue)) >= cnt);
 	return *out;
+}
+
+// Copies the file name of a FILE command, with or without quotes, into out.
+static bool file_arg(const char *s, char *out, int size)
+{
+	char end = ' ';
+	int n = 0;
+	while (*s == ' ') s++;
+	if (*s == '"') {
+		end = '"';
+		s++;
+	}
+	while (*s && (*s != end)) {
+		if (n == size - 1) return false;
+		out[n++] = *s++;
+	}
+	out[n] = 0;
+	return (n > 0) && ((end == ' ') || (*s == '"'));
+}
+
+static bool is_sep(char c)
+{
+	return (c == '/') || (c == '\\');
+}
+
+// The part of p after its last '/' or '\'.
+static const char *file_name(const char *p)
+{
+	const char *name = p;
+	for (; *p; p++) {
+		if (is_sep(*p)) name = p + 1;
+	}
+	return name;
+}
+
+// Appends the parts of src to path[0..*len), resolving "." and "..". Returns
+// false if a ".." goes above the root or the path gets too long.
+static bool append_parts(int *len, const char *src)
+{
+	while (*src)
+	{
+		while (is_sep(*src)) src++;
+		const char *start = src;
+		while (*src && !is_sep(*src)) src++;
+		int n = src - start;
+
+		if ((n == 0) || ((n == 1) && (start[0] == '.'))) continue;
+		if ((n == 2) && (start[0] == '.') && (start[1] == '.')) {
+			if (*len <= 1) return false;
+			int k = *len - 1;
+			while ((k > 1) && (path[k] != '/')) k--;
+			*len = k;
+			continue;
+		}
+		if (*len + 1 + n >= CUE_PATH_MAX) return false;
+		if (*len > 1) path[(*len)++] = '/';
+		memcpy(path + *len, start, n);
+		*len += n;
+	}
+	path[*len] = 0;
+	return true;
+}
+
+// Puts the full path of 'file' (the name in a FILE command) in path. It is
+// relative to the CUE's folder, '\' counts as '/', and "." and ".." are resolved.
+static bool resolve(const char *file)
+{
+	int len = 1;
+	path[0] = '/';
+	return append_parts(&len, cue_dir) && append_parts(&len, file);
+}
+
+// Opens the file named by a FILE command and copies its name into 'name'. It
+// is looked for relative to the CUE's folder, then next to the CUE (all that
+// firmware up to 0.2.3 did).
+static int open_cue_file(const char *file, char *name, int size)
+{
+	const char *fname = file_name(file);
+	bool error_enabled = file_error_enabled;
+	int error_code = file_error_code;
+	bool resolved = resolve(file);
+	if (!resolved || OpenFileNameDataSlot(&aft, path)) {
+		if (resolved && (fname == file)) return 1; // no folders, nothing else to try
+		snprintf(path, CUE_PATH_MAX, "%s%s", cue_dir, fname);
+		if (OpenFileNameDataSlot(&aft, path)) return 1;
+		// the failed first try must not leave the error OSD up
+		file_error_enabled = error_enabled;
+		file_error_code = error_code;
+	}
+	// Tracks only keep their file name: RISCFileSeek reopens them in the folder
+	// of the open file, so all files of a CUE must be in one folder.
+	if ((bin_dir[0] && strcmp(bin_dir, aft.aft_filepath)) || ((int)strlen(fname) >= size)) {
+		mainprintf("CUE: files must be in one folder, names under %d characters\r\n", size);
+		file_error_enabled = 1;
+		file_error_code = error_info_dataslot_File_Not_Found;
+		return 1;
+	}
+	strcpy(bin_dir, aft.aft_filepath);
+	strcpy(name, fname);
+	return 0;
 }
 
 	// dataslot_type aft;
 uint16_t cue_t::LoadCUE(int dataslot) {
-	static char line[128];
+	static char line[256]; // room for a FILE line with folders in it
 	char fline[255];
 	char s[255];
 	// static char fname[80];
@@ -85,11 +187,13 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 	toc_size = DATASLOT_BRAM(1); // This is where the Cue file will be The BINs are in the 101 dataslot
 	if (toc_size == 0) return 100;
 	clearscrachram(0,16384);
-	foo1 = MAIN_SCRACH_ADDRESS_OFFSET + memory_offset_cue;
-	dataslot_read(100, APF_SCRACH_ADDRESS_OFFSET + memory_offset_cue, 0, toc_size);
+	strcpy(cue_dir, aft.aft_filepath);
+	bin_dir[0] = 0;
+	cue_offset = 0;
+	cue_size = toc_size;
 	aft.aft_dataslot = dataslot;
 	int mm, ss, bb, pregap = 0;
-	while ((sgets(line, sizeof(line), toc_size)))
+	while ((sgets(line, sizeof(line))))
 	{
 		lptr = line;
 		// mainprintf("%s\r\n", line);
@@ -98,18 +202,8 @@ uint16_t cue_t::LoadCUE(int dataslot) {
 		/* decode FILE commands */
 		if (!(memcmp(lptr, "FILE", 4)))
 		{
-			int i = 0;
-         	int j = 0;
-         	int q = 0; // track open and closed quotes
-			do { 
-				this->toc.tracks[this->toc.last].name[j] = lptr[5+i]; 
-				i++;
-				j++;
-				if ((this->toc.tracks[this->toc.last].name[j-1] == '\\') || (this->toc.tracks[this->toc.last].name[j-1] == '/')) { j = 0; } //strip out path info
-				if (this->toc.tracks[this->toc.last].name[j-1] == '"') { j--; q++;} // strip out quotes
-        	} while ((lptr[5+i-1] != ' ') || (q == 1));
-			sprintf(s,"%s%s", aft.aft_filepath, this->toc.tracks[this->toc.last].name);
-			if (OpenFileNameDataSlot(&aft, s) > 0) {
+			if (!file_arg(lptr + 4, s, sizeof(s))) return -1;
+			if (open_cue_file(s, this->toc.tracks[this->toc.last].name, sizeof(this->toc.tracks[0].name))) {
 				return 1;
 				}
 			// OpenFileNameDataSlot (&aft, s);
